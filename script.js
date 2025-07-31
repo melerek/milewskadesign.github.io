@@ -98,7 +98,7 @@ contactForm.addEventListener('submit', async (e) => {
     const originalText = submitBtn.textContent;
     
     // Change button state
-    submitBtn.textContent = 'Sending...';
+    submitBtn.textContent = 'Wysyłam...';
     submitBtn.disabled = true;
     
     // Get form data
@@ -114,11 +114,11 @@ contactForm.addEventListener('submit', async (e) => {
         await new Promise(resolve => setTimeout(resolve, 2000));
         
         // Success state
-        submitBtn.textContent = 'Message Sent!';
+        submitBtn.textContent = 'Wiadomość Wysłana!';
         submitBtn.style.background = '#27ae60';
         
         // Show success message
-        showNotification('Thank you! We\'ll get back to you within 24 hours.', 'success');
+        showNotification('Dziękujemy! Odezwiemy się w ciągu 24 godzin.', 'success');
         
         // Reset form
         contactForm.reset();
@@ -132,10 +132,10 @@ contactForm.addEventListener('submit', async (e) => {
         
     } catch (error) {
         // Error state
-        submitBtn.textContent = 'Error - Try Again';
+        submitBtn.textContent = 'Błąd - Spróbuj Ponownie';
         submitBtn.style.background = '#e74c3c';
         
-        showNotification('Something went wrong. Please try again.', 'error');
+        showNotification('Coś poszło nie tak. Spróbuj ponownie.', 'error');
         
         // Reset button after 3 seconds
         setTimeout(() => {
