@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Milewska Design - Interior Design & 3D Visualization</title>
+    <meta name="description" content="Professional interior design services with photorealistic 3D renders. From concept to completion - transform your space with Milewska Design.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Milewska Design</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact" class="cta-button">Get Quote</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Transform Your Space Into a <span class="highlight">Stunning Reality</span></h1>
+                <p class="hero-subtitle">Professional interior design with photorealistic 3D visualization. See your dream space before it's built.</p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Projects Completed</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Client Satisfaction</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">48h</span>
+                        <span class="stat-label">Initial Concept</span>
+                    </div>
+                </div>
+                <div class="hero-buttons">
+                    <a href="#portfolio" class="btn-primary">View Portfolio</a>
+                    <a href="#contact" class="btn-secondary">Start Your Project</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-image-placeholder">
+                    <div class="placeholder-text">Your stunning render showcase here</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="portfolio">
+        <div class="container">
+            <div class="section-header">
+                <h2>Portfolio</h2>
+                <p>Photorealistic renders that bring your vision to life</p>
+            </div>
+            
+            <div class="portfolio-filter">
+                <button class="filter-btn active" data-filter="all">All Projects</button>
+                <button class="filter-btn" data-filter="residential">Residential</button>
+                <button class="filter-btn" data-filter="commercial">Commercial</button>
+                <button class="filter-btn" data-filter="renders">3D Renders</button>
+            </div>
+
+            <div class="portfolio-grid">
+                <div class="portfolio-item" data-category="residential">
+                    <div class="portfolio-image">
+                        <div class="image-placeholder">Modern Living Room Render</div>
+                        <div class="portfolio-overlay">
+                            <h3>Luxury Living Room</h3>
+                            <p>Complete renovation with custom furniture</p>
+                            <button class="view-project">View Project</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item" data-category="commercial">
+                    <div class="portfolio-image">
+                        <div class="image-placeholder">Office Space Render</div>
+                        <div class="portfolio-overlay">
+                            <h3>Corporate Office</h3>
+                            <p>Modern workspace design</p>
+                            <button class="view-project">View Project</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item" data-category="residential">
+                    <div class="portfolio-image">
+                        <div class="image-placeholder">Kitchen Design Render</div>
+                        <div class="portfolio-overlay">
+                            <h3>Designer Kitchen</h3>
+                            <p>Custom cabinetry and island design</p>
+                            <button class="view-project">View Project</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item" data-category="renders">
+                    <div class="portfolio-image">
+                        <div class="image-placeholder">Bedroom Visualization</div>
+                        <div class="portfolio-overlay">
+                            <h3>Master Bedroom</h3>
+                            <p>Photorealistic visualization</p>
+                            <button class="view-project">View Project</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item" data-category="commercial">
+                    <div class="portfolio-image">
+                        <div class="image-placeholder">Restaurant Interior</div>
+                        <div class="portfolio-overlay">
+                            <h3>Restaurant Design</h3>
+                            <p>Complete dining experience</p>
+                            <button class="view-project">View Project</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item" data-category="residential">
+                    <div class="portfolio-image">
+                        <div class="image-placeholder">Bathroom Renovation</div>
+                        <div class="portfolio-overlay">
+                            <h3>Luxury Bathroom</h3>
+                            <p>Spa-inspired design</p>
+                            <button class="view-project">View Project</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>Services</h2>
+                <p>End-to-end interior design solutions</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🎨</div>
+                    <h3>Design Consultation</h3>
+                    <p>Initial consultation to understand your vision, needs, and budget. We'll create a design brief that captures your unique style.</p>
+                    <ul class="service-features">
+                        <li>Space analysis</li>
+                        <li>Style consultation</li>
+                        <li>Budget planning</li>
+                        <li>Timeline creation</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card featured">
+                    <div class="service-icon">🏠</div>
+                    <h3>3D Visualization</h3>
+                    <p>Photorealistic renders that let you see your space before any work begins. Make informed decisions with stunning visualizations.</p>
+                    <ul class="service-features">
+                        <li>Photorealistic renders</li>
+                        <li>Multiple view angles</li>
+                        <li>Material exploration</li>
+                        <li>Lighting simulation</li>
+                    </ul>
+                    <div class="featured-badge">Most Popular</div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">⚡</div>
+                    <h3>Full Implementation</h3>
+                    <p>Complete project management from concept to completion. We handle contractors, materials, and timeline to deliver your dream space.</p>
+                    <ul class="service-features">
+                        <li>Project management</li>
+                        <li>Contractor coordination</li>
+                        <li>Material sourcing</li>
+                        <li>Quality control</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="process-section">
+                <h3>Our Process</h3>
+                <div class="process-steps">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <h4>Discovery</h4>
+                        <p>Understanding your vision and requirements</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <h4>Design</h4>
+                        <p>Creating detailed plans and 3D visualizations</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <h4>Review</h4>
+                        <p>Refining the design based on your feedback</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">4</div>
+                        <h4>Implementation</h4>
+                        <p>Bringing your vision to life</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>About Milewska Design</h2>
+                    <p class="about-intro">With a passion for creating beautiful, functional spaces, I specialize in transforming interiors through innovative design and cutting-edge 3D visualization.</p>
+                    
+                    <div class="about-details">
+                        <p>My approach combines artistic vision with technical precision, ensuring every project not only looks stunning but also functions perfectly for your lifestyle.</p>
+                        
+                        <div class="credentials">
+                            <h4>Why Choose Milewska Design?</h4>
+                            <ul>
+                                <li>✓ Photorealistic 3D renders before any work begins</li>
+                                <li>✓ End-to-end project management</li>
+                                <li>✓ Custom solutions tailored to your needs</li>
+                                <li>✓ Transparent pricing and timeline</li>
+                                <li>✓ Continuous communication throughout the process</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="image-placeholder">Professional headshot here</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>Client Success Stories</h2>
+                <p>What our clients say about working with us</p>
+            </div>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">★★★★★</div>
+                    <p>"The 3D renders were so realistic, I could visualize exactly how my living room would look. The final result exceeded my expectations!"</p>
+                    <div class="testimonial-author">
+                        <strong>Sarah Johnson</strong>
+                        <span>Residential Client</span>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">★★★★★</div>
+                    <p>"Professional, creative, and efficient. The entire process was smooth from initial consultation to final delivery."</p>
+                    <div class="testimonial-author">
+                        <strong>Michael Chen</strong>
+                        <span>Commercial Project</span>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">★★★★★</div>
+                    <p>"Amazing attention to detail and ability to capture exactly what we wanted. Highly recommend for any interior design project."</p>
+                    <div class="testimonial-author">
+                        <strong>Emily Rodriguez</strong>
+                        <span>Kitchen Renovation</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h2>Ready to Transform Your Space?</h2>
+                    <p>Let's discuss your project and create something beautiful together.</p>
+                    
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <h4>Get Started</h4>
+                            <p>Schedule a free consultation to discuss your project</p>
+                        </div>
+                        <div class="contact-item">
+                            <h4>Timeline</h4>
+                            <p>Initial concepts delivered within 48 hours</p>
+                        </div>
+                        <div class="contact-item">
+                            <h4>Investment</h4>
+                            <p>Transparent pricing with no hidden fees</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form-container">
+                    <form class="contact-form" id="contactForm">
+                        <h3>Start Your Project</h3>
+                        
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" required>
+                            <label for="name">Your Name</label>
+                        </div>
+                        
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" required>
+                            <label for="email">Email Address</label>
+                        </div>
+                        
+                        <div class="form-group">
+                            <input type="tel" id="phone" name="phone">
+                            <label for="phone">Phone Number</label>
+                        </div>
+                        
+                        <div class="form-group">
+                            <select id="project-type" name="project-type" required>
+                                <option value="">Select Project Type</option>
+                                <option value="residential">Residential Design</option>
+                                <option value="commercial">Commercial Space</option>
+                                <option value="visualization">3D Visualization Only</option>
+                                <option value="consultation">Design Consultation</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <select id="budget" name="budget">
+                                <option value="">Budget Range</option>
+                                <option value="under-10k">Under $10,000</option>
+                                <option value="10k-25k">$10,000 - $25,000</option>
+                                <option value="25k-50k">$25,000 - $50,000</option>
+                                <option value="50k-plus">$50,000+</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <textarea id="message" name="message" rows="4" required></textarea>
+                            <label for="message">Tell us about your project</label>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">Get Free Consultation</button>
+                        
+                        <p class="form-note">We'll respond within 24 hours with next steps.</p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>Milewska Design</h3>
+                    <p>Transforming spaces through innovative design and visualization</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Services</h4>
+                        <ul>
+                            <li><a href="#services">Interior Design</a></li>
+                            <li><a href="#services">3D Visualization</a></li>
+                            <li><a href="#services">Project Management</a></li>
+                            <li><a href="#services">Consultation</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Company</h4>
+                        <ul>
+                            <li><a href="#about">About</a></li>
+                            <li><a href="#portfolio">Portfolio</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Milewska Design. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
