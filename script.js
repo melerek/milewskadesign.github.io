@@ -65,6 +65,167 @@ filterButtons.forEach(button => {
     });
 });
 
+// Initialize AOS (Animate On Scroll)
+document.addEventListener('DOMContentLoaded', function() {
+    AOS.init({
+        duration: 800,
+        easing: 'ease-in-out',
+        once: true,
+        offset: 100
+    });
+});
+
+// Hero background images array
+const heroImages = [
+    'images/renders/Kanapa.png',
+    'images/renders/kuchnia2.png',
+    'images/renders/Sypialnia2.png',
+    'images/renders/Łazienka 2.png',
+    'images/renders/Po.png'
+];
+
+let currentImageIndex = 0; 
+let heroSlideInterval;
+
+// Change hero background image function - GLOBAL with slide transition
+function changeHeroImage(imageSrc, updateIndex = false, slideDirection = 'right') {
+    const heroBgImg = document.querySelector('.hero-bg-img');
+    const heroContainer = document.querySelector('.hero-background-image');
+    
+    if (heroBgImg && heroContainer) {
+        // Create new image element for smooth transition
+        const newImg = document.createElement('img');
+        newImg.src = imageSrc;
+        newImg.alt = 'Projekt wnętrza';
+        newImg.className = 'hero-bg-img';
+        newImg.style.position = 'absolute';
+        newImg.style.top = '0';
+        newImg.style.left = '0';
+        newImg.style.width = '100%';
+        newImg.style.height = '100%';
+        newImg.style.objectFit = 'cover';
+        newImg.style.objectPosition = 'center';
+        newImg.style.transform = slideDirection === 'right' ? 'translateX(100%)' : 'translateX(-100%)';
+        newImg.style.transition = 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+        
+        // Add new image to container
+        heroContainer.appendChild(newImg);
+        
+        // Trigger slide animation after a small delay
+        setTimeout(() => {
+            // Slide out current image
+            heroBgImg.style.transform = slideDirection === 'right' ? 'translateX(-100%)' : 'translateX(100%)';
+            heroBgImg.style.transition = 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+            
+            // Slide in new image
+            newImg.style.transform = 'translateX(0)';
+        }, 50);
+        
+        // Clean up after animation
+        setTimeout(() => {
+            heroBgImg.remove();
+            newImg.style.position = 'static';
+            newImg.style.transform = 'none';
+            newImg.style.transition = 'none';
+            
+            // Update current index if this was called from gallery click
+            if (updateIndex) {
+                currentImageIndex = heroImages.indexOf(imageSrc);
+                updateGalleryActiveState();
+            }
+        }, 850);
+    }
+}
+
+// Update gallery active state
+function updateGalleryActiveState() {
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    galleryItems.forEach((item, index) => {
+        const img = item.querySelector('.gallery-img');
+        if (img.src.includes(heroImages[currentImageIndex].split('/').pop())) {
+            item.style.opacity = '1';
+            item.style.transform = 'scale(1.1)';
+            item.style.borderColor = '#c9a96e';
+        } else {
+            item.style.opacity = '0.7';
+            item.style.transform = 'scale(1)';
+            item.style.borderColor = 'rgba(255, 255, 255, 0.5)';
+        }
+    });
+}
+
+// Start automatic hero slideshow with slide transitions
+function startHeroSlideshow() {
+    heroSlideInterval = setInterval(() => {
+        const prevIndex = currentImageIndex;
+        currentImageIndex = (currentImageIndex + 1) % heroImages.length;
+        const slideDirection = 'right'; // Always slide from right to left for auto-slideshow
+        changeHeroImage(heroImages[currentImageIndex], false, slideDirection);
+        updateGalleryActiveState();
+    }, 4000); // Change every 4 seconds
+}
+
+// Stop automatic slideshow
+function stopHeroSlideshow() {
+    if (heroSlideInterval) {
+        clearInterval(heroSlideInterval);
+    }
+}
+
+// Manual image change from gallery (stops auto-slideshow temporarily)
+function changeHeroImageManual(imageSrc) {
+    stopHeroSlideshow();
+    
+    // Determine slide direction based on image index
+    const newIndex = heroImages.indexOf(imageSrc);
+    const slideDirection = newIndex > currentImageIndex ? 'right' : 'left';
+    
+    changeHeroImage(imageSrc, true, slideDirection);
+    
+    // Restart slideshow after 8 seconds of inactivity
+    setTimeout(() => {
+        startHeroSlideshow();
+    }, 8000);
+}
+
+// Animated Counter Function
+function animateCounters() {
+    const counters = document.querySelectorAll('.animated-counter .stat-number');
+    
+    counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-count'));
+        let current = 0;
+        const increment = target / 60; // 60 frames for smooth animation
+        
+        const updateCounter = () => {
+            if (current < target) {
+                current += increment;
+                counter.textContent = Math.floor(current);
+                requestAnimationFrame(updateCounter);
+            } else {
+                counter.textContent = target;
+            }
+        };
+        
+        updateCounter();
+    });
+}
+
+// Trigger counter animation when hero section is visible
+const heroObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            animateCounters();
+            heroObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.3 });
+
+const heroSection = document.querySelector('.hero');
+if (heroSection) {
+    heroObserver.observe(heroSection);
+}
+
 // Intersection Observer for animations
 const observerOptions = {
     threshold: 0.1,
@@ -183,75 +344,6 @@ function showNotification(message, type) {
     }, 5000);
 }
 
-// Parallax effect for hero section
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const heroVisual = document.querySelector('.hero-visual');
-    if (heroVisual) {
-        heroVisual.style.transform = `translateY(${scrolled * 0.3}px)`;
-    }
-});
-
-// Counter animation for hero stats
-function animateCounters() {
-    const counters = document.querySelectorAll('.stat-number');
-    
-    counters.forEach(counter => {
-        const target = counter.textContent;
-        const isNumber = !isNaN(target.replace(/[^0-9]/g, ''));
-        
-        if (isNumber) {
-            const finalNumber = parseInt(target.replace(/[^0-9]/g, ''));
-            const suffix = target.replace(/[0-9]/g, '');
-            
-            let current = 0;
-            const increment = finalNumber / 100;
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= finalNumber) {
-                    counter.textContent = finalNumber + suffix;
-                    clearInterval(timer);
-                } else {
-                    counter.textContent = Math.floor(current) + suffix;
-                }
-            }, 20);
-        }
-    });
-}
-
-// Trigger counter animation when hero section is visible
-const heroObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            animateCounters();
-            heroObserver.unobserve(entry.target);
-        }
-    });
-}, { threshold: 0.5 });
-
-const heroSection = document.querySelector('.hero');
-if (heroSection) {
-    heroObserver.observe(heroSection);
-}
-
-// Add loading animation
-window.addEventListener('load', () => {
-    document.body.classList.add('loaded');
-    
-    // Add subtle entrance animations
-    const elements = document.querySelectorAll('.hero-text > *');
-    elements.forEach((el, index) => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        
-        setTimeout(() => {
-            el.style.opacity = '1';
-            el.style.transform = 'translateY(0)';
-        }, index * 100);
-    });
-});
-
 // Enhanced form validation
 function validateForm() {
     const name = document.getElementById('name').value.trim();
@@ -294,6 +386,30 @@ document.querySelectorAll('#contactForm input, #contactForm select, #contactForm
             submitBtn.style.opacity = '0.7';
         }
     });
+});
+
+// Add loading animation
+window.addEventListener('load', () => {
+    document.body.classList.add('loaded');
+    
+    // Smooth entrance for hero elements
+    const heroElements = document.querySelectorAll('.hero-text-container > *');
+    heroElements.forEach((el, index) => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+        
+        setTimeout(() => {
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+        }, index * 150 + 500); // Start after 500ms
+    });
+    
+    // Start hero slideshow after page loads
+    setTimeout(() => {
+        startHeroSlideshow();
+        updateGalleryActiveState(); // Set initial active state
+    }, 2000); // Start slideshow after 2 seconds
 });
 
 // Add smooth reveal animations for sections

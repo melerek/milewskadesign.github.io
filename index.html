@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body>
     <!-- Navigation -->
@@ -34,33 +35,54 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
+        <div class="hero-background-image">
+            <img src="images/renders/Kanapa.png" alt="Projekt wnętrza" class="hero-bg-img">
+            <div class="hero-overlay"></div>
+        </div>
+        
         <div class="hero-content">
-            <div class="hero-text">
-                <h1>Przemień Swoją Przestrzeń w <span class="highlight">Oszałamiającą Rzeczywistość</span></h1>
-                <p class="hero-subtitle">Profesjonalne projektowanie wnętrz z fotorealistycznymi wizualizacjami 3D. Zobacz swoje wymarzone wnętrze, zanim zostanie zbudowane.</p>
+            <div class="hero-text-container">
+                <!-- <div class="hero-tag">Milewska Design</div> -->
+                <h1 class="hero-title">Przemień Swoją Przestrzeń w <span class="highlight">Oszałamiającą Rzeczywistość</span></h1>
+                <p class="hero-subtitle">Profesjonalne projektowanie wnętrz z fotorealistycznymi wizualizacjami 3D</p>
+                
                 <div class="hero-stats">
-                    <div class="stat">
-                        <span class="stat-number">50+</span>
-                        <span class="stat-label">Zrealizowanych Projektów</span>
+                    <div class="stat animated-counter">
+                        <span class="stat-number" data-count="50">0</span><span class="plus">+</span>
+                        <span class="stat-label">Projektów</span>
                     </div>
-                    <div class="stat">
-                        <span class="stat-number">100%</span>
-                        <span class="stat-label">Zadowolenia Klientów</span>
+                    <div class="stat animated-counter">
+                        <span class="stat-number" data-count="100">0</span><span class="percent">%</span>
+                        <span class="stat-label">Zadowolenia</span>
                     </div>
-                    <div class="stat">
-                        <span class="stat-number">48h</span>
-                        <span class="stat-label">Wstępna Koncepcja</span>
+                    <div class="stat animated-counter">
+                        <span class="stat-number" data-count="48">0</span><span class="hours">h</span>
+                        <span class="stat-label">Pierwsza Wizualizacja</span>
                     </div>
                 </div>
+                
                 <div class="hero-buttons">
                     <a href="#portfolio" class="btn-primary">Zobacz Portfolio</a>
                     <a href="#contact" class="btn-secondary">Rozpocznij Projekt</a>
                 </div>
             </div>
-            <div class="hero-visual">
-                <div class="hero-image-placeholder">
-                    <div class="placeholder-text">Twoje oszałamiające wizualizacje tutaj</div>
-                </div>
+        </div>
+        
+        <div class="hero-gallery">
+            <div class="gallery-item active" onclick="changeHeroImageManual('images/renders/Kanapa.png')">
+                <img src="images/renders/Kanapa.png" alt="Salon" class="gallery-img">
+            </div>
+            <div class="gallery-item" onclick="changeHeroImageManual('images/renders/kuchnia2.png')">
+                <img src="images/renders/kuchnia2.png" alt="Kuchnia" class="gallery-img">
+            </div>
+            <div class="gallery-item" onclick="changeHeroImageManual('images/renders/Sypialnia2.png')">
+                <img src="images/renders/Sypialnia2.png" alt="Sypialnia" class="gallery-img">
+            </div>
+            <div class="gallery-item" onclick="changeHeroImageManual('images/renders/Łazienka 2.png')">
+                <img src="images/renders/Łazienka 2.png" alt="Łazienka" class="gallery-img">
+            </div>
+            <div class="gallery-item" onclick="changeHeroImageManual('images/renders/Po.png')">
+                <img src="images/renders/Po.png" alt="Pokój" class="gallery-img">
             </div>
         </div>
     </section>
@@ -68,9 +90,9 @@
     <!-- Portfolio Section -->
     <section id="portfolio" class="portfolio">
         <div class="container">
-            <div class="section-header">
-                <h2>Portfolio</h2>
-                <p>Fotorealistyczne wizualizacje, które ożywiają Twoją wizję</p>
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Portfolio</h2>
+                <p class="section-subtitle">Fotorealistyczne wizualizacje, które ożywiają Twoją wizję</p>
             </div>
             
             <div class="portfolio-filter">
@@ -83,21 +105,10 @@
             <div class="portfolio-grid">
                 <div class="portfolio-item" data-category="residential">
                     <div class="portfolio-image">
-                        <div class="image-placeholder">Nowoczesny Salon - Wizualizacja</div>
+                        <img src="images/renders/Kanapa.png" alt="Nowoczesny salon z designerską kanapą" class="portfolio-img">
                         <div class="portfolio-overlay">
-                            <h3>Luksusowy Salon</h3>
-                            <p>Kompleksowy remont z meblami na wymiar</p>
-                            <button class="view-project">Zobacz Projekt</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="portfolio-item" data-category="commercial">
-                    <div class="portfolio-image">
-                        <div class="image-placeholder">Przestrzeń Biurowa - Wizualizacja</div>
-                        <div class="portfolio-overlay">
-                            <h3>Biuro Korporacyjne</h3>
-                            <p>Nowoczesny projekt przestrzeni pracy</p>
+                            <h3>Nowoczesny Salon</h3>
+                            <p>Elegancki salon z designerską kanapą i nowoczesnym wystrojem</p>
                             <button class="view-project">Zobacz Projekt</button>
                         </div>
                     </div>
@@ -105,10 +116,10 @@
                 
                 <div class="portfolio-item" data-category="residential">
                     <div class="portfolio-image">
-                        <div class="image-placeholder">Projekt Kuchni - Wizualizacja</div>
+                        <img src="images/renders/Kuchnia.png" alt="Designerska kuchnia z wyspą" class="portfolio-img">
                         <div class="portfolio-overlay">
                             <h3>Designerska Kuchnia</h3>
-                            <p>Meble na wymiar i projekt wyspy</p>
+                            <p>Nowoczesna kuchnia z wyspą i meblami na wymiar</p>
                             <button class="view-project">Zobacz Projekt</button>
                         </div>
                     </div>
@@ -116,21 +127,10 @@
                 
                 <div class="portfolio-item" data-category="renders">
                     <div class="portfolio-image">
-                        <div class="image-placeholder">Wizualizacja Sypialni</div>
+                        <img src="images/renders/Sypialnia.png" alt="Elegancka sypialnia - wizualizacja 3D" class="portfolio-img">
                         <div class="portfolio-overlay">
-                            <h3>Główna Sypialnia</h3>
-                            <p>Fotorealistyczna wizualizacja</p>
-                            <button class="view-project">Zobacz Projekt</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="portfolio-item" data-category="commercial">
-                    <div class="portfolio-image">
-                        <div class="image-placeholder">Wnętrze Restauracji</div>
-                        <div class="portfolio-overlay">
-                            <h3>Projekt Restauracji</h3>
-                            <p>Kompletna przestrzeń gastronomiczna</p>
+                            <h3>Elegancka Sypialnia</h3>
+                            <p>Przytulna sypialnia z przemyślanym oświetleniem</p>
                             <button class="view-project">Zobacz Projekt</button>
                         </div>
                     </div>
@@ -138,10 +138,65 @@
                 
                 <div class="portfolio-item" data-category="residential">
                     <div class="portfolio-image">
-                        <div class="image-placeholder">Remont Łazienki</div>
+                        <img src="images/renders/kuchnia2.png" alt="Druga designerska kuchnia" class="portfolio-img">
+                        <div class="portfolio-overlay">
+                            <h3>Kuchnia z Wyspą</h3>
+                            <p>Przestronna kuchnia z centralną wyspą i nowoczesnym designem</p>
+                            <button class="view-project">Zobacz Projekt</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item" data-category="residential">
+                    <div class="portfolio-image">
+                        <img src="images/renders/Łazienka 1.png" alt="Luksusowa łazienka inspirowana SPA" class="portfolio-img">
                         <div class="portfolio-overlay">
                             <h3>Luksusowa Łazienka</h3>
-                            <p>Projekt inspirowany SPA</p>
+                            <p>Elegancka łazienka inspirowana estetyką SPA</p>
+                            <button class="view-project">Zobacz Projekt</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item" data-category="residential">
+                    <div class="portfolio-image">
+                        <img src="images/renders/Łazienka 2.png" alt="Druga luksusowa łazienka" class="portfolio-img">
+                        <div class="portfolio-overlay">
+                            <h3>Minimalistyczna Łazienka</h3>
+                            <p>Nowoczesna łazienka w stylu minimalistycznym</p>
+                            <button class="view-project">Zobacz Projekt</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item" data-category="renders">
+                    <div class="portfolio-image">
+                        <img src="images/renders/Sypialnia2.png" alt="Druga elegancka sypialnia" class="portfolio-img">
+                        <div class="portfolio-overlay">
+                            <h3>Sypialnia Główna</h3>
+                            <p>Przytulna sypialnia z ciepłym oświetleniem</p>
+                            <button class="view-project">Zobacz Projekt</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item" data-category="renders">
+                    <div class="portfolio-image">
+                        <img src="images/renders/detal.png" alt="Detal projektowy wnętrza" class="portfolio-img">
+                        <div class="portfolio-overlay">
+                            <h3>Detal Projektowy</h3>
+                            <p>Precyzyjnie wykonany detal w projekcie wnętrza</p>
+                            <button class="view-project">Zobacz Projekt</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item" data-category="residential">
+                    <div class="portfolio-image">
+                        <img src="images/renders/Po.png" alt="Pokój dzienny" class="portfolio-img">
+                        <div class="portfolio-overlay">
+                            <h3>Pokój Dzienny</h3>
+                            <p>Komfortowa przestrzeń do relaksu i wypoczynku</p>
                             <button class="view-project">Zobacz Projekt</button>
                         </div>
                     </div>
@@ -405,6 +460,7 @@
         </div>
     </footer>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
