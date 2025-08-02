@@ -52,6 +52,7 @@ h3 {
     width: 100%;
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     z-index: 1000;
     padding: 1rem 0;
     transition: all 0.3s ease;
@@ -160,7 +161,7 @@ h3 {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center;
+    object-position: center;\n    transform: scale(1);\n    transform-origin: center center;
 }
 
 .hero-overlay {
@@ -218,6 +219,7 @@ h3 {
     font-weight: 600;
     margin-bottom: 1.5rem;
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(201, 169, 110, 0.3);
 }
 
@@ -1123,4 +1125,287 @@ h3 {
     .hero-gallery {
         display: none;
     }
+}
+
+/* New Styles for Updated Content */
+
+/* Why Choose Us Section */
+.why-choose-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.why-choose-section .section-header h2 {
+    color: #2c3e50;
+}
+
+.why-choose-section .section-header p {
+    color: #6c757d;
+    font-size: 1.1rem;
+}
+
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.benefit-item {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-left: 4px solid #c9a96e;
+}
+
+.benefit-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.benefit-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.benefit-item h4 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    line-height: 1.4;
+}
+
+.benefit-item p {
+    color: #6c757d;
+    line-height: 1.6;
+}
+
+/* Service Package Section */
+.service-package {
+    margin: 4rem 0;
+    padding: 3rem;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+}
+
+.service-package h3 {
+    text-align: center;
+    color: #c9a96e;
+    margin-bottom: 3rem;
+    font-size: 2.5rem;
+    position: relative;
+}
+
+.service-package h3::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: #c9a96e;
+    border-radius: 2px;
+}
+
+.package-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 3rem;
+}
+
+.package-column h4 {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    text-align: center;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #c9a96e;
+}
+
+.package-features {
+    list-style: none;
+    padding: 0;
+}
+
+.package-features li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #e9ecef;
+    color: #495057;
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+.package-features li:last-child {
+    border-bottom: none;
+}
+
+.package-features li strong {
+    color: #c9a96e;
+    font-weight: 600;
+}
+
+/* Detailed Process Section */
+.detailed-process {
+    margin-top: 3rem;
+}
+
+.process-stage {
+    margin-bottom: 3rem;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.process-stage:hover {
+    transform: translateY(-5px);
+}
+
+.stage-header {
+    background: linear-gradient(135deg, #c9a96e 0%, #b8956a 100%);
+    color: white;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.stage-number {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid white;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.stage-header h4 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.stage-content {
+    padding: 2rem;
+}
+
+.stage-steps {
+    display: grid;
+    gap: 2rem;
+}
+
+.stage-step {
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 15px;
+    border-left: 4px solid #c9a96e;
+}
+
+.stage-step h5 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.stage-step p {
+    color: #6c757d;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.stage-step ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.stage-step ul li {
+    color: #495057;
+    padding: 0.25rem 0;
+    line-height: 1.5;
+}
+
+.technical-drawings ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+    margin-top: 1.5rem;
+}
+
+.technical-drawings li {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 10px;
+    border-left: 3px solid #c9a96e;
+    color: #495057;
+    font-weight: 500;
+}
+
+/* Contact Section Updates */
+.contact-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+/* Responsive Design for New Sections */
+@media (max-width: 768px) {
+    .benefits-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .package-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .benefit-item,
+    .package-column {
+        min-width: auto;
+    }
+    
+    .stage-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    .stage-header h4 {
+        font-size: 1.2rem;
+    }
+    
+    .technical-drawings ul {
+        grid-template-columns: 1fr;
+    }
+    
+    .why-choose-us,
+    .service-package {
+        padding: 2rem 1rem;
+    }
+}
+
+/* Fix for hero image zoom animation */
+.hero-bg-img {
+    transform: scale(1.2) !important;
+    transform-origin: center center !important;
+}
+
+.hero-bg-img.zoom-active {
+    transform: scale(1.0) !important;
+}
+
+/* Update hero image transition */
+.hero-bg-img {
+    transition: transform 7s ease-in-out !important;
 }

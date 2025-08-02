@@ -105,7 +105,7 @@ function changeHeroImage(imageSrc, updateIndex = false, slideDirection = 'right'
         newImg.style.height = '100%';
         newImg.style.objectFit = 'cover';
         newImg.style.objectPosition = 'center';
-        newImg.style.transform = slideDirection === 'right' ? 'translateX(100%)' : 'translateX(-100%)';
+        newImg.style.transform = slideDirection === 'right' ? 'translateX(100%) scale(1.1)' : 'translateX(-100%) scale(1.1)';
         newImg.style.transition = 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
         
         // Add new image to container
@@ -113,20 +113,23 @@ function changeHeroImage(imageSrc, updateIndex = false, slideDirection = 'right'
         
         // Trigger slide animation after a small delay
         setTimeout(() => {
-            // Slide out current image
-            heroBgImg.style.transform = slideDirection === 'right' ? 'translateX(-100%)' : 'translateX(100%)';
+            // Slide out current image with zoom out
+            heroBgImg.style.transform = slideDirection === 'right' ? 'translateX(-100%) scale(0.95)' : 'translateX(100%) scale(0.95)';
             heroBgImg.style.transition = 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
             
-            // Slide in new image
-            newImg.style.transform = 'translateX(0)';
+            // Slide in new image with zoom in to normal
+            newImg.style.transform = 'translateX(0) scale(1)';
         }, 50);
         
-        // Clean up after animation
+        // Clean up after animation and start subtle zoom effect
         setTimeout(() => {
             heroBgImg.remove();
-            newImg.style.position = 'static';
-            newImg.style.transform = 'none';
-            newImg.style.transition = 'none';
+            newImg.style.position = 'absolute';
+            newImg.style.transform = 'scale(1)';
+            newImg.style.transition = 'transform 15s ease-in-out';
+            
+            // Add subtle continuous zoom animation
+            newImg.classList.add('zoom-active');
             
             // Update current index if this was called from gallery click
             if (updateIndex) {
@@ -162,7 +165,7 @@ function startHeroSlideshow() {
         const slideDirection = 'right'; // Always slide from right to left for auto-slideshow
         changeHeroImage(heroImages[currentImageIndex], false, slideDirection);
         updateGalleryActiveState();
-    }, 4000); // Change every 4 seconds
+    }, 7000); // Change every 7 seconds
 }
 
 // Stop automatic slideshow
@@ -409,6 +412,12 @@ window.addEventListener('load', () => {
     setTimeout(() => {
         startHeroSlideshow();
         updateGalleryActiveState(); // Set initial active state
+        
+        // Start zoom animation for initial image
+        const initialImg = document.querySelector('.hero-bg-img');
+        if (initialImg) {
+            initialImg.classList.add('zoom-active');
+        }
     }, 2000); // Start slideshow after 2 seconds
 });
 
