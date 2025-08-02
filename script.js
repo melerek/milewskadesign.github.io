@@ -77,11 +77,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Hero background images array
 const heroImages = [
-    'images/renders/Kanapa.png',
-    'images/renders/kuchnia2.png',
-    'images/renders/Sypialnia2.png',
-    'images/renders/Łazienka 2.png',
-    'images/renders/Po.png'
+    'images/renders/Kanapa.jpg',
+    'images/renders/kuchnia2.jpg',
+    'images/renders/Sypialnia2.jpg',
+    'images/renders/Łazienka 2.jpg',
+    'images/renders/Po.jpg'
 ];
 
 let currentImageIndex = 0; 
