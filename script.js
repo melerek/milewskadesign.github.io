@@ -29,16 +29,9 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Navbar background on scroll
+// Navbar background on scroll - with dark mode support
 window.addEventListener('scroll', () => {
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 100) {
-        navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-        navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
-    } else {
-        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-        navbar.style.boxShadow = 'none';
-    }
+    updateNavbarBackground();
 });
 
 // Portfolio Filter Functionality
@@ -376,49 +369,71 @@ function validateForm() {
     return errors;
 }
 
-// Real-time form validation
+// Real-time form validation with progress tracking
 document.querySelectorAll('#contactForm input, #contactForm select, #contactForm textarea').forEach(field => {
+    // Track field completion on input
+    field.addEventListener('input', () => {
+        trackFieldCompletion(field);
+    });
+
     field.addEventListener('blur', () => {
         const errors = validateForm();
         const submitBtn = document.querySelector('.submit-btn');
-        
+
         if (errors.length === 0) {
             submitBtn.style.opacity = '1';
             submitBtn.disabled = false;
         } else {
             submitBtn.style.opacity = '0.7';
         }
+
+        trackFieldCompletion(field);
     });
 });
 
 // Add loading animation
-window.addEventListener('load', () => {
+window.addEventListener('load', async () => {
     document.body.classList.add('loaded');
-    
+
+    // Initialize theme first
+    initializeTheme();
+
+    // Detect WebP support
+    const supportsWebP = await detectWebPSupport();
+    document.documentElement.classList.add(supportsWebP ? 'webp-support' : 'no-webp');
+
+    // Initialize PWA features
+    initializePWAFeatures();
+
+    // Hide page loader
+    setTimeout(() => {
+        hidePageLoader();
+    }, 1000);
+
     // Smooth entrance for hero elements
     const heroElements = document.querySelectorAll('.hero-text-container > *');
     heroElements.forEach((el, index) => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(30px)';
         el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-        
+
         setTimeout(() => {
             el.style.opacity = '1';
             el.style.transform = 'translateY(0)';
-        }, index * 150 + 500); // Start after 500ms
+        }, index * 150 + 1500); // Start after loader is hidden
     });
-    
+
     // Start hero slideshow after page loads
     setTimeout(() => {
         startHeroSlideshow();
         updateGalleryActiveState(); // Set initial active state
-        
+
         // Start zoom animation for initial image
         const initialImg = document.querySelector('.hero-bg-img');
         if (initialImg) {
             initialImg.classList.add('zoom-active');
         }
-    }, 2000); // Start slideshow after 2 seconds
+    }, 3000); // Start slideshow after 3 seconds
 });
 
 // Add smooth reveal animations for sections
@@ -449,3 +464,438 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// Dark Mode Functionality
+function toggleDarkMode() {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+
+    // Update theme color meta tag
+    const themeColor = newTheme === 'dark' ? '#2d2d2d' : '#c9a96e';
+    document.querySelector('meta[name=\"theme-color\"]').setAttribute('content', themeColor);
+
+    // Update navbar background immediately after theme change
+    updateNavbarBackground();
+
+    // Show notification
+    const message = newTheme === 'dark' ? 'Tryb ciemny włączony' : 'Tryb jasny włączony';
+    const icon = newTheme === 'dark' ? '🌙' : '☀️';
+    showEnhancedNotification('Zmiana motywu', message, 'info', icon);
+}
+
+// Separate function for updating navbar background
+function updateNavbarBackground() {
+    const navbar = document.querySelector('.navbar');
+    const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
+
+    if (window.scrollY > 100) {
+        if (isDarkMode) {
+            navbar.style.background = 'rgba(13, 17, 23, 0.98)';
+            navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.3)';
+        } else {
+            navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+            navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+        }
+    } else {
+        if (isDarkMode) {
+            navbar.style.background = 'rgba(13, 17, 23, 0.95)';
+            navbar.style.boxShadow = 'none';
+        } else {
+            navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+            navbar.style.boxShadow = 'none';
+        }
+    }
+}
+
+// Initialize theme on page load
+function initializeTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const theme = savedTheme || (prefersDark ? 'dark' : 'light');
+
+    document.documentElement.setAttribute('data-theme', theme);
+
+    // Update theme color meta tag
+    const themeColor = theme === 'dark' ? '#2d2d2d' : '#c9a96e';
+    document.querySelector('meta[name=\"theme-color\"]').setAttribute('content', themeColor);
+
+    // Initialize navbar background
+    setTimeout(() => {
+        updateNavbarBackground();
+    }, 100);
+}
+
+// Listen for system theme changes
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    if (!localStorage.getItem('theme')) {
+        const newTheme = e.matches ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        const themeColor = newTheme === 'dark' ? '#2d2d2d' : '#c9a96e';
+        document.querySelector('meta[name=\"theme-color\"]').setAttribute('content', themeColor);
+    }
+});
+
+// WebP Support Detection and Image Optimization
+function detectWebPSupport() {
+    return new Promise((resolve) => {
+        const webP = new Image();
+        webP.onload = webP.onerror = function () {
+            resolve(webP.height === 2);
+        };
+        webP.src = 'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA';
+    });
+}
+
+// Progressive Web App Features
+function initializePWAFeatures() {
+    // Update available notification
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+            showEnhancedNotification(
+                'Aktualizacja dostępna',
+                'Strona została zaktualizowana. Odśwież, aby zobaczyć najnowszą wersję.',
+                'info',
+                '🔄'
+            );
+        });
+    }
+
+    // Network status monitoring
+    function updateOnlineStatus() {
+        const status = navigator.onLine ? 'online' : 'offline';
+        if (status === 'offline') {
+            showEnhancedNotification(
+                'Brak połączenia',
+                'Jesteś offline. Niektóre funkcje mogą być niedostępne.',
+                'error',
+                '📡'
+            );
+        } else {
+            showEnhancedNotification(
+                'Połączono',
+                'Połączenie z internetem zostało przywrócone.',
+                'success',
+                '🌐'
+            );
+        }
+    }
+
+    window.addEventListener('online', updateOnlineStatus);
+    window.addEventListener('offline', updateOnlineStatus);
+}
+
+// Portfolio Data for Lightbox
+const portfolioData = {
+    'Kanapa.jpg': {
+        title: 'Nowoczesny Salon',
+        description: 'Elegancki salon z designerską kanapą i nowoczesnym wystrojem. Projekt łączy komfort z estetyką, tworząc przestrzeń idealną do relaksu.',
+        tags: ['Salon', 'Nowoczesny', 'Mieszkaniowy']
+    },
+    'Kuchnia.jpg': {
+        title: 'Designerska Kuchnia',
+        description: 'Nowoczesna kuchnia z wyspą i meblami na wymiar. Funkcjonalna przestrzeń z wysokiej jakości wykończeniami.',
+        tags: ['Kuchnia', 'Designerska', 'Wyspa']
+    },
+    'Sypialnia.jpg': {
+        title: 'Elegancka Sypialnia',
+        description: 'Przytulna sypialnia z przemyślanym oświetleniem. Harmonia kolorów i tekstur tworzy idealną atmosferę do odpoczynku.',
+        tags: ['Sypialnia', 'Elegancka', '3D']
+    },
+    'kuchnia2.jpg': {
+        title: 'Kuchnia z Wyspą',
+        description: 'Przestronna kuchnia z centralną wyspą i nowoczesnym designem. Optymalne wykorzystanie przestrzeni i światła.',
+        tags: ['Kuchnia', 'Wyspa', 'Przestronna']
+    },
+    'Łazienka 1.jpg': {
+        title: 'Luksusowa Łazienka',
+        description: 'Elegancka łazienka inspirowana estetyką SPA. Naturalne materiały i przemyślane oświetlenie.',
+        tags: ['Łazienka', 'Luksusowa', 'SPA']
+    },
+    'Łazienka 2.jpg': {
+        title: 'Minimalistyczna Łazienka',
+        description: 'Nowoczesna łazienka w stylu minimalistycznym. Czystość linii i funkcjonalność w każdym detalu.',
+        tags: ['Łazienka', 'Minimalistyczna', 'Nowoczesna']
+    },
+    'Sypialnia2.jpg': {
+        title: 'Sypialnia Główna',
+        description: 'Przytulna sypialnia z ciepłym oświetleniem. Eleganckie wykończenia i przemyślane rozwiązania.',
+        tags: ['Sypialnia', 'Główna', 'Przytulna']
+    },
+    'detal.jpg': {
+        title: 'Detal Projektowy',
+        description: 'Precyzyjnie wykonany detal w projekcie wnętrza. Uwaga do najmniejszych szczegółów w każdym elemencie.',
+        tags: ['Detal', 'Projektowy', 'Precyzja']
+    },
+    'Po.jpg': {
+        title: 'Pokój Dzienny',
+        description: 'Komfortowa przestrzeń do relaksu i wypoczynku. Harmonijne połączenie funkcjonalności z estetyką.',
+        tags: ['Pokój', 'Dzienny', 'Komfort']
+    }
+};
+
+let currentLightboxIndex = 0;
+let lightboxImages = [];
+
+// Lightbox Functions
+function openLightbox(button) {
+    const portfolioItem = button.closest('.portfolio-item');
+    const img = portfolioItem.querySelector('.portfolio-img');
+    const lightbox = document.getElementById('lightboxOverlay');
+
+    // Get all portfolio images for navigation
+    lightboxImages = Array.from(document.querySelectorAll('.portfolio-img')).map(img => {
+        const src = img.src;
+        const filename = src.split('/').pop();
+        return {
+            src: src,
+            filename: filename,
+            data: portfolioData[filename] || {
+                title: 'Projekt Wnętrza',
+                description: 'Profesjonalnie wykonany projekt wnętrza.',
+                tags: ['Wnętrze', 'Projekt']
+            }
+        };
+    });
+
+    // Find current image index
+    const currentSrc = img.src;
+    currentLightboxIndex = lightboxImages.findIndex(item => item.src === currentSrc);
+
+    // Display the image
+    displayLightboxImage(currentLightboxIndex);
+
+    // Show lightbox
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+    const lightbox = document.getElementById('lightboxOverlay');
+    lightbox.classList.remove('active');
+    document.body.style.overflow = 'auto';
+}
+
+function displayLightboxImage(index) {
+    const image = lightboxImages[index];
+    const lightboxImg = document.getElementById('lightboxImage');
+    const lightboxTitle = document.getElementById('lightboxTitle');
+    const lightboxDesc = document.getElementById('lightboxDescription');
+    const lightboxTags = document.getElementById('lightboxTags');
+
+    lightboxImg.src = image.src;
+    lightboxTitle.textContent = image.data.title;
+    lightboxDesc.textContent = image.data.description;
+
+    // Clear and populate tags
+    lightboxTags.innerHTML = '';
+    image.data.tags.forEach(tag => {
+        const tagElement = document.createElement('span');
+        tagElement.className = 'lightbox-tag';
+        tagElement.textContent = tag;
+        lightboxTags.appendChild(tagElement);
+    });
+}
+
+function nextImage() {
+    currentLightboxIndex = (currentLightboxIndex + 1) % lightboxImages.length;
+    displayLightboxImage(currentLightboxIndex);
+}
+
+function previousImage() {
+    currentLightboxIndex = (currentLightboxIndex - 1 + lightboxImages.length) % lightboxImages.length;
+    displayLightboxImage(currentLightboxIndex);
+}
+
+// Click-to-Call and Email Functions
+function makeCall(phoneNumber) {
+    // Remove any spaces or special characters for the tel: link
+    const cleanNumber = phoneNumber.replace(/\s+/g, '');
+
+    // Check if device supports phone calls
+    if (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        window.location.href = `tel:${cleanNumber}`;
+    } else {
+        // For desktop, copy to clipboard and show notification
+        navigator.clipboard.writeText(phoneNumber).then(() => {
+            showEnhancedNotification(
+                'Numer telefonu skopiowany!',
+                `${phoneNumber} został skopiowany do schowka`,
+                'success',
+                '📞'
+            );
+        }).catch(() => {
+            showEnhancedNotification(
+                'Numer telefonu',
+                phoneNumber,
+                'info',
+                '📞'
+            );
+        });
+    }
+}
+
+function sendEmail(emailAddress) {
+    const subject = encodeURIComponent('Zapytanie o projekt wnętrza');
+    const body = encodeURIComponent('Dzień dobry,\n\nChciałbym/chciałabym uzyskać więcej informacji na temat Państwa usług projektowania wnętrz.\n\nZ poważaniem');
+
+    window.location.href = `mailto:${emailAddress}?subject=${subject}&body=${body}`;
+}
+
+// Enhanced Notification System
+function showEnhancedNotification(title, message, type = 'info', icon = '') {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+
+    notification.innerHTML = `
+        <div class="notification-icon">${icon}</div>
+        <div class="notification-content">
+            <div class="notification-title">${title}</div>
+            <div class="notification-message">${message}</div>
+        </div>
+    `;
+
+    document.body.appendChild(notification);
+
+    // Animate in
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 100);
+
+    // Remove after 5 seconds
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+            if (notification.parentNode) {
+                document.body.removeChild(notification);
+            }
+        }, 400);
+    }, 5000);
+}
+
+// Form Progress Tracking
+const formSteps = {
+    1: ['name', 'email', 'phone'],
+    2: ['project-type', 'budget'],
+    3: ['message']
+};
+
+let currentStep = 1;
+let completedFields = new Set();
+
+function updateFormProgress() {
+    const progressLine = document.getElementById('progressLine');
+    const totalSteps = Object.keys(formSteps).length;
+
+    // Calculate completion percentage
+    let completedSteps = 0;
+
+    for (let step = 1; step <= totalSteps; step++) {
+        const stepFields = formSteps[step];
+        const stepCompleted = stepFields.every(fieldId => {
+            const field = document.getElementById(fieldId);
+            return field && field.value.trim() !== '';
+        });
+
+        const stepElement = document.getElementById(`step${step}`);
+
+        if (stepCompleted) {
+            stepElement.classList.remove('active');
+            stepElement.classList.add('completed');
+            completedSteps++;
+        } else if (stepFields.some(fieldId => {
+            const field = document.getElementById(fieldId);
+            return field && field.value.trim() !== '';
+        })) {
+            stepElement.classList.add('active');
+            stepElement.classList.remove('completed');
+            currentStep = step;
+        } else {
+            stepElement.classList.remove('active', 'completed');
+        }
+    }
+
+    // Update progress line
+    const progressPercentage = (completedSteps / totalSteps) * 100;
+    progressLine.style.width = `${progressPercentage}%`;
+}
+
+// Enhanced form validation with progress tracking
+function trackFieldCompletion(field) {
+    const fieldId = field.id;
+    const value = field.value.trim();
+    const formGroup = field.closest('.form-group');
+
+    if (value !== '') {
+        completedFields.add(fieldId);
+        formGroup.classList.add('completed');
+    } else {
+        completedFields.delete(fieldId);
+        formGroup.classList.remove('completed');
+    }
+
+    updateFormProgress();
+}
+
+// Page Loader
+function hidePageLoader() {
+    const loader = document.getElementById('pageLoader');
+    if (loader) {
+        loader.classList.add('hidden');
+        setTimeout(() => {
+            loader.style.display = 'none';
+        }, 500);
+    }
+}
+
+// Keyboard navigation for lightbox
+document.addEventListener('keydown', function(e) {
+    const lightbox = document.getElementById('lightboxOverlay');
+    if (lightbox.classList.contains('active')) {
+        switch(e.key) {
+            case 'ArrowLeft':
+                previousImage();
+                break;
+            case 'ArrowRight':
+                nextImage();
+                break;
+            case 'Escape':
+                closeLightbox();
+                break;
+        }
+    }
+});
+
+// Close lightbox when clicking outside
+document.getElementById('lightboxOverlay').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeLightbox();
+    }
+});
+
+// Compare Modal Functions
+function openCompareModal() {
+    const modal = document.getElementById("compareModal");
+    modal.classList.add("show");
+    document.body.style.overflow = "hidden"; // Prevent background scrolling
+}
+
+function closeCompareModal() {
+    const modal = document.getElementById("compareModal");
+    modal.classList.remove("show");
+    document.body.style.overflow = "auto"; // Restore scrolling
+}
+
+// Close modal with Escape key
+document.addEventListener("keydown", function(event) {
+    if (event.key === "Escape") {
+        closeCompareModal();
+    }
+});
+
+// Prevent modal from closing when clicking on table content
+document.querySelector(".compare-modal-content")?.addEventListener("click", function(e) {
+    e.stopPropagation();
+});

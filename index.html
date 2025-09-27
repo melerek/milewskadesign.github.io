@@ -10,19 +10,44 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#c9a96e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Milewska Design">
+    <link rel="apple-touch-icon" href="/images/icons/icon-192x192.png">
+    <meta name="msapplication-TileColor" content="#c9a96e">
+    <meta name="msapplication-TileImage" content="/images/icons/icon-144x144.png">
 </head>
 <body>
+    <!-- Page Loader -->
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <div class="loader-text">Milewska Design</div>
+        </div>
+    </div>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
                 <h2>Milewska Design</h2>
             </div>
+
+            <!-- Dark Mode Toggle -->
+            <div class="theme-toggle" onclick="toggleDarkMode()" title="Przełącz motyw">
+                <div class="theme-toggle-icon">
+                    <span class="sun-icon">☀️</span>
+                    <span class="moon-icon">🌙</span>
+                </div>
+            </div>
             <ul class="nav-menu">
                 <li><a href="#home">Start</a></li>
                 <li><a href="#portfolio">Portfolio</a></li>
                 <li><a href="#why-choose">Dlaczego ja</a></li>
-                <li><a href="#services">Usługi</a></li>
+                <li><a href="#oferta">Oferta</a></li>
                 <li><a href="#about">O mnie</a></li>
                 <li><a href="#contact" class="cta-button">Wycena</a></li>
                 <li class="social-nav">
@@ -38,6 +63,14 @@
                     </a>
                 </li>
             </ul>
+
+            <!-- Mobile Dark Mode Toggle -->
+            <div class="mobile-theme-toggle" onclick="toggleDarkMode()" title="Przełącz motyw">
+                <div class="theme-toggle-icon">
+                    <span class="sun-icon">☀️</span>
+                    <span class="moon-icon">🌙</span>
+                </div>
+            </div>
             <div class="hamburger">
                 <span></span>
                 <span></span>
@@ -127,7 +160,7 @@
                         <div class="portfolio-overlay">
                             <h3>Nowoczesny Salon</h3>
                             <p>Elegancki salon z designerską kanapą i nowoczesnym wystrojem</p>
-                            <button class="view-project">Zobacz Projekt</button>
+                            <button class="view-project" onclick="openLightbox(this)">Zobacz Projekt</button>
                         </div>
                     </div>
                 </div>
@@ -138,7 +171,7 @@
                         <div class="portfolio-overlay">
                             <h3>Designerska Kuchnia</h3>
                             <p>Nowoczesna kuchnia z wyspą i meblami na wymiar</p>
-                            <button class="view-project">Zobacz Projekt</button>
+                            <button class="view-project" onclick="openLightbox(this)">Zobacz Projekt</button>
                         </div>
                     </div>
                 </div>
@@ -149,7 +182,7 @@
                         <div class="portfolio-overlay">
                             <h3>Elegancka Sypialnia</h3>
                             <p>Przytulna sypialnia z przemyślanym oświetleniem</p>
-                            <button class="view-project">Zobacz Projekt</button>
+                            <button class="view-project" onclick="openLightbox(this)">Zobacz Projekt</button>
                         </div>
                     </div>
                 </div>
@@ -160,7 +193,7 @@
                         <div class="portfolio-overlay">
                             <h3>Kuchnia z Wyspą</h3>
                             <p>Przestronna kuchnia z centralną wyspą i nowoczesnym designem</p>
-                            <button class="view-project">Zobacz Projekt</button>
+                            <button class="view-project" onclick="openLightbox(this)">Zobacz Projekt</button>
                         </div>
                     </div>
                 </div>
@@ -171,7 +204,7 @@
                         <div class="portfolio-overlay">
                             <h3>Luksusowa Łazienka</h3>
                             <p>Elegancka łazienka inspirowana estetyką SPA</p>
-                            <button class="view-project">Zobacz Projekt</button>
+                            <button class="view-project" onclick="openLightbox(this)">Zobacz Projekt</button>
                         </div>
                     </div>
                 </div>
@@ -182,7 +215,7 @@
                         <div class="portfolio-overlay">
                             <h3>Minimalistyczna Łazienka</h3>
                             <p>Nowoczesna łazienka w stylu minimalistycznym</p>
-                            <button class="view-project">Zobacz Projekt</button>
+                            <button class="view-project" onclick="openLightbox(this)">Zobacz Projekt</button>
                         </div>
                     </div>
                 </div>
@@ -193,7 +226,7 @@
                         <div class="portfolio-overlay">
                             <h3>Sypialnia Główna</h3>
                             <p>Przytulna sypialnia z ciepłym oświetleniem</p>
-                            <button class="view-project">Zobacz Projekt</button>
+                            <button class="view-project" onclick="openLightbox(this)">Zobacz Projekt</button>
                         </div>
                     </div>
                 </div>
@@ -204,7 +237,7 @@
                         <div class="portfolio-overlay">
                             <h3>Detal Projektowy</h3>
                             <p>Precyzyjnie wykonany detal w projekcie wnętrza</p>
-                            <button class="view-project">Zobacz Projekt</button>
+                            <button class="view-project" onclick="openLightbox(this)">Zobacz Projekt</button>
                         </div>
                     </div>
                 </div>
@@ -215,7 +248,7 @@
                         <div class="portfolio-overlay">
                             <h3>Pokój Dzienny</h3>
                             <p>Komfortowa przestrzeń do relaksu i wypoczynku</p>
-                            <button class="view-project">Zobacz Projekt</button>
+                            <button class="view-project" onclick="openLightbox(this)">Zobacz Projekt</button>
                         </div>
                     </div>
                 </div>
@@ -301,148 +334,149 @@
         </div>
     </section>
 
-    <!-- Services Section -->
-    <section id="services" class="services">
+    <!-- Oferta Section -->
+    <section id="oferta" class="oferta">
         <div class="container">
             <div class="section-header">
-                <h2>Usługi</h2>
-                <p>Kompleksowe rozwiązania projektowania wnętrz</p>
+                <h2>Wybierz ścieżkę do swojego wymarzonego wnętrza</h2>
+                <div class="intro-text">
+                    <p>Marzysz o domu, który jest Twoją oazą spokoju, ale na myśl o remoncie czujesz głównie stres? Masz w głowie setki pomysłów, ale nie wiesz, jak zamienić je w spójny i realny do wykonania projekt?</p>
+                    <p><strong>Doskonale to rozumiem.</strong></p>
+                    <p>Nazywam się Katarzyna Milewska i stworzyłam proces współpracy, który zdejmuje z Ciebie ciężar niepewności. Niezależnie od tego, na jakim etapie jesteś i jakiego wsparcia potrzebujesz, znajdziesz tu pakiet stworzony dla Ciebie.</p>
+                </div>
             </div>
-            
-            
-            <!-- Comprehensive Service Package -->
-            <div class="service-package">
-                <h3>Projekt Kompleksowy</h3>
-                <div class="package-grid">
-                    <div class="package-column">
-                        <h4>Dokumentacja Projektowa</h4>
-                        <ul class="package-features">
-                            <li>✓ Inwentaryzacja wnętrza</li>
-                            <li>✓ Ankieta dotycząca oczekiwań i gustów klienta (150+ pytań)</li>
-                            <li>✓ Do 3 propozycji układu funkcjonalnego - rzuty 2D</li>
-                            <li>✓ Pełne opracowanie rysunków budowlanych</li>
-                            <li>✓ Widoki ścian wszystkich pomieszczeń</li>
-                            <li>✓ Rysunki techniczne detali architektury wnętrz</li>
-                            <li>✓ Projekt stolarki zabudowy meblowej</li>
-                        </ul>
+
+            <div class="packages-grid">
+                <!-- Pakiet Klarowny Plan -->
+                <div class="package-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="package-header">
+                        <h3>PAKIET "KLAROWNY PLAN"</h3>
+                        <p class="package-tagline">Fundament, który gwarantuje, że Twój remont nie zacznie się od kosztownego błędu.</p>
                     </div>
-                    <div class="package-column">
-                        <h4>Wizualizacje i Materiały</h4>
-                        <ul class="package-features">
-                            <li>✓ Fotorealistyczne wizualizacje 3D</li>
-                            <li>✓ Mood boardy - prezentacja materiałów i kolorystyki</li>
-                            <li>✓ Wybór materiałów i kolorystyki</li>
-                            <li>✓ Katalog elementów wykończenia i wyposażenia</li>
-                            <li>✓ Szczegółowy kosztorys</li>
-                            <li>✓ Lista zakupów z cenami</li>
-                            <li>✓ <strong>BONUS:</strong> Checklista remontowa</li>
-                        </ul>
+
+                    <div class="package-content">
+                        <div class="ideal-for">
+                            <h4>Ten pakiet jest idealny dla Ciebie, jeśli:</h4>
+                            <ul>
+                                <li>Jesteś na samym początku drogi i chcesz mieć <strong>absolutną pewność</strong>, że układ Twojego domu jest logiczny, ergonomiczny i w pełni wykorzystuje potencjał przestrzeni.</li>
+                                <li>Planujesz prace budowlane (np. wyburzanie ścian) i potrzebujesz <strong>profesjonalnej podstawy technicznej</strong> do rozmów z wykonawcami.</li>
+                                <li>Chcesz uniknąć najczęstszego i najdroższego błędu w remoncie – <strong>niefunkcjonalnego układu</strong>, którego poprawienie na późniejszym etapie jest praktycznie niemożliwe.</li>
+                            </ul>
+                        </div>
+
+                        <div class="what-you-get">
+                            <h4>Co dokładnie otrzymasz?</h4>
+                            <p>Kompletną bazę techniczną Twojego projektu, czyli profesjonalny <strong>układ funkcjonalny 2D</strong> (w 2-3 wariantach do wyboru) oraz przemyślane <strong>schematy rozmieszczenia instalacji elektrycznej i hydraulicznej</strong>.</p>
+                        </div>
+
+                        <div class="main-benefit">
+                            <h4>Najważniejsza korzyść: PEWNOŚĆ I BEZPIECZEŃSTWO</h4>
+                            <p>Zyskujesz pewność, że fundament Twojego projektu jest solidny. To inteligentny plan, który przewiduje Twoje codzienne potrzeby i chroni Cię przed popełnieniem fundamentalnych, kosztownych błędów.</p>
+                        </div>
+
+                    </div>
+
+                    <div class="package-bottom">
+                        <div class="package-price">
+                            <span class="price">Orientacyjna cena:<br><strong>6 000 zł netto</strong></span>
+                        </div>
+                        <div class="package-actions">
+                            <a href="#contact" class="package-btn">Poproś o szczegółową ofertę</a>
+                            <button class="compare-btn" onclick="openCompareModal()">Porównaj pakiety</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pakiet Wizja -->
+                <div class="package-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="package-header">
+                        <h3>PAKIET "WIZJA"</h3>
+                        <p class="package-tagline">Zobacz i poczuj swoje idealne wnętrze z fotorealistyczną precyzją, zanim wydasz choćby złotówkę na materiały.</p>
+                    </div>
+
+                    <div class="package-content">
+                        <div class="ideal-for">
+                            <h4>Ten pakiet jest idealny dla Ciebie, jeśli:</h4>
+                            <ul>
+                                <li>Masz już zaufaną ekipę wykonawczą, ale potrzebujesz <strong>spójnej i profesjonalnej wizji</strong>, która połączy Twoje marzenia i inspiracje w harmonijną całość.</li>
+                                <li>Cenisz estetykę i chcesz być w 100% pewna/pewny finalnego efektu wizualnego, <strong>unikając ryzyka nietrafionych decyzji</strong> i stylistycznego chaosu.</li>
+                                <li>Chcesz otrzymać <strong>gotową "instrukcję wizualną"</strong>, którą będziesz mogła/mógł przekazać wykonawcom, aby dokładnie wiedzieli, jaki efekt mają osiągnąć.</li>
+                            </ul>
+                        </div>
+
+                        <div class="what-you-get">
+                            <h4>Co dokładnie otrzymasz?</h4>
+                            <p>Wszystko z Pakietu "Klarowny Plan" oraz dodatkowo serce projektu: <strong>moodboardy</strong> definiujące styl, dobór kluczowych materiałów oraz <strong>fotorealistyczne wizualizacje 3D</strong> (o jakości potwierdzonej w ogólnopolskim konkursie) i <strong>interaktywną panoramę 360 stopni</strong>.</p>
+                        </div>
+
+                        <div class="main-benefit">
+                            <h4>Najważniejsza korzyść: INSPIRACJA I GWARANCJA EFEKTU</h4>
+                            <p>Otrzymujesz kompletną, piękną i gotową do wdrożenia wizję Twojego domu. Zakochujesz się w swoim wnętrzu jeszcze przed rozpoczęciem remontu, co daje Ci bezcenną pewność i ekscytację na myśl o efekcie końcowym.</p>
+                        </div>
+
+                    </div>
+
+                    <div class="package-bottom">
+                        <div class="package-price">
+                            <span class="price">Orientacyjna cena:<br><strong>11 000 zł netto</strong></span>
+                        </div>
+                        <div class="package-actions">
+                            <a href="#contact" class="package-btn">Poproś o szczegółową ofertę</a>
+                            <button class="compare-btn" onclick="openCompareModal()">Porównaj pakiety</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pakiet Realizacja - Najpopularniejszy -->
+                <div class="package-card featured" data-aos="fade-up" data-aos-delay="300">
+                    <div class="popular-badge">Najpopularniejszy</div>
+                    <div class="package-header">
+                        <h3>PAKIET "REALIZACJA"</h3>
+                        <p class="package-tagline">Kompletna "instrukcja obsługi" Twojego nowego domu, która oszczędza Twój czas, pieniądze i nerwy podczas remontu.</p>
+                    </div>
+
+                    <div class="package-content">
+                        <div class="ideal-for">
+                            <h4>Ten pakiet jest idealny dla Ciebie, jeśli:</h4>
+                            <ul>
+                                <li>Cenisz swój czas i chcesz otrzymać <strong>kompleksowe wsparcie od A do Z</strong>, minimalizując swoje zaangażowanie w najbardziej czasochłonne etapy projektu.</li>
+                                <li>Chcesz mieć <strong>pełną kontrolę nad budżetem</strong> i uniknąć finansowych niespodzianek w trakcie remontu.</li>
+                                <li>Twoim celem jest <strong>maksymalny spokój ducha</strong> i pewność, że każdy, nawet najmniejszy detal, zostanie profesjonalnie zaplanowany i przygotowany do bezbłędnej realizacji.</li>
+                            </ul>
+                        </div>
+
+                        <div class="what-you-get">
+                            <h4>Co dokładnie otrzymasz?</h4>
+                            <p>Wszystko z Pakietu "Wizja" oraz dodatkowo najważniejsze narzędzia do sprawnej realizacji: <strong>kompletną, wielostronicową dokumentację techniczną</strong> dla wszystkich wykonawców, <strong>szczegółowy kosztorys</strong> i <strong>listę zakupową</strong> oraz <strong>BONUS: Autorską Checklistę Remontową</strong>.</p>
+                        </div>
+
+                        <div class="main-benefit">
+                            <h4>Najważniejsza korzyść: SPOKÓJ I KONTROLA</h4>
+                            <p>Zyskujesz precyzyjny i kompletny plan działania, który jest Twoją tarczą ochronną podczas remontu. To gwarancja, że Twoja piękna wizja zostanie zrealizowana sprawnie, bez błędów i w założonym budżecie.</p>
+                        </div>
+
+                    </div>
+
+                    <div class="package-bottom">
+                        <div class="package-price">
+                            <span class="price">Orientacyjna cena:<br><strong>16 000 zł netto</strong></span>
+                        </div>
+                        <div class="package-actions">
+                            <a href="#contact" class="package-btn featured-btn">Poproś o szczegółową ofertę</a>
+                            <button class="compare-btn" onclick="openCompareModal()">Porównaj pakiety</button>
+                        </div>
                     </div>
                 </div>
             </div>
-            
-            <div class="process-section">
-                <h3>Proces Realizacji - Krok po Kroku</h3>
-                <div class="detailed-process">
-                    <div class="process-stage">
-                        <div class="stage-header">
-                            <div class="stage-number">1</div>
-                            <h4>POZNAJMY SIĘ + WYBIERZMY WSPÓLNĄ DROGĘ</h4>
-                        </div>
-                        <div class="stage-content">
-                            <div class="stage-steps">
-                                <div class="stage-step">
-                                    <h5>Poznajmy się</h5>
-                                    <p>Spotkanie i rozmowa - wypełnienie obszernego kwestionariusza pytań (150+ pytań). Pomaga w określeniu potrzeb, wymogów i estetycznych upodobań.</p>
-                                </div>
-                                <div class="stage-step">
-                                    <h5>Wybierzmy wspólną drogę</h5>
-                                    <p>Opracowanie wyceny z zakresem oraz harmonogramem prac.</p>
-                                </div>
-                                <div class="stage-step">
-                                    <h5>Poznaję obiekt</h5>
-                                    <p>Inwentaryzacja obiektu oraz dokumentacja fotograficzna. Uzyskuję precyzyjne wymiary, będące podstawą do realizacji projektów wykonawczych.</p>
-                                </div>
-                                <div class="stage-step">
-                                    <h5>Burza mózgów</h5>
-                                    <p>Stworzenie 2-3 propozycji układów funkcjonalnych pomieszczeń z propozycjami zagospodarowania przestrzeni.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="process-stage">
-                        <div class="stage-header">
-                            <div class="stage-number">2</div>
-                            <h4>SCHEMAT ESTETYKI + KONCEPCJA ARANŻACJI</h4>
-                        </div>
-                        <div class="stage-content">
-                            <div class="stage-steps">
-                                <div class="stage-step">
-                                    <h5>Schemat estetyki</h5>
-                                    <p>Otwarta dyskusja mająca na celu poznanie potrzeb, preferowanej estetyki, kolorów. Obejmuje propozycje doboru materiałów i wyposażenia.</p>
-                                </div>
-                                <div class="stage-step">
-                                    <h5>Koncepcja aranżacji</h5>
-                                    <p>Spośród setek mebli i materiałów wybieram te konkretne, pasujące pod kątem funkcjonalności, kolorystyki i budżetu. Przygotowanie dwóch zestawień w postaci moodboardów.</p>
-                                </div>
-                                <div class="stage-step">
-                                    <h5>Wizualizacje</h5>
-                                    <p>Profesjonalnie wykonane wizualizacje pozwalają wirtualnie urzeczywistnić projekty jeszcze przed rozpoczęciem prac.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="process-stage">
-                        <div class="stage-header">
-                            <div class="stage-number">3</div>
-                            <h4>RYSUNKI BUDOWLANE</h4>
-                        </div>
-                        <div class="stage-content">
-                            <p>Po zatwierdzeniu koncepcji zaczyna się praca nad dokumentacją techniczną. Otrzymujecie pełen zestaw rysunków technicznych potrzebnych przy realizacji prac remontowych:</p>
-                            <div class="technical-drawings">
-                                <ul>
-                                    <li>• Stan istniejący i nowa aranżacja</li>
-                                    <li>• Plan wyburzeń i projekt nowych ścian</li>
-                                    <li>• Projekt sufitów podwieszanych</li>
-                                    <li>• Projekt instalacji hydraulicznych, elektrycznych i grzewczych</li>
-                                    <li>• Projekt oświetlenia</li>
-                                    <li>• Projekt posadzek z policzeniem dokładnych ilości materiałów</li>
-                                    <li>• Schematyczny rysunek przedstawiający sposób wykończenia ścian</li>
-                                    <li>• Finalny wybór materiałów</li>
-                                    <li>• Rysunki techniczne elementów wykończeniowych</li>
-                                    <li>• Projekt stolarki zabudowy meblowej</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="process-stage">
-                        <div class="stage-header">
-                            <div class="stage-number">4</div>
-                            <h4>LISTA ZAKUPÓW + BONUS</h4>
-                        </div>
-                        <div class="stage-content">
-                            <div class="stage-steps">
-                                <div class="stage-step">
-                                    <h5>Lista zakupów</h5>
-                                    <p>Sporządzam kosztorys w formie tabeli zawierający:</p>
-                                    <ul>
-                                        <li>• Wykaz wszystkich mebli</li>
-                                        <li>• Wykaz opraw oświetleniowych oraz sprzętu elektrycznego</li>
-                                        <li>• Wykaz armatury oraz ceramiki łazienkowej</li>
-                                        <li>• Wykaz wyposażenia kuchni oraz propozycja sprzętów AGD</li>
-                                        <li>• Wycena wszystkich materiałów</li>
-                                    </ul>
-                                </div>
-                                <div class="stage-step">
-                                    <h5>BONUS - Checklista remontowa</h5>
-                                    <p>Kompleksowy przewodnik, który pomoże zadbać zarówno o kwestie techniczne (instalacje hydrauliczne, elektryczne), jak i o detale wykończeniowe. Ułatwia przejście przez proces remontu i minimalizuje ryzyko popełnienia błędów.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
+            <div class="closing-section">
+                <h2>Podoba Ci się któryś z pakietów? To dopiero początek.</h2>
+                <div class="closing-content">
+                    <p>Powyższy opis to tylko zarys możliwości. Jeśli czujesz, że któryś z pakietów jest dla Ciebie, napisz do mnie.</p>
+                    <p>W odpowiedzi otrzymasz <strong>dedykowaną, szczegółową, kilkunastostronicową ofertę w formacie PDF</strong>, która rozwieje wszystkie Twoje wątpliwości i pokaże, jak dokładnie, krok po kroku, może wyglądać nasza współpraca.</p>
+                    <p>Pamiętaj, ze względu na moje pełne zaangażowanie w każdy projekt, w danym miesiącu mogę rozpocząć współpracę tylko z <strong>ograniczoną liczbą nowych klientów</strong>.</p>
+
+                    <a href="#contact" class="final-cta-btn">Skontaktuj się i otrzymaj spersonalizowaną ofertę</a>
                 </div>
             </div>
         </div>
@@ -526,11 +560,11 @@
                     <p>Porozmawiajmy o Twoim projekcie i stwórzmy razem coś pięknego.</p>
                     
                     <div class="contact-details">
-                        <div class="contact-item">
+                        <div class="contact-item clickable" onclick="makeCall('+48669870306')">
                             <h4>Telefon</h4>
                             <p>+48 669 870 306</p>
                         </div>
-                        <div class="contact-item">
+                        <div class="contact-item clickable" onclick="sendEmail('milewskadesign@gmail.com')">
                             <h4>Email</h4>
                             <p>milewskadesign@gmail.com</p>
                         </div>
@@ -542,6 +576,23 @@
                 </div>
                 
                 <div class="contact-form-container">
+                    <!-- Form Progress Indicator -->
+                    <div class="form-progress">
+                        <div class="form-progress-line" id="progressLine"></div>
+                        <div class="form-step active" id="step1">
+                            <div class="form-step-circle">1</div>
+                            <div class="form-step-label">Kontakt</div>
+                        </div>
+                        <div class="form-step" id="step2">
+                            <div class="form-step-circle">2</div>
+                            <div class="form-step-label">Projekt</div>
+                        </div>
+                        <div class="form-step" id="step3">
+                            <div class="form-step-circle">3</div>
+                            <div class="form-step-label">Szczegóły</div>
+                        </div>
+                    </div>
+
                     <form class="contact-form" id="contactForm">
                         <h3>Rozpocznij Swój Projekt</h3>
                         
@@ -617,10 +668,10 @@
                     <div class="footer-column">
                         <h4>Usługi</h4>
                         <ul>
-                            <li><a href="#services">Projektowanie Wnętrz</a></li>
-                            <li><a href="#services">Wizualizacja 3D</a></li>
-                            <li><a href="#services">Zarządzanie Projektem</a></li>
-                            <li><a href="#services">Konsultacja</a></li>
+                            <li><a href="#oferta">Pakiet "Klarowny Plan"</a></li>
+                            <li><a href="#oferta">Pakiet "Wizja"</a></li>
+                            <li><a href="#oferta">Pakiet "Realizacja"</a></li>
+                            <li><a href="#contact">Konsultacja</a></li>
                         </ul>
                     </div>
                     <div class="footer-column">
@@ -639,7 +690,220 @@
         </div>
     </footer>
 
+    <!-- Package Compare Modal -->
+    <div id="compareModal" class="compare-modal" onclick="closeCompareModal()">
+        <div class="compare-modal-content" onclick="event.stopPropagation()">
+            <div class="compare-header">
+                <h2>Porównanie Pakietów</h2>
+                <button class="close-btn" onclick="closeCompareModal()">&times;</button>
+            </div>
+            <div class="compare-table-container">
+                <table class="compare-table">
+                    <thead>
+                        <tr>
+                            <th class="element-col">Element usługi</th>
+                            <th class="package-col klarowny">Pakiet "Klarowny Plan"<br><span class="subtitle">(Projekt Funkcjonalny)</span></th>
+                            <th class="package-col wizja">Pakiet "Wizja"<br><span class="subtitle">(Projekt Koncepcyjny)</span></th>
+                            <th class="package-col realizacja featured">Pakiet "Realizacja"<br><span class="subtitle">(Projekt Kompleksowy)</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="goal-row">
+                            <td class="element-name"><strong>Główny cel:</strong></td>
+                            <td>Solidny fundament techniczny</td>
+                            <td>Kompletna wizja estetyczna</td>
+                            <td class="featured-cell">Pełne przygotowanie do realizacji</td>
+                        </tr>
+                        <tr class="category-header">
+                            <td colspan="4"><strong>ANALIZA I STRATEGIA</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="element-name">Spotkanie i analiza potrzeb</td>
+                            <td class="check klarowny">✓</td>
+                            <td class="check wizja">✓</td>
+                            <td class="check featured-cell realizacja featured">✓</td>
+                        </tr>
+                        <tr>
+                            <td class="element-name">Autorska, szczegółowa ankieta</td>
+                            <td class="check klarowny">✓</td>
+                            <td class="check wizja">✓</td>
+                            <td class="check featured-cell realizacja featured">✓</td>
+                        </tr>
+                        <tr>
+                            <td class="element-name">Inwentaryzacja (pomiary)</td>
+                            <td class="check klarowny">✓</td>
+                            <td class="check wizja">✓</td>
+                            <td class="check featured-cell realizacja featured">✓</td>
+                        </tr>
+                        <tr class="category-header">
+                            <td colspan="4"><strong>PROJEKT FUNKCJONALNY</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="element-name">Układ funkcjonalny 2D (2-3 warianty)</td>
+                            <td class="check">✓</td>
+                            <td class="check">✓</td>
+                            <td class="check featured-cell">✓</td>
+                        </tr>
+                        <tr>
+                            <td class="element-name">Schemat instalacji elektrycznej</td>
+                            <td class="check">✓</td>
+                            <td class="check">✓</td>
+                            <td class="check featured-cell">✓</td>
+                        </tr>
+                        <tr>
+                            <td class="element-name">Schemat instalacji hydraulicznej</td>
+                            <td class="check">✓</td>
+                            <td class="check">✓</td>
+                            <td class="check featured-cell">✓</td>
+                        </tr>
+                        <tr class="category-header">
+                            <td colspan="4"><strong>PROJEKT WIZUALNY</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="element-name">Moodboard i kierunek stylu</td>
+                            <td class="no-check">-</td>
+                            <td class="check">✓</td>
+                            <td class="check featured-cell">✓</td>
+                        </tr>
+                        <tr>
+                            <td class="element-name">Fotorealistyczne wizualizacje 3D</td>
+                            <td class="no-check">-</td>
+                            <td class="check">✓</td>
+                            <td class="check featured-cell">✓</td>
+                        </tr>
+                        <tr>
+                            <td class="element-name">Interaktywna panorama 360°</td>
+                            <td class="no-check">-</td>
+                            <td class="check">✓</td>
+                            <td class="check featured-cell">✓</td>
+                        </tr>
+                        <tr>
+                            <td class="element-name">Dobór materiałów i wizyty w showroomach</td>
+                            <td class="no-check">-</td>
+                            <td class="check">✓</td>
+                            <td class="check featured-cell">✓</td>
+                        </tr>
+                        <tr class="category-header">
+                            <td colspan="4"><strong>DOKUMENTACJA REALIZACYJNA</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="element-name">Kompletna dokumentacja techniczna</td>
+                            <td class="no-check">-</td>
+                            <td class="no-check">-</td>
+                            <td class="check featured-cell">✓</td>
+                        </tr>
+                        <tr>
+                            <td class="element-name">Szczegółowy kosztorys budowy</td>
+                            <td class="no-check">-</td>
+                            <td class="no-check">-</td>
+                            <td class="check featured-cell">✓</td>
+                        </tr>
+                        <tr>
+                            <td class="element-name">Lista zakupowa z linkami</td>
+                            <td class="no-check">-</td>
+                            <td class="no-check">-</td>
+                            <td class="check featured-cell">✓</td>
+                        </tr>
+                        <tr class="category-header">
+                            <td colspan="4"><strong>WSPARCIE DODATKOWE</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="element-name">Autorska Checklista Remontowa</td>
+                            <td class="no-check">-</td>
+                            <td class="no-check">-</td>
+                            <td class="check featured-cell">✓</td>
+                        </tr>
+                        <tr class="price-row">
+                            <td class="element-name"><strong>Orientacyjna cena netto:</strong></td>
+                            <td class="price-cell"><strong>6 000 zł</strong></td>
+                            <td class="price-cell"><strong>11 000 zł</strong></td>
+                            <td class="price-cell featured-cell"><strong>16 000 zł</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="compare-footer">
+                <button class="compare-cta-btn" onclick="closeCompareModal(); document.getElementById('contact').scrollIntoView({behavior: 'smooth'});">Wybierz swój pakiet</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PWA Install Button -->
+    <div class="pwa-install" id="pwaInstallContainer">
+        <button class="pwa-install-btn" id="pwaInstallBtn" onclick="installPWA()" style="display: none;">
+            📱 Zainstaluj aplikację
+        </button>
+    </div>
+
+    <!-- Portfolio Lightbox Modal -->
+    <div class="lightbox-overlay" id="lightboxOverlay">
+        <div class="lightbox-content">
+            <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+            <button class="lightbox-nav lightbox-prev" onclick="previousImage()">&larr;</button>
+            <button class="lightbox-nav lightbox-next" onclick="nextImage()">&rarr;</button>
+            <img class="lightbox-image" id="lightboxImage" src="" alt="">
+            <div class="lightbox-info">
+                <h3 class="lightbox-title" id="lightboxTitle"></h3>
+                <p class="lightbox-description" id="lightboxDescription"></p>
+                <div class="lightbox-tags" id="lightboxTags"></div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
+
+    <!-- PWA Installation -->
+    <script>
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('Service Worker registered successfully:', registration);
+                    })
+                    .catch(error => {
+                        console.log('Service Worker registration failed:', error);
+                    });
+            });
+        }
+
+        // PWA Install Prompt
+        let deferredPrompt;
+        const installButton = document.getElementById('pwaInstallBtn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+
+            // Show install button
+            if (installButton) {
+                installButton.style.display = 'block';
+            }
+        });
+
+        function installPWA() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted PWA install');
+                    }
+                    deferredPrompt = null;
+                    if (installButton) {
+                        installButton.style.display = 'none';
+                    }
+                });
+            }
+        }
+
+        // Hide install button if already installed
+        window.addEventListener('appinstalled', (evt) => {
+            console.log('PWA was installed');
+            if (installButton) {
+                installButton.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>

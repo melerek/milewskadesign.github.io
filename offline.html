@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline - Milewska Design</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+        }
+
+        .offline-container {
+            text-align: center;
+            max-width: 500px;
+            padding: 2rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .offline-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: #c9a96e;
+        }
+
+        .offline-title {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .offline-message {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .offline-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .offline-btn {
+            padding: 0.75rem 1.5rem;
+            background: #c9a96e;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .offline-btn:hover {
+            background: #b8956a;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(201, 169, 110, 0.3);
+        }
+
+        .offline-btn.secondary {
+            background: transparent;
+            color: #c9a96e;
+            border: 2px solid #c9a96e;
+        }
+
+        .offline-btn.secondary:hover {
+            background: #c9a96e;
+            color: white;
+        }
+
+        .connection-status {
+            margin-top: 2rem;
+            padding: 1rem;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .connection-status.offline {
+            background: rgba(231, 76, 60, 0.1);
+            color: #e74c3c;
+            border: 1px solid rgba(231, 76, 60, 0.3);
+        }
+
+        .connection-status.online {
+            background: rgba(39, 174, 96, 0.1);
+            color: #27ae60;
+            border: 1px solid rgba(39, 174, 96, 0.3);
+        }
+
+        .cached-content {
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .cached-content h3 {
+            color: #c9a96e;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .cached-links {
+            list-style: none;
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .cached-links li {
+            background: #f8f9fa;
+            padding: 0.75rem;
+            border-radius: 8px;
+            border-left: 3px solid #c9a96e;
+        }
+
+        .cached-links a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .cached-links a:hover {
+            color: #c9a96e;
+        }
+
+        @media (max-width: 600px) {
+            .offline-container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+
+            .offline-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .offline-btn {
+                width: 100%;
+                max-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-container">
+        <div class="offline-icon">📱</div>
+        <h1 class="offline-title">Jesteś Offline</h1>
+        <p class="offline-message">
+            Nie ma połączenia z internetem, ale możesz nadal przeglądać
+            wcześniej odwiedzone strony Milewska Design.
+        </p>
+
+        <div class="offline-actions">
+            <button class="offline-btn" onclick="window.location.reload()">
+                Spróbuj Ponownie
+            </button>
+            <a href="/" class="offline-btn secondary">
+                Strona Główna
+            </a>
+        </div>
+
+        <div class="connection-status offline" id="connectionStatus">
+            🔴 Brak połączenia z internetem
+        </div>
+
+        <div class="cached-content">
+            <h3>Dostępne Offline</h3>
+            <ul class="cached-links">
+                <li><a href="/">🏠 Strona Główna</a></li>
+                <li><a href="/#portfolio">🎨 Portfolio</a></li>
+                <li><a href="/#about">👤 O Mnie</a></li>
+                <li><a href="/#contact">📞 Kontakt</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Check connection status
+        function updateConnectionStatus() {
+            const statusElement = document.getElementById('connectionStatus');
+
+            if (navigator.onLine) {
+                statusElement.textContent = '🟢 Połączono z internetem';
+                statusElement.className = 'connection-status online';
+
+                // Auto-redirect after 2 seconds if back online
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 2000);
+            } else {
+                statusElement.textContent = '🔴 Brak połączenia z internetem';
+                statusElement.className = 'connection-status offline';
+            }
+        }
+
+        // Listen for connection changes
+        window.addEventListener('online', updateConnectionStatus);
+        window.addEventListener('offline', updateConnectionStatus);
+
+        // Initial check
+        updateConnectionStatus();
+
+        // Periodic connection check
+        setInterval(updateConnectionStatus, 5000);
+
+        // Add click handlers for cached links
+        document.querySelectorAll('.cached-links a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                // Let the browser handle the navigation
+                // The service worker will serve cached content if available
+            });
+        });
+    </script>
+</body>
+</html>
