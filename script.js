@@ -15,6 +15,43 @@ document.querySelectorAll('.nav-menu a').forEach(link => {
     });
 });
 
+// Highlight active navigation link on scroll
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-menu li a:not(.cta-button)');
+
+const sectionObserverNav = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${id}`) {
+                    link.classList.add('active');
+                }
+            });
+        }
+    });
+}, { rootMargin: '-50% 0px -50% 0px' });
+
+sections.forEach(section => {
+    sectionObserverNav.observe(section);
+});
+
+// Back to Top Button
+const backToTopButton = document.querySelector('.back-to-top');
+
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+        if (backToTopButton) {
+            backToTopButton.classList.add('show');
+        }
+    } else {
+        if (backToTopButton) {
+            backToTopButton.classList.remove('show');
+        }
+    }
+});
+
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
