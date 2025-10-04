@@ -178,7 +178,7 @@ function updateGalleryActiveState() {
         if (img.src.includes(heroImages[currentImageIndex].split('/').pop())) {
             item.style.opacity = '1';
             item.style.transform = 'scale(1.1)';
-            item.style.borderColor = '#c9a96e';
+            item.style.borderColor = '#a88d80';
         } else {
             item.style.opacity = '0.7';
             item.style.transform = 'scale(1)';
@@ -511,7 +511,7 @@ function toggleDarkMode() {
     localStorage.setItem('theme', newTheme);
 
     // Update theme color meta tag
-    const themeColor = newTheme === 'dark' ? '#2d2d2d' : '#c9a96e';
+    const themeColor = newTheme === 'dark' ? '#1c2726' : '#a88d80';
     document.querySelector('meta[name=\"theme-color\"]').setAttribute('content', themeColor);
 
     // Update navbar background immediately after theme change
@@ -556,7 +556,7 @@ function initializeTheme() {
     document.documentElement.setAttribute('data-theme', theme);
 
     // Update theme color meta tag
-    const themeColor = theme === 'dark' ? '#2d2d2d' : '#c9a96e';
+    const themeColor = theme === 'dark' ? '#1c2726' : '#a88d80';
     document.querySelector('meta[name=\"theme-color\"]').setAttribute('content', themeColor);
 
     // Initialize navbar background
