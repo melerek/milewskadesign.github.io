@@ -5,6 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Milewska Design - Projektowanie Wnętrz i Wizualizacje 3D</title>
     <meta name="description" content="Profesjonalne usługi projektowania wnętrz z fotorealistycznymi wizualizacjami 3D. Od koncepcji do realizacji - przekształć swoją przestrzeń z Milewska Design.">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Milewska Design - Projektowanie Wnętrz i Wizualizacje 3D">
+    <meta property="og:description" content="Profesjonalne usługi projektowania wnętrz z fotorealistycznymi wizualizacjami 3D. Od koncepcji do realizacji - przekształć swoją przestrzeń z Milewska Design.">
+    <meta property="og:image" content="https://milewskadesign.github.io/images/renders/Kanapa.jpg">
+    <meta property="og:url" content="https://milewskadesign.github.io">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="pl_PL">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Milewska Design - Projektowanie Wnętrz i Wizualizacje 3D">
+    <meta name="twitter:description" content="Profesjonalne usługi projektowania wnętrz z fotorealistycznymi wizualizacjami 3D. Od koncepcji do realizacji - przekształć swoją przestrzeń z Milewska Design.">
+    <meta name="twitter:image" content="https://milewskadesign.github.io/images/renders/Kanapa.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/icons/favicon-16x16.png">
+    <link rel="shortcut icon" href="/images/icons/favicon.ico">
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="images/renders/Kanapa.jpg" as="image">
+    <link rel="preload" href="styles.css" as="style">
+    
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,7 +61,7 @@
             </div>
 
             <!-- Dark Mode Toggle -->
-            <div class="theme-toggle" onclick="toggleDarkMode()" title="Przełącz motyw">
+            <div class="theme-toggle" role="button" tabindex="0" title="Przełącz motyw" aria-label="Przełącz tryb ciemny">
                 <div class="theme-toggle-icon">
                     <span class="sun-icon">☀️</span>
                     <span class="moon-icon">🌙</span>
@@ -65,7 +89,7 @@
             </ul>
 
             <!-- Mobile Dark Mode Toggle -->
-            <div class="mobile-theme-toggle" onclick="toggleDarkMode()" title="Przełącz motyw">
+            <div class="mobile-theme-toggle" role="button" tabindex="0" title="Przełącz motyw" aria-label="Przełącz tryb ciemny">
                 <div class="theme-toggle-icon">
                     <span class="sun-icon">☀️</span>
                     <span class="moon-icon">🌙</span>
@@ -121,20 +145,20 @@
         </div>
         
         <div class="hero-gallery">
-            <div class="gallery-item active" onclick="changeHeroImageManual('images/renders/Kanapa.jpg')">
-                <img src="images/renders/Kanapa.jpg" alt="Salon" class="gallery-img">
+            <div class="gallery-item active" data-hero-image="images/renders/Kanapa.jpg" role="button" tabindex="0" aria-label="Pokaż obraz salonu">
+                <img src="images/renders/Kanapa.jpg" alt="Salon" class="gallery-img" loading="lazy">
             </div>
-            <div class="gallery-item" onclick="changeHeroImageManual('images/renders/kuchnia2.jpg')">
-                <img src="images/renders/kuchnia2.jpg" alt="Kuchnia" class="gallery-img">
+            <div class="gallery-item" data-hero-image="images/renders/kuchnia2.jpg" role="button" tabindex="0" aria-label="Pokaż obraz kuchni">
+                <img src="images/renders/kuchnia2.jpg" alt="Kuchnia" class="gallery-img" loading="lazy">
             </div>
-            <div class="gallery-item" onclick="changeHeroImageManual('images/renders/Sypialnia2.jpg')">
-                <img src="images/renders/Sypialnia2.jpg" alt="Sypialnia" class="gallery-img">
+            <div class="gallery-item" data-hero-image="images/renders/Sypialnia2.jpg" role="button" tabindex="0" aria-label="Pokaż obraz sypialni">
+                <img src="images/renders/Sypialnia2.jpg" alt="Sypialnia" class="gallery-img" loading="lazy">
             </div>
-            <div class="gallery-item" onclick="changeHeroImageManual('images/renders/Łazienka 2.jpg')">
-                <img src="images/renders/Łazienka 2.jpg" alt="Łazienka" class="gallery-img">
+            <div class="gallery-item" data-hero-image="images/renders/Łazienka 2.jpg" role="button" tabindex="0" aria-label="Pokaż obraz łazienki">
+                <img src="images/renders/Łazienka 2.jpg" alt="Łazienka" class="gallery-img" loading="lazy">
             </div>
-            <div class="gallery-item" onclick="changeHeroImageManual('images/renders/Po.jpg')">
-                <img src="images/renders/Po.jpg" alt="Pokój" class="gallery-img">
+            <div class="gallery-item" data-hero-image="images/renders/Po.jpg" role="button" tabindex="0" aria-label="Pokaż obraz pokoju">
+                <img src="images/renders/Po.jpg" alt="Pokój" class="gallery-img" loading="lazy">
             </div>
         </div>
     </section>
@@ -156,99 +180,99 @@
             <div class="portfolio-grid">
                 <div class="portfolio-item" data-category="residential">
                     <div class="portfolio-image">
-                        <img src="images/renders/Kanapa.jpg" alt="Nowoczesny salon z designerską kanapą" class="portfolio-img">
+                        <img src="images/renders/Kanapa.jpg" alt="Nowoczesny salon z designerską kanapą" class="portfolio-img" loading="lazy">
                         <div class="portfolio-overlay">
                             <h3>Nowoczesny Salon</h3>
                             <p>Elegancki salon z designerską kanapą i nowoczesnym wystrojem</p>
-                            <button class="view-project" onclick="openLightbox(this)">Zobacz Projekt</button>
+                            <button class="view-project" data-action="open-lightbox">Zobacz Projekt</button>
                         </div>
                     </div>
                 </div>
                 
                 <div class="portfolio-item" data-category="residential">
                     <div class="portfolio-image">
-                        <img src="images/renders/Kuchnia.jpg" alt="Designerska kuchnia z wyspą" class="portfolio-img">
+                        <img src="images/renders/Kuchnia.jpg" alt="Designerska kuchnia z wyspą" class="portfolio-img" loading="lazy">
                         <div class="portfolio-overlay">
                             <h3>Designerska Kuchnia</h3>
                             <p>Nowoczesna kuchnia z wyspą i meblami na wymiar</p>
-                            <button class="view-project" onclick="openLightbox(this)">Zobacz Projekt</button>
+                            <button class="view-project" data-action="open-lightbox">Zobacz Projekt</button>
                         </div>
                     </div>
                 </div>
                 
                 <div class="portfolio-item" data-category="renders">
                     <div class="portfolio-image">
-                        <img src="images/renders/Sypialnia.jpg" alt="Elegancka sypialnia - wizualizacja 3D" class="portfolio-img">
+                        <img src="images/renders/Sypialnia.jpg" alt="Elegancka sypialnia - wizualizacja 3D" class="portfolio-img" loading="lazy">
                         <div class="portfolio-overlay">
                             <h3>Elegancka Sypialnia</h3>
                             <p>Przytulna sypialnia z przemyślanym oświetleniem</p>
-                            <button class="view-project" onclick="openLightbox(this)">Zobacz Projekt</button>
+                            <button class="view-project" data-action="open-lightbox">Zobacz Projekt</button>
                         </div>
                     </div>
                 </div>
                 
                 <div class="portfolio-item" data-category="residential">
                     <div class="portfolio-image">
-                        <img src="images/renders/kuchnia2.jpg" alt="Druga designerska kuchnia" class="portfolio-img">
+                        <img src="images/renders/kuchnia2.jpg" alt="Druga designerska kuchnia" class="portfolio-img" loading="lazy">
                         <div class="portfolio-overlay">
                             <h3>Kuchnia z Wyspą</h3>
                             <p>Przestronna kuchnia z centralną wyspą i nowoczesnym designem</p>
-                            <button class="view-project" onclick="openLightbox(this)">Zobacz Projekt</button>
+                            <button class="view-project" data-action="open-lightbox">Zobacz Projekt</button>
                         </div>
                     </div>
                 </div>
                 
                 <div class="portfolio-item" data-category="residential">
                     <div class="portfolio-image">
-                        <img src="images/renders/Łazienka 1.jpg" alt="Luksusowa łazienka inspirowana SPA" class="portfolio-img">
+                        <img src="images/renders/Łazienka 1.jpg" alt="Luksusowa łazienka inspirowana SPA" class="portfolio-img" loading="lazy">
                         <div class="portfolio-overlay">
                             <h3>Luksusowa Łazienka</h3>
                             <p>Elegancka łazienka inspirowana estetyką SPA</p>
-                            <button class="view-project" onclick="openLightbox(this)">Zobacz Projekt</button>
+                            <button class="view-project" data-action="open-lightbox">Zobacz Projekt</button>
                         </div>
                     </div>
                 </div>
                 
                 <div class="portfolio-item" data-category="residential">
                     <div class="portfolio-image">
-                        <img src="images/renders/Łazienka 2.jpg" alt="Druga luksusowa łazienka" class="portfolio-img">
+                        <img src="images/renders/Łazienka 2.jpg" alt="Druga luksusowa łazienka" class="portfolio-img" loading="lazy">
                         <div class="portfolio-overlay">
                             <h3>Minimalistyczna Łazienka</h3>
                             <p>Nowoczesna łazienka w stylu minimalistycznym</p>
-                            <button class="view-project" onclick="openLightbox(this)">Zobacz Projekt</button>
+                            <button class="view-project" data-action="open-lightbox">Zobacz Projekt</button>
                         </div>
                     </div>
                 </div>
                 
                 <div class="portfolio-item" data-category="renders">
                     <div class="portfolio-image">
-                        <img src="images/renders/Sypialnia2.jpg" alt="Druga elegancka sypialnia" class="portfolio-img">
+                        <img src="images/renders/Sypialnia2.jpg" alt="Druga elegancka sypialnia" class="portfolio-img" loading="lazy">
                         <div class="portfolio-overlay">
                             <h3>Sypialnia Główna</h3>
                             <p>Przytulna sypialnia z ciepłym oświetleniem</p>
-                            <button class="view-project" onclick="openLightbox(this)">Zobacz Projekt</button>
+                            <button class="view-project" data-action="open-lightbox">Zobacz Projekt</button>
                         </div>
                     </div>
                 </div>
                 
                 <div class="portfolio-item" data-category="renders">
                     <div class="portfolio-image">
-                        <img src="images/renders/detal.jpg" alt="Detal projektowy wnętrza" class="portfolio-img">
+                        <img src="images/renders/detal.jpg" alt="Detal projektowy wnętrza" class="portfolio-img" loading="lazy">
                         <div class="portfolio-overlay">
                             <h3>Detal Projektowy</h3>
                             <p>Precyzyjnie wykonany detal w projekcie wnętrza</p>
-                            <button class="view-project" onclick="openLightbox(this)">Zobacz Projekt</button>
+                            <button class="view-project" data-action="open-lightbox">Zobacz Projekt</button>
                         </div>
                     </div>
                 </div>
                 
                 <div class="portfolio-item" data-category="residential">
                     <div class="portfolio-image">
-                        <img src="images/renders/Po.jpg" alt="Pokój dzienny" class="portfolio-img">
+                        <img src="images/renders/Po.jpg" alt="Pokój dzienny" class="portfolio-img" loading="lazy">
                         <div class="portfolio-overlay">
                             <h3>Pokój Dzienny</h3>
                             <p>Komfortowa przestrzeń do relaksu i wypoczynku</p>
-                            <button class="view-project" onclick="openLightbox(this)">Zobacz Projekt</button>
+                            <button class="view-project" data-action="open-lightbox">Zobacz Projekt</button>
                         </div>
                     </div>
                 </div>
@@ -382,7 +406,7 @@
                         </div>
                         <div class="package-actions">
                             <a href="#contact" class="package-btn">Poproś o szczegółową ofertę</a>
-                            <button class="compare-btn" onclick="openCompareModal()">Porównaj pakiety</button>
+                            <button class="compare-btn" data-action="open-compare">Porównaj pakiety</button>
                         </div>
                     </div>
                 </div>
@@ -422,7 +446,7 @@
                         </div>
                         <div class="package-actions">
                             <a href="#contact" class="package-btn">Poproś o szczegółową ofertę</a>
-                            <button class="compare-btn" onclick="openCompareModal()">Porównaj pakiety</button>
+                            <button class="compare-btn" data-action="open-compare">Porównaj pakiety</button>
                         </div>
                     </div>
                 </div>
@@ -463,7 +487,7 @@
                         </div>
                         <div class="package-actions">
                             <a href="#contact" class="package-btn featured-btn">Poproś o szczegółową ofertę</a>
-                            <button class="compare-btn" onclick="openCompareModal()">Porównaj pakiety</button>
+                            <button class="compare-btn" data-action="open-compare">Porównaj pakiety</button>
                         </div>
                     </div>
                 </div>
@@ -560,11 +584,11 @@
                     <p>Porozmawiajmy o Twoim projekcie i stwórzmy razem coś pięknego.</p>
                     
                     <div class="contact-details">
-                        <div class="contact-item clickable" onclick="makeCall('+48669870306')">
+                        <div class="contact-item clickable" data-action="call" data-phone="+48669870306" role="button" tabindex="0" aria-label="Zadzwoń pod numer +48 669 870 306">
                             <h4>Telefon</h4>
                             <p>+48 669 870 306</p>
                         </div>
-                        <div class="contact-item clickable" onclick="sendEmail('milewskadesign@gmail.com')">
+                        <div class="contact-item clickable" data-action="email" data-email="milewskadesign@gmail.com" role="button" tabindex="0" aria-label="Wyślij email do milewskadesign@gmail.com">
                             <h4>Email</h4>
                             <p>milewskadesign@gmail.com</p>
                         </div>
@@ -691,11 +715,11 @@
     </footer>
 
     <!-- Package Compare Modal -->
-    <div id="compareModal" class="compare-modal" onclick="closeCompareModal()">
-        <div class="compare-modal-content" onclick="event.stopPropagation()">
+    <div id="compareModal" class="compare-modal" data-action="close-compare-bg">
+        <div class="compare-modal-content" data-action="modal-content">
             <div class="compare-header">
                 <h2>Porównanie Pakietów</h2>
-                <button class="close-btn" onclick="closeCompareModal()">&times;</button>
+                <button class="close-btn" data-action="close-compare" aria-label="Zamknij">&times;</button>
             </div>
             <div class="compare-table-container">
                 <table class="compare-table">
@@ -823,14 +847,14 @@
                 </table>
             </div>
             <div class="compare-footer">
-                <button class="compare-cta-btn" onclick="closeCompareModal(); document.getElementById('contact').scrollIntoView({behavior: 'smooth'});">Wybierz swój pakiet</button>
+                <button class="compare-cta-btn" data-action="close-and-contact">Wybierz swój pakiet</button>
             </div>
         </div>
     </div>
 
     <!-- PWA Install Button -->
     <div class="pwa-install" id="pwaInstallContainer">
-        <button class="pwa-install-btn" id="pwaInstallBtn" onclick="installPWA()" style="display: none;">
+        <button class="pwa-install-btn" id="pwaInstallBtn" data-action="install-pwa" style="display: none;" aria-label="Zainstaluj aplikację">
             📱 Zainstaluj aplikację
         </button>
     </div>
@@ -838,9 +862,9 @@
     <!-- Portfolio Lightbox Modal -->
     <div class="lightbox-overlay" id="lightboxOverlay">
         <div class="lightbox-content">
-            <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
-            <button class="lightbox-nav lightbox-prev" onclick="previousImage()">&larr;</button>
-            <button class="lightbox-nav lightbox-next" onclick="nextImage()">&rarr;</button>
+            <button class="lightbox-close" data-action="close-lightbox" aria-label="Zamknij">&times;</button>
+            <button class="lightbox-nav lightbox-prev" data-action="prev-image" aria-label="Poprzedni obraz">&larr;</button>
+            <button class="lightbox-nav lightbox-next" data-action="next-image" aria-label="Następny obraz">&rarr;</button>
             <img class="lightbox-image" id="lightboxImage" src="" alt="">
             <div class="lightbox-info">
                 <h3 class="lightbox-title" id="lightboxTitle"></h3>
@@ -854,6 +878,60 @@
     <a href="#home" class="back-to-top" title="Wróć na górę">
         &#8679;
     </a>
+
+    <!-- Structured Data (Schema.org) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "Milewska Design",
+        "image": "https://milewskadesign.github.io/images/renders/Kanapa.jpg",
+        "description": "Profesjonalne usługi projektowania wnętrz z fotorealistycznymi wizualizacjami 3D. Od koncepcji do realizacji - przekształć swoją przestrzeń z Milewska Design.",
+        "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "PL"
+        },
+        "telephone": "+48669870306",
+        "email": "milewskadesign@gmail.com",
+        "url": "https://milewskadesign.github.io",
+        "sameAs": [
+            "https://www.instagram.com/milewska_design/",
+            "https://www.facebook.com/people/Milewska-Design/61556583926533/"
+        ],
+        "priceRange": "6000-16000 PLN",
+        "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday"
+            ],
+            "opens": "09:00",
+            "closes": "17:00"
+        },
+        "areaServed": {
+            "@type": "Country",
+            "name": "Polska"
+        },
+        "serviceType": [
+            "Projektowanie wnętrz",
+            "Wizualizacje 3D",
+            "Dokumentacja techniczna",
+            "Konsultacje projektowe"
+        ],
+        "founder": {
+            "@type": "Person",
+            "name": "Katarzyna Milewska"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "5",
+            "reviewCount": "3"
+        }
+    }
+    </script>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>

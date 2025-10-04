@@ -936,3 +936,111 @@ document.addEventListener("keydown", function(event) {
 document.querySelector(".compare-modal-content")?.addEventListener("click", function(e) {
     e.stopPropagation();
 });
+
+// ===== EVENT DELEGATION FOR DATA-ACTION ATTRIBUTES =====
+
+// Centralized event handler for all data-action clicks
+document.addEventListener('click', function(e) {
+    const target = e.target.closest('[data-action]');
+    if (!target) return;
+    
+    const action = target.getAttribute('data-action');
+    
+    switch(action) {
+        case 'open-lightbox':
+            openLightbox(target);
+            break;
+        case 'close-lightbox':
+            closeLightbox();
+            break;
+        case 'prev-image':
+            previousImage();
+            break;
+        case 'next-image':
+            nextImage();
+            break;
+        case 'open-compare':
+            openCompareModal();
+            break;
+        case 'close-compare':
+            closeCompareModal();
+            break;
+        case 'close-compare-bg':
+            if (e.target === target) {
+                closeCompareModal();
+            }
+            break;
+        case 'close-and-contact':
+            closeCompareModal();
+            document.getElementById('contact').scrollIntoView({behavior: 'smooth'});
+            break;
+        case 'call':
+            makeCall(target.getAttribute('data-phone'));
+            break;
+        case 'email':
+            sendEmail(target.getAttribute('data-email'));
+            break;
+        case 'install-pwa':
+            installPWA();
+            break;
+        case 'modal-content':
+            e.stopPropagation();
+            break;
+    }
+});
+
+// Handle keyboard events for data-action elements
+document.addEventListener('keydown', function(e) {
+    const target = e.target.closest('[data-action]');
+    if (!target) return;
+    
+    // Handle Enter and Space keys for accessibility
+    if (e.key === 'Enter' || e.key === ' ') {
+        const action = target.getAttribute('data-action');
+        
+        // Prevent default for space key to avoid page scrolling
+        if (e.key === ' ') {
+            e.preventDefault();
+        }
+        
+        // Trigger the same actions as click
+        switch(action) {
+            case 'open-compare':
+            case 'close-compare':
+            case 'close-and-contact':
+            case 'call':
+            case 'email':
+            case 'install-pwa':
+                target.click();
+                break;
+        }
+    }
+});
+
+// Theme toggle keyboard support
+const themeToggles = document.querySelectorAll('.theme-toggle, .mobile-theme-toggle');
+themeToggles.forEach(toggle => {
+    toggle.addEventListener('click', toggleDarkMode);
+    toggle.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleDarkMode();
+        }
+    });
+});
+
+// Hero gallery keyboard support
+document.querySelectorAll('.gallery-item[data-hero-image]').forEach(item => {
+    item.addEventListener('click', function() {
+        const imageSrc = this.getAttribute('data-hero-image');
+        changeHeroImageManual(imageSrc);
+    });
+    
+    item.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            const imageSrc = this.getAttribute('data-hero-image');
+            changeHeroImageManual(imageSrc);
+        }
+    });
+});
