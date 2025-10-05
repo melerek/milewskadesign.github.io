@@ -970,10 +970,6 @@ document.addEventListener('click', function(e) {
                 closeCompareModal();
             }
             break;
-        case 'close-and-contact':
-            closeCompareModal();
-            document.getElementById('contact').scrollIntoView({behavior: 'smooth'});
-            break;
         case 'call':
             makeCall(target.getAttribute('data-phone'));
             break;
@@ -1007,7 +1003,6 @@ document.addEventListener('keydown', function(e) {
         switch(action) {
             case 'open-compare':
             case 'close-compare':
-            case 'close-and-contact':
             case 'call':
             case 'email':
             case 'install-pwa':

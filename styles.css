@@ -720,51 +720,60 @@ h3 {
 
 /* About Section */
 .about {
-    padding: 100px 0;
+    padding: 60px 0;
     background: var(--bg-secondary);
 }
 
 .about-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    gap: 3rem;
     align-items: center;
 }
 
 .about-text h2 {
     color: var(--text-primary);
-    margin-bottom: 1.5rem;
-    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    font-size: 2.2rem;
 }
 
 .about-intro {
-    font-size: 1.2rem;
+    font-size: 1.05rem;
     color: var(--text-secondary);
-    margin-bottom: 2rem;
-    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
 }
 
 .about-details p {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     color: var(--text-secondary);
-    line-height: 1.7;
+    line-height: 1.6;
+    font-size: 0.95rem;
 }
 
 .credentials h4 {
     color: var(--accent-primary);
+    margin-bottom: 0.75rem;
+    font-size: 1.15rem;
+}
+
+.credentials p {
     margin-bottom: 1rem;
-    font-size: 1.3rem;
+    font-size: 0.95rem;
 }
 
 .credentials ul {
     list-style: none;
+    margin-bottom: 0.5rem;
 }
 
 .credentials li {
-    padding: 0.5rem 0;
+    padding: 0.4rem 0;
     color: var(--text-secondary);
     position: relative;
     padding-left: 1.5rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
 }
 
 .credentials li::before {
@@ -780,18 +789,18 @@ h3 {
 }
 
 .about-photo {
-    width: 400px;
-    height: 500px;
+    width: 350px;
+    height: 450px;
     object-fit: cover;
     object-position: center;
-    border-radius: 25px;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
     transition: all 0.4s ease;
 }
 
 .about-photo:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 35px 80px rgba(168, 141, 128, 0.3);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 30px 70px rgba(168, 141, 128, 0.3);
 }
 
 .about-image .image-placeholder {
@@ -1175,13 +1184,13 @@ h3 {
 
     .about-content {
         grid-template-columns: 1fr;
-        gap: 2rem;
+        gap: 1.5rem;
         text-align: center;
     }
     
     .about-photo {
-        width: 300px;
-        height: 400px;
+        width: 280px;
+        height: 360px;
     }
 
     .contact-content {
