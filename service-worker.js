@@ -1,4 +1,4 @@
-const CACHE_NAME = 'milewska-design-v1.0.0';
+const CACHE_NAME = 'milewska-design-v1.1.0';
 const OFFLINE_URL = '/offline.html';
 
 // Assets to cache immediately
@@ -9,10 +9,10 @@ const PRECACHE_ASSETS = [
   '/script.js',
   '/manifest.json',
   '/images/milewska_design_pic.jpg',
-  // Core render images for offline viewing
-  '/images/renders/Kanapa.jpg',
-  '/images/renders/kuchnia2.jpg',
-  '/images/renders/Sypialnia2.jpg',
+  // Core render images for offline viewing (optimized WebP)
+  '/images/renders/Project_2_wil/caly salon_medium.webp',
+  '/images/renders/Project_1_zab/Kuchnia_medium.webp',
+  '/images/renders/Project_3_mag/Sypialnia_medium.webp',
   // Fonts
   'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap',
   // AOS Library

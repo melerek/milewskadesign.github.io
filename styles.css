@@ -548,6 +548,7 @@ h3 {
     object-fit: cover;
     transition: transform 0.3s ease;
     display: block;
+    aspect-ratio: 4/3; /* Prevents layout shift */
 }
 
 .portfolio-item:hover .portfolio-img {

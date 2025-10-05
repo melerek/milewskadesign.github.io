@@ -250,6 +250,11 @@ function startHeroSlideshow() {
     
     heroSlideInterval = setInterval(() => {
         currentImageIndex = (currentImageIndex + 1) % heroImages.length;
+        
+        // Preload next image before showing current one
+        const nextIndex = (currentImageIndex + 1) % heroImages.length;
+        preloadNextHeroImage(nextIndex);
+        
         changeHeroImage(heroImages[currentImageIndex].src, false);
         updateGalleryActiveState();
     }, 5000); // Change every 5 seconds
@@ -279,12 +284,26 @@ function initializeHeroImages() {
     const allImages = getAllProjectImages();
     heroImages = shuffleArray(allImages);
     
-    // Update the first hero image if available
+    // Preload only first 3 images for better performance
     if (heroImages.length > 0) {
         const initialImg = document.querySelector('.hero-bg-img');
         if (initialImg) {
             initialImg.src = heroImages[0].src;
         }
+        
+        // Preload next 2 images in background
+        for (let i = 1; i <= 2 && i < heroImages.length; i++) {
+            const preloadImg = new Image();
+            preloadImg.src = heroImages[i].src;
+        }
+    }
+}
+
+// Preload next image before it's shown
+function preloadNextHeroImage(index) {
+    if (index < heroImages.length) {
+        const preloadImg = new Image();
+        preloadImg.src = heroImages[index].src;
     }
 }
 
@@ -703,15 +722,15 @@ const portfolioProjects = {
         area: '~75m²',
         tags: ['Mieszkanie', 'Nowoczesne', 'Salon', 'Kuchnia', 'Łazienka'],
         images: [
-            { src: 'images/renders/Project_1_zab/Widok salon-kuchnia.png', caption: 'Widok na salon i kuchnię' },
-            { src: 'images/renders/Project_1_zab/Widok kanapa I.png', caption: 'Strefa relaksu z kanapą' },
-            { src: 'images/renders/Project_1_zab/Telewizor_CShading_LightMix.png', caption: 'Strefa telewizyjna' },
-            { src: 'images/renders/Project_1_zab/Kuchnia.png', caption: 'Nowoczesna kuchnia' },
-            { src: 'images/renders/Project_1_zab/Widok na korytarz.png', caption: 'Widok na korytarz' },
-            { src: 'images/renders/Project_1_zab/korytarz_CShading_LightMix001.png', caption: 'Korytarz z oświetleniem' },
-            { src: 'images/renders/Project_1_zab/Lustro na korytarzu_CShading_LightMix001.png', caption: 'Lustro na korytarzu' },
-            { src: 'images/renders/Project_1_zab/Prysznic_CShading_LightMix001.png', caption: 'Strefa prysznicowa' },
-            { src: 'images/renders/Project_1_zab/Umywalka_CShading_LightMix.png', caption: 'Strefa umywalkowa' }
+            { src: 'images/renders/Project_1_zab/Widok salon-kuchnia_full.webp', caption: 'Widok na salon i kuchnię' },
+            { src: 'images/renders/Project_1_zab/Widok kanapa I_full.webp', caption: 'Strefa relaksu z kanapą' },
+            { src: 'images/renders/Project_1_zab/Telewizor_CShading_LightMix_full.webp', caption: 'Strefa telewizyjna' },
+            { src: 'images/renders/Project_1_zab/Kuchnia_full.webp', caption: 'Nowoczesna kuchnia' },
+            { src: 'images/renders/Project_1_zab/Widok na korytarz_full.webp', caption: 'Widok na korytarz' },
+            { src: 'images/renders/Project_1_zab/korytarz_CShading_LightMix001_full.webp', caption: 'Korytarz z oświetleniem' },
+            { src: 'images/renders/Project_1_zab/Lustro na korytarzu_CShading_LightMix001_full.webp', caption: 'Lustro na korytarzu' },
+            { src: 'images/renders/Project_1_zab/Prysznic_CShading_LightMix001_full.webp', caption: 'Strefa prysznicowa' },
+            { src: 'images/renders/Project_1_zab/Umywalka_CShading_LightMix_full.webp', caption: 'Strefa umywalkowa' }
         ]
     },
     'project_2': {
@@ -721,18 +740,18 @@ const portfolioProjects = {
         area: '~90m²',
         tags: ['Apartament', 'Luksusowe', 'Wilanów', 'Designerskie', 'Eleganckie'],
         images: [
-            { src: 'images/renders/Project_2_wil/caly salon.png', caption: 'Panorama salonu' },
-            { src: 'images/renders/Project_2_wil/salon.png', caption: 'Strefa wypoczynkowa' },
-            { src: 'images/renders/Project_2_wil/kanapa_CShading_LightMix.png', caption: 'Designerska kanapa' },
-            { src: 'images/renders/Project_2_wil/tv_CShading_LightMix.png', caption: 'Strefa telewizyjna' },
-            { src: 'images/renders/Project_2_wil/Stół_CShading_LightMix.png', caption: 'Strefa jadalna' },
-            { src: 'images/renders/Project_2_wil/Kuchnia_po_PS.png', caption: 'Kuchnia z wyspą' },
-            { src: 'images/renders/Project_2_wil/Kuchnia detal_CShading_LightMix.png', caption: 'Detal kuchenny' },
-            { src: 'images/renders/Project_2_wil/Jaśniejsze.png', caption: 'Jasna przestrzeń' },
-            { src: 'images/renders/Project_2_wil/Detal.png', caption: 'Detal dekoracyjny' },
-            { src: 'images/renders/Project_2_wil/Detal_CShading_LightMix.png', caption: 'Detal z oświetleniem' },
-            { src: 'images/renders/Project_2_wil/łazienka.png', caption: 'Elegancka łazienka' },
-            { src: 'images/renders/Project_2_wil/Umywalka.png', caption: 'Strefa umywalkowa' }
+            { src: 'images/renders/Project_2_wil/caly salon_full.webp', caption: 'Panorama salonu' },
+            { src: 'images/renders/Project_2_wil/salon_full.webp', caption: 'Strefa wypoczynkowa' },
+            { src: 'images/renders/Project_2_wil/kanapa_CShading_LightMix_full.webp', caption: 'Designerska kanapa' },
+            { src: 'images/renders/Project_2_wil/tv_CShading_LightMix_full.webp', caption: 'Strefa telewizyjna' },
+            { src: 'images/renders/Project_2_wil/Stół_CShading_LightMix_full.webp', caption: 'Strefa jadalna' },
+            { src: 'images/renders/Project_2_wil/Kuchnia_po_PS_full.webp', caption: 'Kuchnia z wyspą' },
+            { src: 'images/renders/Project_2_wil/Kuchnia detal_CShading_LightMix_full.webp', caption: 'Detal kuchenny' },
+            { src: 'images/renders/Project_2_wil/Jaśniejsze_full.webp', caption: 'Jasna przestrzeń' },
+            { src: 'images/renders/Project_2_wil/Detal_full.webp', caption: 'Detal dekoracyjny' },
+            { src: 'images/renders/Project_2_wil/Detal_CShading_LightMix_full.webp', caption: 'Detal z oświetleniem' },
+            { src: 'images/renders/Project_2_wil/łazienka_full.webp', caption: 'Elegancka łazienka' },
+            { src: 'images/renders/Project_2_wil/Umywalka_full.webp', caption: 'Strefa umywalkowa' }
         ]
     },
     'project_3': {
@@ -742,14 +761,14 @@ const portfolioProjects = {
         area: '~65m²',
         tags: ['Mieszkanie', 'Rodzinne', 'Ciepłe', 'Naturalne', 'Przytulne'],
         images: [
-            { src: 'images/renders/Project_3_mag/Kanapa.png', caption: 'Salon z kanapą' },
-            { src: 'images/renders/Project_3_mag/Po.png', caption: 'Strefa wypoczynkowa' },
-            { src: 'images/renders/Project_3_mag/detal.png', caption: 'Detal projektowy' },
-            { src: 'images/renders/Project_3_mag/Kuchnia.png', caption: 'Funkcjonalna kuchnia' },
-            { src: 'images/renders/Project_3_mag/kuchnia2.png', caption: 'Widok na kuchnię' },
-            { src: 'images/renders/Project_3_mag/Sypialnia.png', caption: 'Przytulna sypialnia' },
-            { src: 'images/renders/Project_3_mag/Sypialnia2.png', caption: 'Strefa nocna' },
-            { src: 'images/renders/Project_3_mag/Łazienka 2.png', caption: 'Nowoczesna łazienka' }
+            { src: 'images/renders/Project_3_mag/Kanapa_full.webp', caption: 'Salon z kanapą' },
+            { src: 'images/renders/Project_3_mag/Po_full.webp', caption: 'Strefa wypoczynkowa' },
+            { src: 'images/renders/Project_3_mag/detal_full.webp', caption: 'Detal projektowy' },
+            { src: 'images/renders/Project_3_mag/Kuchnia_full.webp', caption: 'Funkcjonalna kuchnia' },
+            { src: 'images/renders/Project_3_mag/kuchnia2_full.webp', caption: 'Widok na kuchnię' },
+            { src: 'images/renders/Project_3_mag/Sypialnia_full.webp', caption: 'Przytulna sypialnia' },
+            { src: 'images/renders/Project_3_mag/Sypialnia2_full.webp', caption: 'Strefa nocna' },
+            { src: 'images/renders/Project_3_mag/Łazienka 2_full.webp', caption: 'Nowoczesna łazienka' }
         ]
     },
     'project_4': {
@@ -759,12 +778,12 @@ const portfolioProjects = {
         area: '~70m²',
         tags: ['Mieszkanie', 'Minimalistyczne', 'Nowoczesne', 'Funkcjonalne'],
         images: [
-            { src: 'images/renders/Project_4_kaz/Widok na tv.png', caption: 'Widok na strefę TV' },
-            { src: 'images/renders/Project_4_kaz/Widok na kanapę.png', caption: 'Widok na kanapę' },
-            { src: 'images/renders/Project_4_kaz/TV.png', caption: 'Strefa telewizyjna' },
-            { src: 'images/renders/Project_4_kaz/Widok na stół.png', caption: 'Strefa jadalna' },
-            { src: 'images/renders/Project_4_kaz/Widok na drzwi wejściowe.png', caption: 'Widok na wejście' },
-            { src: 'images/renders/Project_4_kaz/Widok na zabudowę.png', caption: 'Zabudowa meblowa' }
+            { src: 'images/renders/Project_4_kaz/Widok na tv_full.webp', caption: 'Widok na strefę TV' },
+            { src: 'images/renders/Project_4_kaz/Widok na kanapę_full.webp', caption: 'Widok na kanapę' },
+            { src: 'images/renders/Project_4_kaz/TV_full.webp', caption: 'Strefa telewizyjna' },
+            { src: 'images/renders/Project_4_kaz/Widok na stół_full.webp', caption: 'Strefa jadalna' },
+            { src: 'images/renders/Project_4_kaz/Widok na drzwi wejściowe_full.webp', caption: 'Widok na wejście' },
+            { src: 'images/renders/Project_4_kaz/Widok na zabudowę_full.webp', caption: 'Zabudowa meblowa' }
         ]
     },
     'project_s1': {
@@ -773,9 +792,9 @@ const portfolioProjects = {
         location: 'Projekt Konkursowy',
         tags: ['Konkurs', 'Minimalizm', 'Elegancja', 'Naturalne Materiały'],
         images: [
-            { src: 'images/renders/Project_S1/Ujęcie I.png', caption: 'Ujęcie I - perspektywa ogólna' },
-            { src: 'images/renders/Project_S1/Ujęcie II.png', caption: 'Ujęcie II - detal' },
-            { src: 'images/renders/Project_S1/Ujęcie III.png', caption: 'Ujęcie III - atmosfera wnętrza' }
+            { src: 'images/renders/Project_S1/Ujęcie I_full.webp', caption: 'Ujęcie I - perspektywa ogólna' },
+            { src: 'images/renders/Project_S1/Ujęcie II_full.webp', caption: 'Ujęcie II - detal' },
+            { src: 'images/renders/Project_S1/Ujęcie III_full.webp', caption: 'Ujęcie III - atmosfera wnętrza' }
         ]
     },
     'project_s2': {
@@ -784,9 +803,9 @@ const portfolioProjects = {
         location: 'Projekt Konkursowy',
         tags: ['Konkurs', 'Nowoczesne', 'Ciepłe Akcenty', 'Harmonia'],
         images: [
-            { src: 'images/renders/Project_S2/Ujęcie I.png', caption: 'Ujęcie I - widok ogólny' },
-            { src: 'images/renders/Project_S2/Ujęcie II.png', caption: 'Ujęcie II - kompozycja' },
-            { src: 'images/renders/Project_S2/Ujęcie III.png', caption: 'Ujęcie III - detale' }
+            { src: 'images/renders/Project_S2/Ujęcie I_full.webp', caption: 'Ujęcie I - widok ogólny' },
+            { src: 'images/renders/Project_S2/Ujęcie II_full.webp', caption: 'Ujęcie II - kompozycja' },
+            { src: 'images/renders/Project_S2/Ujęcie III_full.webp', caption: 'Ujęcie III - detale' }
         ]
     },
     'project_s3': {
@@ -795,9 +814,9 @@ const portfolioProjects = {
         location: 'Projekt Konkursowy',
         tags: ['Konkurs', 'Funkcjonalność', 'Estetyka', 'Harmonia'],
         images: [
-            { src: 'images/renders/Project_S3/Ujęcie I.jpg', caption: 'Ujęcie I - koncepcja główna' },
-            { src: 'images/renders/Project_S3/Ujęcie II.jpg', caption: 'Ujęcie II - przestrzeń dzienna' },
-            { src: 'images/renders/Project_S3/Ujęcie III.jpg', caption: 'Ujęcie III - detale wnętrza' }
+            { src: 'images/renders/Project_S3/Ujęcie I_full.webp', caption: 'Ujęcie I - koncepcja główna' },
+            { src: 'images/renders/Project_S3/Ujęcie II_full.webp', caption: 'Ujęcie II - przestrzeń dzienna' },
+            { src: 'images/renders/Project_S3/Ujęcie III_full.webp', caption: 'Ujęcie III - detale wnętrza' }
         ]
     },
     'project_s4': {
@@ -806,8 +825,8 @@ const portfolioProjects = {
         location: 'Projekt Konkursowy',
         tags: ['Konkurs', 'Subtelność', 'Detale', 'Kompozycja'],
         images: [
-            { src: 'images/renders/Project_S4/Ujęcie 1.png', caption: 'Ujęcie 1 - wizja główna' },
-            { src: 'images/renders/Project_S4/Ujęcie 2.png', caption: 'Ujęcie 2 - perspektywa' }
+            { src: 'images/renders/Project_S4/Ujęcie 1_full.webp', caption: 'Ujęcie 1 - wizja główna' },
+            { src: 'images/renders/Project_S4/Ujęcie 2_full.webp', caption: 'Ujęcie 2 - perspektywa' }
         ]
     }
 };
