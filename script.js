@@ -31,7 +31,7 @@ const sectionObserverNav = new IntersectionObserver((entries) => {
             });
         }
     });
-}, { rootMargin: '-50% 0px -50% 0px' });
+}, { rootMargin: '-80px 0px -50% 0px' }); // Account for navbar height
 
 sections.forEach(section => {
     sectionObserverNav.observe(section);
@@ -52,15 +52,26 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Smooth scrolling for navigation links
+// Smooth scrolling for navigation links with navbar offset
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+        const targetId = this.getAttribute('href');
+        const target = document.querySelector(targetId);
+        
         if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
+            // Get navbar height
+            const navbar = document.querySelector('.navbar');
+            const navbarHeight = navbar ? navbar.offsetHeight : 80;
+            
+            // Calculate target position with offset
+            const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
+            const offsetPosition = targetPosition - navbarHeight - 20; // Extra 20px padding
+            
+            // Smooth scroll to position
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
             });
         }
     });
@@ -105,20 +116,42 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Hero background images array
-const heroImages = [
-    'images/renders/Kanapa.jpg',
-    'images/renders/kuchnia2.jpg',
-    'images/renders/Sypialnia2.jpg',
-    'images/renders/Łazienka 2.jpg',
-    'images/renders/Po.jpg'
-];
+// Hero background images array - Collect all images from portfolio projects
+function getAllProjectImages() {
+    const allImages = [];
+    
+    // Collect all images from portfolio projects
+    Object.keys(portfolioProjects).forEach(projectId => {
+        const project = portfolioProjects[projectId];
+        project.images.forEach(image => {
+            allImages.push({
+                src: image.src,
+                caption: image.caption,
+                projectTitle: project.title
+            });
+        });
+    });
+    
+    return allImages;
+}
 
+// Shuffle array function
+function shuffleArray(array) {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+}
+
+// Initialize hero images with shuffled project images
+let heroImages = [];
 let currentImageIndex = 0; 
 let heroSlideInterval;
 
-// Change hero background image function - GLOBAL with slide transition
-function changeHeroImage(imageSrc, updateIndex = false, slideDirection = 'right') {
+// Change hero background image function - GLOBAL with fade transition
+function changeHeroImage(imageSrc, updateIndex = false) {
     const heroBgImg = document.querySelector('.hero-bg-img');
     const heroContainer = document.querySelector('.hero-background-image');
     
@@ -135,47 +168,71 @@ function changeHeroImage(imageSrc, updateIndex = false, slideDirection = 'right'
         newImg.style.height = '100%';
         newImg.style.objectFit = 'cover';
         newImg.style.objectPosition = 'center';
-        newImg.style.transform = slideDirection === 'right' ? 'translateX(100%) scale(1.1)' : 'translateX(-100%) scale(1.1)';
-        newImg.style.transition = 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+        newImg.style.opacity = '0';
+        newImg.style.transition = 'opacity 1.5s ease-in-out, transform 15s ease-in-out';
+        newImg.style.zIndex = '1';
+        
+        // Start zoom animation immediately
+        newImg.classList.add('zoom-active');
         
         // Add new image to container
         heroContainer.appendChild(newImg);
         
-        // Trigger slide animation after a small delay
-        setTimeout(() => {
-            // Slide out current image with zoom out
-            heroBgImg.style.transform = slideDirection === 'right' ? 'translateX(-100%) scale(0.95)' : 'translateX(100%) scale(0.95)';
-            heroBgImg.style.transition = 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
-            
-            // Slide in new image with zoom in to normal
-            newImg.style.transform = 'translateX(0) scale(1)';
-        }, 50);
+        // Ensure the old image stays visible during transition
+        heroBgImg.style.zIndex = '0';
+        heroBgImg.style.transition = 'opacity 1.5s ease-in-out';
         
-        // Clean up after animation and start subtle zoom effect
-        setTimeout(() => {
-            heroBgImg.remove();
-            newImg.style.position = 'absolute';
-            newImg.style.transform = 'scale(1)';
-            newImg.style.transition = 'transform 15s ease-in-out';
+        // Wait for image to load before starting fade
+        if (newImg.complete) {
+            startFadeTransition();
+        } else {
+            newImg.onload = () => {
+                startFadeTransition();
+            };
+        }
+        
+        function startFadeTransition() {
+            // Small delay to ensure DOM is ready
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    // Fade out old image
+                    heroBgImg.style.opacity = '0';
+                    
+                    // Fade in new image
+                    newImg.style.opacity = '1';
+                });
+            });
             
-            // Add subtle continuous zoom animation
-            newImg.classList.add('zoom-active');
+            // Clean up old image after transition completes
+        setTimeout(() => {
+                if (heroBgImg.parentNode === heroContainer) {
+            heroBgImg.remove();
+                }
+            
+                // Reset z-index
+                newImg.style.zIndex = '';
             
             // Update current index if this was called from gallery click
             if (updateIndex) {
-                currentImageIndex = heroImages.indexOf(imageSrc);
+                    currentImageIndex = heroImages.findIndex(img => img.src === imageSrc);
                 updateGalleryActiveState();
             }
-        }, 850);
+            }, 1600);
+        }
     }
 }
 
 // Update gallery active state
 function updateGalleryActiveState() {
     const galleryItems = document.querySelectorAll('.gallery-item');
+    if (heroImages.length === 0 || !heroImages[currentImageIndex]) return;
+    
+    const currentImageSrc = heroImages[currentImageIndex].src;
+    const currentFilename = currentImageSrc.split('/').pop();
+    
     galleryItems.forEach((item, index) => {
         const img = item.querySelector('.gallery-img');
-        if (img.src.includes(heroImages[currentImageIndex].split('/').pop())) {
+        if (img && img.src.includes(currentFilename)) {
             item.style.opacity = '1';
             item.style.transform = 'scale(1.1)';
             item.style.borderColor = '#a88d80';
@@ -187,15 +244,15 @@ function updateGalleryActiveState() {
     });
 }
 
-// Start automatic hero slideshow with slide transitions
+// Start automatic hero slideshow with fade transitions
 function startHeroSlideshow() {
+    if (heroImages.length === 0) return;
+    
     heroSlideInterval = setInterval(() => {
-        const prevIndex = currentImageIndex;
         currentImageIndex = (currentImageIndex + 1) % heroImages.length;
-        const slideDirection = 'right'; // Always slide from right to left for auto-slideshow
-        changeHeroImage(heroImages[currentImageIndex], false, slideDirection);
+        changeHeroImage(heroImages[currentImageIndex].src, false);
         updateGalleryActiveState();
-    }, 7000); // Change every 7 seconds
+    }, 5000); // Change every 5 seconds
 }
 
 // Stop automatic slideshow
@@ -209,16 +266,26 @@ function stopHeroSlideshow() {
 function changeHeroImageManual(imageSrc) {
     stopHeroSlideshow();
     
-    // Determine slide direction based on image index
-    const newIndex = heroImages.indexOf(imageSrc);
-    const slideDirection = newIndex > currentImageIndex ? 'right' : 'left';
-    
-    changeHeroImage(imageSrc, true, slideDirection);
+    changeHeroImage(imageSrc, true);
     
     // Restart slideshow after 8 seconds of inactivity
     setTimeout(() => {
         startHeroSlideshow();
     }, 8000);
+}
+
+// Initialize hero images with shuffled project images
+function initializeHeroImages() {
+    const allImages = getAllProjectImages();
+    heroImages = shuffleArray(allImages);
+    
+    // Update the first hero image if available
+    if (heroImages.length > 0) {
+        const initialImg = document.querySelector('.hero-bg-img');
+        if (initialImg) {
+            initialImg.src = heroImages[0].src;
+        }
+    }
 }
 
 // Animated Counter Function
@@ -434,6 +501,9 @@ window.addEventListener('load', async () => {
 
     // Initialize theme first
     initializeTheme();
+    
+    // Initialize hero images with random shuffled images from all projects
+    initializeHeroImages();
 
     // Detect WebP support
     const supportsWebP = await detectWebPSupport();
@@ -624,84 +694,149 @@ function initializePWAFeatures() {
     window.addEventListener('offline', updateOnlineStatus);
 }
 
-// Portfolio Data for Lightbox
-const portfolioData = {
-    'Kanapa.jpg': {
-        title: 'Nowoczesny Salon',
-        description: 'Elegancki salon z designerską kanapą i nowoczesnym wystrojem. Projekt łączy komfort z estetyką, tworząc przestrzeń idealną do relaksu.',
-        tags: ['Salon', 'Nowoczesny', 'Mieszkaniowy']
+// Portfolio Projects Data - Complete Gallery System
+const portfolioProjects = {
+    'project_1': {
+        title: 'Nowoczesne Mieszkanie w Ząbkach',
+        description: 'Kompleksowy projekt mieszkania łączący funkcjonalność z nowoczesną estetyką. Otwarta strefa dzienna płynnie przechodzi w kuchnię, tworząc przestrzeń idealną do życia rodzinnego. Projekt wyróżnia się przemyślanym oświetleniem, elegancką kolorystyką i dbałością o każdy detal.',
+        location: 'Ząbki',
+        area: '~75m²',
+        tags: ['Mieszkanie', 'Nowoczesne', 'Salon', 'Kuchnia', 'Łazienka'],
+        images: [
+            { src: 'images/renders/Project_1_zab/Widok salon-kuchnia.png', caption: 'Widok na salon i kuchnię' },
+            { src: 'images/renders/Project_1_zab/Widok kanapa I.png', caption: 'Strefa relaksu z kanapą' },
+            { src: 'images/renders/Project_1_zab/Telewizor_CShading_LightMix.png', caption: 'Strefa telewizyjna' },
+            { src: 'images/renders/Project_1_zab/Kuchnia.png', caption: 'Nowoczesna kuchnia' },
+            { src: 'images/renders/Project_1_zab/Widok na korytarz.png', caption: 'Widok na korytarz' },
+            { src: 'images/renders/Project_1_zab/korytarz_CShading_LightMix001.png', caption: 'Korytarz z oświetleniem' },
+            { src: 'images/renders/Project_1_zab/Lustro na korytarzu_CShading_LightMix001.png', caption: 'Lustro na korytarzu' },
+            { src: 'images/renders/Project_1_zab/Prysznic_CShading_LightMix001.png', caption: 'Strefa prysznicowa' },
+            { src: 'images/renders/Project_1_zab/Umywalka_CShading_LightMix.png', caption: 'Strefa umywalkowa' }
+        ]
     },
-    'Kuchnia.jpg': {
-        title: 'Designerska Kuchnia',
-        description: 'Nowoczesna kuchnia z wyspą i meblami na wymiar. Funkcjonalna przestrzeń z wysokiej jakości wykończeniami.',
-        tags: ['Kuchnia', 'Designerska', 'Wyspa']
+    'project_2': {
+        title: 'Elegancki Apartament w Wilanowie',
+        description: 'Luksusowy apartament łączący klasyczną elegancję z nowoczesnymi rozwiązaniami. Przestronny salon z wysokimi sufitami, designerska kuchnia oraz elegancka łazienka tworzą harmonijną całość. Projekt charakteryzuje się subtelną kolorystyką, naturalnymi materiałami i dbałością o detale.',
+        location: 'Wilanów, Warszawa',
+        area: '~90m²',
+        tags: ['Apartament', 'Luksusowe', 'Wilanów', 'Designerskie', 'Eleganckie'],
+        images: [
+            { src: 'images/renders/Project_2_wil/caly salon.png', caption: 'Panorama salonu' },
+            { src: 'images/renders/Project_2_wil/salon.png', caption: 'Strefa wypoczynkowa' },
+            { src: 'images/renders/Project_2_wil/kanapa_CShading_LightMix.png', caption: 'Designerska kanapa' },
+            { src: 'images/renders/Project_2_wil/tv_CShading_LightMix.png', caption: 'Strefa telewizyjna' },
+            { src: 'images/renders/Project_2_wil/Stół_CShading_LightMix.png', caption: 'Strefa jadalna' },
+            { src: 'images/renders/Project_2_wil/Kuchnia_po_PS.png', caption: 'Kuchnia z wyspą' },
+            { src: 'images/renders/Project_2_wil/Kuchnia detal_CShading_LightMix.png', caption: 'Detal kuchenny' },
+            { src: 'images/renders/Project_2_wil/Jaśniejsze.png', caption: 'Jasna przestrzeń' },
+            { src: 'images/renders/Project_2_wil/Detal.png', caption: 'Detal dekoracyjny' },
+            { src: 'images/renders/Project_2_wil/Detal_CShading_LightMix.png', caption: 'Detal z oświetleniem' },
+            { src: 'images/renders/Project_2_wil/łazienka.png', caption: 'Elegancka łazienka' },
+            { src: 'images/renders/Project_2_wil/Umywalka.png', caption: 'Strefa umywalkowa' }
+        ]
     },
-    'Sypialnia.jpg': {
-        title: 'Elegancka Sypialnia',
-        description: 'Przytulna sypialnia z przemyślanym oświetleniem. Harmonia kolorów i tekstur tworzy idealną atmosferę do odpoczynku.',
-        tags: ['Sypialnia', 'Elegancka', '3D']
+    'project_3': {
+        title: 'Ciepłe Mieszkanie na Bemowie',
+        description: 'Przytulne mieszkanie rodzinne z ciepłą, naturalną kolorystyką. Projekt stawia na komfort i funkcjonalność, łącząc przestrzeń dzienną z kuchnią i osobną sypialnią. Naturalne materiały, drewniane akcenty i przemyślane oświetlenie tworzą atmosferę spokoju i harmonii.',
+        location: 'Bemowo, Warszawa',
+        area: '~65m²',
+        tags: ['Mieszkanie', 'Rodzinne', 'Ciepłe', 'Naturalne', 'Przytulne'],
+        images: [
+            { src: 'images/renders/Project_3_mag/Kanapa.png', caption: 'Salon z kanapą' },
+            { src: 'images/renders/Project_3_mag/Po.png', caption: 'Strefa wypoczynkowa' },
+            { src: 'images/renders/Project_3_mag/detal.png', caption: 'Detal projektowy' },
+            { src: 'images/renders/Project_3_mag/Kuchnia.png', caption: 'Funkcjonalna kuchnia' },
+            { src: 'images/renders/Project_3_mag/kuchnia2.png', caption: 'Widok na kuchnię' },
+            { src: 'images/renders/Project_3_mag/Sypialnia.png', caption: 'Przytulna sypialnia' },
+            { src: 'images/renders/Project_3_mag/Sypialnia2.png', caption: 'Strefa nocna' },
+            { src: 'images/renders/Project_3_mag/Łazienka 2.png', caption: 'Nowoczesna łazienka' }
+        ]
     },
-    'kuchnia2.jpg': {
-        title: 'Kuchnia z Wyspą',
-        description: 'Przestronna kuchnia z centralną wyspą i nowoczesnym designem. Optymalne wykorzystanie przestrzeni i światła.',
-        tags: ['Kuchnia', 'Wyspa', 'Przestronna']
+    'project_4': {
+        title: 'Nowoczesne Mieszkanie w Kazimierzu',
+        description: 'Minimalistyczny projekt mieszkania z otwartą przestrzenią dzienną. Przemyślany układ funkcjonalny zapewnia wygodę użytkowania, a nowoczesny design z subtelnymi akcentami tworzy elegancką całość. Projekt charakteryzuje się czystymi liniami i harmonijną kompozycją.',
+        location: 'Kazimierz',
+        area: '~70m²',
+        tags: ['Mieszkanie', 'Minimalistyczne', 'Nowoczesne', 'Funkcjonalne'],
+        images: [
+            { src: 'images/renders/Project_4_kaz/Widok na tv.png', caption: 'Widok na strefę TV' },
+            { src: 'images/renders/Project_4_kaz/Widok na kanapę.png', caption: 'Widok na kanapę' },
+            { src: 'images/renders/Project_4_kaz/TV.png', caption: 'Strefa telewizyjna' },
+            { src: 'images/renders/Project_4_kaz/Widok na stół.png', caption: 'Strefa jadalna' },
+            { src: 'images/renders/Project_4_kaz/Widok na drzwi wejściowe.png', caption: 'Widok na wejście' },
+            { src: 'images/renders/Project_4_kaz/Widok na zabudowę.png', caption: 'Zabudowa meblowa' }
+        ]
     },
-    'Łazienka 1.jpg': {
-        title: 'Luksusowa Łazienka',
-        description: 'Elegancka łazienka inspirowana estetyką SPA. Naturalne materiały i przemyślane oświetlenie.',
-        tags: ['Łazienka', 'Luksusowa', 'SPA']
+    'project_s1': {
+        title: 'Projekt Konkursowy - Opcja Pierwsza',
+        description: 'Minimalistyczna propozycja konkursowa łącząca czystość formy z funkcjonalnością. Projekt wyróżnia się elegancją, wykorzystaniem naturalnych materiałów i przemyślanym oświetleniem. Harmonijna kompozycja przestrzeni tworzy spokojną, nowoczesną atmosferę.',
+        location: 'Projekt Konkursowy',
+        tags: ['Konkurs', 'Minimalizm', 'Elegancja', 'Naturalne Materiały'],
+        images: [
+            { src: 'images/renders/Project_S1/Ujęcie I.png', caption: 'Ujęcie I - perspektywa ogólna' },
+            { src: 'images/renders/Project_S1/Ujęcie II.png', caption: 'Ujęcie II - detal' },
+            { src: 'images/renders/Project_S1/Ujęcie III.png', caption: 'Ujęcie III - atmosfera wnętrza' }
+        ]
     },
-    'Łazienka 2.jpg': {
-        title: 'Minimalistyczna Łazienka',
-        description: 'Nowoczesna łazienka w stylu minimalistycznym. Czystość linii i funkcjonalność w każdym detalu.',
-        tags: ['Łazienka', 'Minimalistyczna', 'Nowoczesna']
+    'project_s2': {
+        title: 'Projekt Konkursowy - Opcja Druga',
+        description: 'Nowoczesna wizja przestrzeni z ciepłymi akcentami. Projekt łączy funkcjonalność z estetyką, stawiając na harmonię kolorów i tekstur. Przemyślane oświetlenie i naturalne materiały tworzą przytulną, ale nowoczesną atmosferę.',
+        location: 'Projekt Konkursowy',
+        tags: ['Konkurs', 'Nowoczesne', 'Ciepłe Akcenty', 'Harmonia'],
+        images: [
+            { src: 'images/renders/Project_S2/Ujęcie I.png', caption: 'Ujęcie I - widok ogólny' },
+            { src: 'images/renders/Project_S2/Ujęcie II.png', caption: 'Ujęcie II - kompozycja' },
+            { src: 'images/renders/Project_S2/Ujęcie III.png', caption: 'Ujęcie III - detale' }
+        ]
     },
-    'Sypialnia2.jpg': {
-        title: 'Sypialnia Główna',
-        description: 'Przytulna sypialnia z ciepłym oświetleniem. Eleganckie wykończenia i przemyślane rozwiązania.',
-        tags: ['Sypialnia', 'Główna', 'Przytulna']
+    'project_s3': {
+        title: 'Projekt Konkursowy - Opcja Trzecia',
+        description: 'Harmonijne połączenie funkcjonalności i estetyki w przestrzeni mieszkalnej. Projekt charakteryzuje się przemyślanym układem, elegancką kolorystyką i dbałością o detale. Balans między nowoczesnością a przytulnością tworzy idealną przestrzeń do życia.',
+        location: 'Projekt Konkursowy',
+        tags: ['Konkurs', 'Funkcjonalność', 'Estetyka', 'Harmonia'],
+        images: [
+            { src: 'images/renders/Project_S3/Ujęcie I.jpg', caption: 'Ujęcie I - koncepcja główna' },
+            { src: 'images/renders/Project_S3/Ujęcie II.jpg', caption: 'Ujęcie II - przestrzeń dzienna' },
+            { src: 'images/renders/Project_S3/Ujęcie III.jpg', caption: 'Ujęcie III - detale wnętrza' }
+        ]
     },
-    'detal.jpg': {
-        title: 'Detal Projektowy',
-        description: 'Precyzyjnie wykonany detal w projekcie wnętrza. Uwaga do najmniejszych szczegółów w każdym elemencie.',
-        tags: ['Detal', 'Projektowy', 'Precyzja']
-    },
-    'Po.jpg': {
-        title: 'Pokój Dzienny',
-        description: 'Komfortowa przestrzeń do relaksu i wypoczynku. Harmonijne połączenie funkcjonalności z estetyką.',
-        tags: ['Pokój', 'Dzienny', 'Komfort']
+    'project_s4': {
+        title: 'Projekt Konkursowy - Opcja Czwarta',
+        description: 'Subtelna propozycja konkursowa stawiająca na detale i przemyślaną kompozycję. Projekt charakteryzuje się elegancją, czystością formy i funkcjonalnością. Harmonijna paleta kolorów i naturalne materiały tworzą spokojną, nowoczesną przestrzeń.',
+        location: 'Projekt Konkursowy',
+        tags: ['Konkurs', 'Subtelność', 'Detale', 'Kompozycja'],
+        images: [
+            { src: 'images/renders/Project_S4/Ujęcie 1.png', caption: 'Ujęcie 1 - wizja główna' },
+            { src: 'images/renders/Project_S4/Ujęcie 2.png', caption: 'Ujęcie 2 - perspektywa' }
+        ]
     }
 };
 
 let currentLightboxIndex = 0;
-let lightboxImages = [];
+let currentProjectData = null;
 
-// Lightbox Functions
-function openLightbox(button) {
-    const portfolioItem = button.closest('.portfolio-item');
-    const img = portfolioItem.querySelector('.portfolio-img');
+// Lightbox Functions - Updated for Project Galleries
+function openLightbox(element) {
+    // Handle both button clicks and portfolio item clicks
+    const portfolioItem = element.closest('.portfolio-item');
+    
+    if (!portfolioItem) return;
+    
+    const projectId = portfolioItem.getAttribute('data-project-id');
     const lightbox = document.getElementById('lightboxOverlay');
 
-    // Get all portfolio images for navigation
-    lightboxImages = Array.from(document.querySelectorAll('.portfolio-img')).map(img => {
-        const src = img.src;
-        const filename = src.split('/').pop();
-        return {
-            src: src,
-            filename: filename,
-            data: portfolioData[filename] || {
-                title: 'Projekt Wnętrza',
-                description: 'Profesjonalnie wykonany projekt wnętrza.',
-                tags: ['Wnętrze', 'Projekt']
-            }
-        };
-    });
+    // Get project data
+    currentProjectData = portfolioProjects[projectId];
+    
+    if (!currentProjectData) {
+        console.error('Project data not found for:', projectId);
+        return;
+    }
 
-    // Find current image index
-    const currentSrc = img.src;
-    currentLightboxIndex = lightboxImages.findIndex(item => item.src === currentSrc);
+    // Start at first image
+    currentLightboxIndex = 0;
 
-    // Display the image
+    // Display the first image
     displayLightboxImage(currentLightboxIndex);
 
     // Show lightbox
@@ -709,26 +844,60 @@ function openLightbox(button) {
     document.body.style.overflow = 'hidden';
 }
 
+// Add click event listeners to portfolio items
+document.addEventListener('DOMContentLoaded', function() {
+    const portfolioItems = document.querySelectorAll('.portfolio-item');
+    portfolioItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+            // Don't trigger if clicking on a link or button that has its own action
+            if (e.target.closest('a[href]:not([data-action])')) return;
+            openLightbox(this);
+        });
+    });
+});
+
 function closeLightbox() {
     const lightbox = document.getElementById('lightboxOverlay');
     lightbox.classList.remove('active');
     document.body.style.overflow = 'auto';
+    currentProjectData = null;
 }
 
 function displayLightboxImage(index) {
-    const image = lightboxImages[index];
+    if (!currentProjectData || !currentProjectData.images[index]) {
+        return;
+    }
+
+    const imageData = currentProjectData.images[index];
     const lightboxImg = document.getElementById('lightboxImage');
     const lightboxTitle = document.getElementById('lightboxTitle');
     const lightboxDesc = document.getElementById('lightboxDescription');
     const lightboxTags = document.getElementById('lightboxTags');
 
-    lightboxImg.src = image.src;
-    lightboxTitle.textContent = image.data.title;
-    lightboxDesc.textContent = image.data.description;
+    // Update image
+    lightboxImg.src = imageData.src;
+    lightboxImg.alt = imageData.caption;
+
+    // Update title with image counter
+    const imageCounter = `${index + 1} / ${currentProjectData.images.length}`;
+    lightboxTitle.textContent = `${currentProjectData.title} - ${imageCounter}`;
+
+    // Update description with caption and project info
+    let descriptionHTML = `<strong>${imageData.caption}</strong><br>`;
+    descriptionHTML += currentProjectData.description;
+    
+    if (currentProjectData.location) {
+        descriptionHTML += `<br><br><strong>Lokalizacja:</strong> ${currentProjectData.location}`;
+    }
+    if (currentProjectData.area) {
+        descriptionHTML += ` | <strong>Powierzchnia:</strong> ${currentProjectData.area}`;
+    }
+    
+    lightboxDesc.innerHTML = descriptionHTML;
 
     // Clear and populate tags
     lightboxTags.innerHTML = '';
-    image.data.tags.forEach(tag => {
+    currentProjectData.tags.forEach(tag => {
         const tagElement = document.createElement('span');
         tagElement.className = 'lightbox-tag';
         tagElement.textContent = tag;
@@ -737,12 +906,14 @@ function displayLightboxImage(index) {
 }
 
 function nextImage() {
-    currentLightboxIndex = (currentLightboxIndex + 1) % lightboxImages.length;
+    if (!currentProjectData) return;
+    currentLightboxIndex = (currentLightboxIndex + 1) % currentProjectData.images.length;
     displayLightboxImage(currentLightboxIndex);
 }
 
 function previousImage() {
-    currentLightboxIndex = (currentLightboxIndex - 1 + lightboxImages.length) % lightboxImages.length;
+    if (!currentProjectData) return;
+    currentLightboxIndex = (currentLightboxIndex - 1 + currentProjectData.images.length) % currentProjectData.images.length;
     displayLightboxImage(currentLightboxIndex);
 }
 
