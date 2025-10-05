@@ -1,0 +1,15 @@
+# Milewska Design - robots.txt
+# Allow all search engines to index the site
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://milewskadesign.github.io/sitemap.xml
+
+# Crawl-delay (optional, helps prevent overwhelming the server)
+Crawl-delay: 1
+
+# Disallow specific directories (if any)
+# Disallow: /service-worker.js
+# Disallow: /manifest.json

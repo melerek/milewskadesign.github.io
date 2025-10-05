@@ -1,5 +1,15 @@
-const CACHE_NAME = 'milewska-design-v1.3.0';
+const CACHE_NAME = 'milewska-design-v1.4.0';
 const OFFLINE_URL = '/offline.html';
+
+// Security headers to add to all responses
+const SECURITY_HEADERS = {
+  'X-Frame-Options': 'DENY',
+  'X-Content-Type-Options': 'nosniff',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), interest-cohort=()',
+  'X-XSS-Protection': '1; mode=block',
+  'Strict-Transport-Security': 'max-age=31536000; includeSubDomains'
+};
 
 // Assets to cache immediately
 const PRECACHE_ASSETS = [
@@ -88,10 +98,10 @@ self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(request)
       .then(cachedResponse => {
-        // Return cached version if available
+        // Return cached version with security headers if available
         if (cachedResponse) {
           console.log('Service Worker: Serving from cache:', request.url);
-          return cachedResponse;
+          return addSecurityHeaders(cachedResponse);
         }
 
         // Otherwise, fetch from network
@@ -114,6 +124,11 @@ self.addEventListener('fetch', event => {
                   cache.put(request, responseToCache);
                 }
               });
+
+            // Add security headers to HTML responses
+            if (request.url.includes('.html') || request.mode === 'navigate') {
+              return addSecurityHeaders(networkResponse);
+            }
 
             return networkResponse;
           })
@@ -138,6 +153,24 @@ self.addEventListener('fetch', event => {
       })
   );
 });
+
+// Helper function to add security headers to response
+function addSecurityHeaders(response) {
+  // Clone the response to make it mutable
+  const newHeaders = new Headers(response.headers);
+  
+  // Add security headers
+  Object.entries(SECURITY_HEADERS).forEach(([header, value]) => {
+    newHeaders.set(header, value);
+  });
+  
+  // Create new response with security headers
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers: newHeaders
+  });
+}
 
 // Helper function to determine what should be cached
 function shouldCache(url) {

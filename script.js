@@ -1,3 +1,99 @@
+// =================================================================
+// ANALYTICS HELPER FUNCTIONS
+// =================================================================
+
+/**
+ * Track custom events to Google Analytics 4
+ * @param {string} eventName - Name of the event
+ * @param {object} eventParams - Additional parameters
+ */
+function trackEvent(eventName, eventParams = {}) {
+    // Google Analytics 4
+    if (typeof gtag === 'function') {
+        gtag('event', eventName, eventParams);
+    }
+    
+    // Microsoft Clarity custom tags
+    if (typeof clarity === 'function') {
+        clarity('set', eventName, JSON.stringify(eventParams));
+    }
+    
+    // Console log for debugging (remove in production if needed)
+    console.log('📊 Analytics Event:', eventName, eventParams);
+}
+
+/**
+ * Track page views (for SPA-like navigation)
+ * @param {string} pagePath - Page path
+ * @param {string} pageTitle - Page title
+ */
+function trackPageView(pagePath, pageTitle) {
+    if (typeof gtag === 'function') {
+        gtag('config', 'G-XXXXXXXXXX', {
+            page_path: pagePath,
+            page_title: pageTitle
+        });
+    }
+}
+
+// =================================================================
+// SCROLL DEPTH TRACKING
+// =================================================================
+
+let scrollDepthTracked = {
+    '25': false,
+    '50': false,
+    '75': false,
+    '100': false
+};
+
+function trackScrollDepth() {
+    const scrollPercentage = Math.round((window.scrollY + window.innerHeight) / document.documentElement.scrollHeight * 100);
+    
+    if (scrollPercentage >= 25 && !scrollDepthTracked['25']) {
+        scrollDepthTracked['25'] = true;
+        trackEvent('scroll_depth', { depth: '25%' });
+    } else if (scrollPercentage >= 50 && !scrollDepthTracked['50']) {
+        scrollDepthTracked['50'] = true;
+        trackEvent('scroll_depth', { depth: '50%' });
+    } else if (scrollPercentage >= 75 && !scrollDepthTracked['75']) {
+        scrollDepthTracked['75'] = true;
+        trackEvent('scroll_depth', { depth: '75%' });
+    } else if (scrollPercentage >= 100 && !scrollDepthTracked['100']) {
+        scrollDepthTracked['100'] = true;
+        trackEvent('scroll_depth', { depth: '100%' });
+    }
+}
+
+// Track scroll depth on scroll
+window.addEventListener('scroll', () => {
+    requestAnimationFrame(trackScrollDepth);
+}, { passive: true });
+
+// =================================================================
+// TIME ON PAGE TRACKING
+// =================================================================
+
+let timeOnPage = 0;
+const trackingInterval = setInterval(() => {
+    timeOnPage += 30;
+    
+    // Track at 30s, 60s, 120s, 300s (5min)
+    if (timeOnPage === 30 || timeOnPage === 60 || timeOnPage === 120 || timeOnPage === 300) {
+        trackEvent('time_on_page', { seconds: timeOnPage });
+    }
+}, 30000); // Every 30 seconds
+
+// Clear interval on page unload
+window.addEventListener('beforeunload', () => {
+    clearInterval(trackingInterval);
+    trackEvent('page_exit', { time_spent: timeOnPage });
+});
+
+// =================================================================
+// MOBILE NAVIGATION
+// =================================================================
+
 // Mobile Navigation Toggle
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
@@ -12,6 +108,12 @@ document.querySelectorAll('.nav-menu a').forEach(link => {
     link.addEventListener('click', () => {
         hamburger.classList.remove('active');
         navMenu.classList.remove('active');
+        
+        // Track navigation clicks
+        trackEvent('navigation_click', {
+            link_text: link.textContent.trim(),
+            link_url: link.getAttribute('href')
+        });
     });
 });
 
@@ -369,62 +471,7 @@ document.querySelectorAll('.service-card, .portfolio-item, .testimonial-card, .p
 });
 
 // Contact Form Handling
-const contactForm = document.getElementById('contactForm');
-
-contactForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const submitBtn = contactForm.querySelector('.submit-btn');
-    const originalText = submitBtn.textContent;
-    
-    // Change button state
-    submitBtn.textContent = 'Wysyłam...';
-    submitBtn.disabled = true;
-    
-    // Get form data
-    const formData = new FormData(contactForm);
-    const formObject = {};
-    formData.forEach((value, key) => {
-        formObject[key] = value;
-    });
-    
-    try {
-        // Here you would typically send the data to your backend
-        // For now, we'll simulate a successful submission
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        
-        // Success state
-        submitBtn.textContent = 'Wiadomość Wysłana!';
-        submitBtn.style.background = '#27ae60';
-        
-        // Show success message
-        showNotification('Dziękujemy! Odezwiemy się w ciągu 24 godzin.', 'success');
-        
-        // Reset form
-        contactForm.reset();
-        
-        // Reset button after 3 seconds
-        setTimeout(() => {
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-            submitBtn.style.background = '';
-        }, 3000);
-        
-    } catch (error) {
-        // Error state
-        submitBtn.textContent = 'Błąd - Spróbuj Ponownie';
-        submitBtn.style.background = '#e74c3c';
-        
-        showNotification('Coś poszło nie tak. Spróbuj ponownie.', 'error');
-        
-        // Reset button after 3 seconds
-        setTimeout(() => {
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-            submitBtn.style.background = '';
-        }, 3000);
-    }
-});
+// Form submission handler will be added after validation setup below
 
 // Notification system
 function showNotification(message, type) {
@@ -867,6 +914,13 @@ function openLightbox(element) {
     lightbox.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
     
+    // Track portfolio view
+    trackEvent('portfolio_view', {
+        project_id: projectId,
+        project_name: currentProjectData.title,
+        project_category: portfolioItem.getAttribute('data-category') || 'unknown'
+    });
+    
     // Set focus to close button for keyboard navigation
     const closeButton = lightbox.querySelector('.lightbox-close');
     if (closeButton) {
@@ -1247,3 +1301,284 @@ document.querySelectorAll('.gallery-item[data-hero-image]').forEach(item => {
         }
     });
 });
+
+// ============================================
+// EMAILJS CONFIGURATION
+// ============================================
+
+// EmailJS Configuration
+// IMPORTANT: Replace these with your actual EmailJS credentials
+const EMAILJS_CONFIG = {
+    PUBLIC_KEY: 'egtGOL04rZzV-8WHG',
+    SERVICE_ID: 'service_nott0ma',
+    TEMPLATE_ID: 'template_8wh19gm'
+};
+
+// Initialize EmailJS
+function initEmailJS() {
+    if (typeof emailjs !== 'undefined') {
+        emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+        console.log('EmailJS initialized successfully');
+    } else {
+        console.error('EmailJS library not loaded');
+    }
+}
+
+// Send email function
+function sendEmail(form) {
+    return new Promise((resolve, reject) => {
+        // Check if EmailJS is initialized
+        if (typeof emailjs === 'undefined') {
+            reject(new Error('EmailJS not loaded'));
+            return;
+        }
+
+        // Check if config is set up
+        if (EMAILJS_CONFIG.PUBLIC_KEY.includes('YOUR_') || 
+            EMAILJS_CONFIG.SERVICE_ID.includes('YOUR_') || 
+            EMAILJS_CONFIG.TEMPLATE_ID.includes('YOUR_')) {
+            
+            console.warn('⚠️ EmailJS not configured yet. Please add your credentials.');
+            // For now, simulate success to test the flow
+            setTimeout(() => {
+                console.log('Simulated email send (configure EmailJS to enable real emails)');
+                resolve({ status: 200, text: 'Simulated success' });
+            }, 1500);
+            return;
+        }
+
+        // Get form data
+        const formData = new FormData(form);
+        const templateParams = {
+            from_name: formData.get('name'),
+            from_email: formData.get('email'),
+            phone: formData.get('phone') || 'Nie podano',
+            project_type: formData.get('project-type'),
+            budget: formData.get('budget') || 'Nie określono',
+            message: formData.get('message'),
+            to_email: 'milewskadesign@gmail.com' // Your email
+        };
+
+        // Send using EmailJS
+        emailjs.send(
+            EMAILJS_CONFIG.SERVICE_ID,
+            EMAILJS_CONFIG.TEMPLATE_ID,
+            templateParams
+        ).then(
+            (result) => {
+                console.log('✅ Email sent successfully:', result);
+                resolve(result);
+            },
+            (error) => {
+                console.error('❌ Email send failed:', error);
+                reject(error);
+            }
+        );
+    });
+}
+
+// Initialize EmailJS when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    initEmailJS();
+});
+
+// ============================================
+// FORM VALIDATION
+// ============================================
+
+const contactForm = document.getElementById('contactForm');
+
+if (contactForm) {
+    // Error messages in Polish
+    const errorMessages = {
+        valueMissing: {
+            default: 'To pole jest wymagane',
+            name: 'Proszę podać swoje imię',
+            email: 'Proszę podać adres email',
+            message: 'Proszę opisać swój projekt',
+            'project-type': 'Proszę wybrać typ projektu'
+        },
+        typeMismatch: {
+            email: 'Proszę podać poprawny adres email'
+        },
+        patternMismatch: {
+            name: 'Proszę używać tylko liter',
+            email: 'Proszę podać poprawny adres email',
+            phone: 'Proszę podać poprawny numer telefonu'
+        },
+        tooShort: {
+            name: 'Imię musi mieć co najmniej 2 znaki',
+            message: 'Wiadomość musi mieć co najmniej 10 znaków'
+        },
+        tooLong: {
+            name: 'Imię jest za długie (max 50 znaków)',
+            message: 'Wiadomość jest za długa (max 1000 znaków)'
+        }
+    };
+
+    // Get all form fields
+    const formFields = contactForm.querySelectorAll('input, textarea, select');
+
+    // Validate individual field
+    function validateField(field) {
+        const fieldId = field.id;
+        const errorSpan = document.getElementById(`${fieldId}-error`);
+        const formGroup = field.closest('.form-group');
+
+        // Clear previous states
+        field.classList.remove('invalid', 'valid');
+        formGroup.classList.remove('has-error', 'has-success');
+        
+        if (errorSpan) {
+            errorSpan.textContent = '';
+        }
+
+        // Check validity
+        if (field.validity.valid && field.value.trim() !== '') {
+            field.classList.add('valid');
+            formGroup.classList.add('has-success');
+            return true;
+        } else if (!field.validity.valid) {
+            field.classList.add('invalid');
+            formGroup.classList.add('has-error');
+
+            // Set error message
+            if (errorSpan) {
+                let errorMessage = errorMessages.valueMissing.default;
+
+                if (field.validity.valueMissing) {
+                    errorMessage = errorMessages.valueMissing[fieldId] || errorMessages.valueMissing.default;
+                } else if (field.validity.typeMismatch) {
+                    errorMessage = errorMessages.typeMismatch[fieldId] || 'Niepoprawny format';
+                } else if (field.validity.patternMismatch) {
+                    errorMessage = errorMessages.patternMismatch[fieldId] || 'Niepoprawny format';
+                } else if (field.validity.tooShort) {
+                    errorMessage = errorMessages.tooShort[fieldId] || `Minimalna długość: ${field.minLength} znaków`;
+                } else if (field.validity.tooLong) {
+                    errorMessage = errorMessages.tooLong[fieldId] || `Maksymalna długość: ${field.maxLength} znaków`;
+                }
+
+                errorSpan.textContent = errorMessage;
+            }
+            return false;
+        }
+        
+        return true;
+    }
+
+    // Add real-time validation on blur
+    formFields.forEach(field => {
+        field.addEventListener('blur', () => {
+            if (field.value.trim() !== '') {
+                validateField(field);
+            }
+        });
+
+        // Clear error on input
+        field.addEventListener('input', () => {
+            if (field.classList.contains('invalid')) {
+                validateField(field);
+            }
+        });
+    });
+
+    // Form submission
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Validate all fields
+        let isValid = true;
+        formFields.forEach(field => {
+            if (!validateField(field)) {
+                isValid = false;
+            }
+        });
+
+        if (!isValid) {
+            // Focus first invalid field
+            const firstInvalid = contactForm.querySelector('.invalid');
+            if (firstInvalid) {
+                firstInvalid.focus();
+            }
+
+            // Show error status
+            showFormStatus('error', 'Proszę poprawić błędy w formularzu');
+            return;
+        }
+
+        // If valid, show loading state
+        const submitBtn = contactForm.querySelector('button[type="submit"]');
+        submitBtn.classList.add('loading');
+        submitBtn.disabled = true;
+
+        // Send email using EmailJS
+        sendEmail(contactForm)
+            .then((result) => {
+                submitBtn.classList.remove('loading');
+                submitBtn.disabled = false;
+
+                // Show success message
+                showFormStatus('success', 'Dziękujemy! Skontaktujemy się z Tobą wkrótce.');
+                
+                // Track form submission
+                const formData = new FormData(contactForm);
+                trackEvent('form_submission', {
+                    form_type: 'contact',
+                    project_type: formData.get('project-type') || 'not_specified',
+                    budget: formData.get('budget') || 'not_specified'
+                });
+                
+                // Track conversion for GA4
+                if (typeof gtag === 'function') {
+                    gtag('event', 'conversion', {
+                        'send_to': 'G-XXXXXXXXXX/conversion',
+                        'value': 1.0,
+                        'currency': 'PLN'
+                    });
+                }
+
+                // Reset form after 3 seconds
+                setTimeout(() => {
+                    contactForm.reset();
+                    formFields.forEach(field => {
+                        field.classList.remove('valid', 'invalid');
+                        field.closest('.form-group').classList.remove('has-success', 'has-error');
+                        const errorSpan = document.getElementById(`${field.id}-error`);
+                        if (errorSpan) {
+                            errorSpan.textContent = '';
+                        }
+                    });
+                    hideFormStatus();
+                }, 3000);
+            })
+            .catch((error) => {
+                submitBtn.classList.remove('loading');
+                submitBtn.disabled = false;
+
+                // Show error message
+                console.error('EmailJS Error:', error);
+                showFormStatus('error', 'Wystąpił błąd. Prosimy spróbować ponownie lub skontaktować się bezpośrednio: milewskadesign@gmail.com');
+            });
+    });
+
+    // Show form status message
+    function showFormStatus(type, message) {
+        const formStatus = document.getElementById('formStatus');
+        if (formStatus) {
+            formStatus.className = `form-status ${type} show`;
+            formStatus.textContent = message;
+        }
+    }
+
+    // Hide form status message
+    function hideFormStatus() {
+        const formStatus = document.getElementById('formStatus');
+        if (formStatus) {
+            formStatus.classList.remove('show');
+            setTimeout(() => {
+                formStatus.className = 'form-status';
+                formStatus.textContent = '';
+            }, 300);
+        }
+    }
+}
