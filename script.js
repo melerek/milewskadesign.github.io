@@ -1303,6 +1303,51 @@ document.querySelectorAll('.gallery-item[data-hero-image]').forEach(item => {
 });
 
 // ============================================
+// RECAPTCHA CONFIGURATION
+// ============================================
+
+// reCAPTCHA Configuration
+// IMPORTANT: Replace with your actual reCAPTCHA Site Key
+const RECAPTCHA_CONFIG = {
+    SITE_KEY: 'YOUR_RECAPTCHA_SITE_KEY',
+    ACTION: 'contact_form'
+};
+
+/**
+ * Get reCAPTCHA token
+ * @returns {Promise<string>} reCAPTCHA token
+ */
+function getRecaptchaToken() {
+    return new Promise((resolve, reject) => {
+        // Check if reCAPTCHA is loaded
+        if (typeof grecaptcha === 'undefined') {
+            console.warn('⚠️ reCAPTCHA not loaded. Please add your Site Key.');
+            resolve(null); // Allow form to work without reCAPTCHA if not configured
+            return;
+        }
+
+        // Check if Site Key is configured
+        if (RECAPTCHA_CONFIG.SITE_KEY === 'YOUR_RECAPTCHA_SITE_KEY') {
+            console.warn('⚠️ reCAPTCHA not configured. Please add your Site Key.');
+            resolve(null); // Allow form to work without reCAPTCHA if not configured
+            return;
+        }
+
+        grecaptcha.ready(() => {
+            grecaptcha.execute(RECAPTCHA_CONFIG.SITE_KEY, { action: RECAPTCHA_CONFIG.ACTION })
+                .then((token) => {
+                    console.log('✅ reCAPTCHA token generated');
+                    resolve(token);
+                })
+                .catch((error) => {
+                    console.error('❌ reCAPTCHA error:', error);
+                    reject(error);
+                });
+        });
+    });
+}
+
+// ============================================
 // EMAILJS CONFIGURATION
 // ============================================
 
@@ -1326,7 +1371,7 @@ function initEmailJS() {
 
 // Send email function
 function sendEmail(form) {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         // Check if EmailJS is initialized
         if (typeof emailjs === 'undefined') {
             reject(new Error('EmailJS not loaded'));
@@ -1347,6 +1392,21 @@ function sendEmail(form) {
             return;
         }
 
+        // Get reCAPTCHA token first
+        let recaptchaToken = null;
+        try {
+            recaptchaToken = await getRecaptchaToken();
+            if (recaptchaToken) {
+                console.log('✅ reCAPTCHA verification passed');
+            } else {
+                console.warn('⚠️ reCAPTCHA not configured, proceeding without verification');
+            }
+        } catch (error) {
+            console.error('❌ reCAPTCHA verification failed:', error);
+            // Don't reject - allow form to work even if reCAPTCHA fails
+            // In production, you might want to reject here
+        }
+
         // Get form data
         const formData = new FormData(form);
         const templateParams = {
@@ -1356,7 +1416,8 @@ function sendEmail(form) {
             project_type: formData.get('project-type'),
             budget: formData.get('budget') || 'Nie określono',
             message: formData.get('message'),
-            to_email: 'milewskadesign@gmail.com' // Your email
+            to_email: 'milewskadesign@gmail.com', // Your email
+            recaptcha_token: recaptchaToken || 'not_configured' // Include reCAPTCHA token
         };
 
         // Send using EmailJS
