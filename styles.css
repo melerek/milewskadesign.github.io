@@ -238,7 +238,7 @@ h3 {
     height: 2px;
     bottom: -5px;
     left: 0;
-    background: var(--accent-primary);
+    background: var(--accent-dark); /* Dark accent underline */
     transition: width 0.3s ease;
 }
 
@@ -1045,7 +1045,8 @@ h3 {
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background: var(--border-light);
+    background: var(--accent-dark); /* Dark accent for dots */
+    opacity: 0.3;
     border: none;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -1053,12 +1054,14 @@ h3 {
 }
 
 .carousel-dot:hover {
-    background: var(--accent-secondary);
+    background: var(--accent-dark);
+    opacity: 0.6;
     transform: scale(1.2);
 }
 
 .carousel-dot.active {
-    background: var(--accent-primary);
+    background: var(--accent-dark); /* Active dot in dark accent */
+    opacity: 1;
     width: 32px;
     border-radius: 6px;
 }
@@ -2327,6 +2330,7 @@ h3 {
     --color-brownish: #a88d80;
     --color-text-dark: #1c2726;
     --color-text-grey: #544f4d;
+    --accent-dark: #544f4d;
     
     /* Light mode colors */
     --bg-primary: #ede7e5;
