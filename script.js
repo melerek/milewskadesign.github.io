@@ -91,6 +91,147 @@ window.addEventListener('beforeunload', () => {
 });
 
 // =================================================================
+// TESTIMONIALS CAROUSEL
+// =================================================================
+
+class TestimonialsCarousel {
+    constructor() {
+        this.carousel = document.querySelector('.testimonials-carousel');
+        if (!this.carousel) return;
+        
+        this.track = this.carousel.querySelector('.testimonials-track');
+        this.cards = Array.from(this.track.querySelectorAll('.testimonial-card'));
+        this.prevBtn = this.carousel.querySelector('.carousel-btn-prev');
+        this.nextBtn = this.carousel.querySelector('.carousel-btn-next');
+        this.dotsContainer = document.querySelector('.carousel-dots');
+        
+        this.currentIndex = 0;
+        this.totalCards = this.cards.length;
+        this.cardsPerView = this.getCardsPerView();
+        
+        this.init();
+    }
+    
+    getCardsPerView() {
+        // Show 1 card on mobile, 2 on desktop
+        return window.innerWidth <= 768 ? 1 : 2;
+    }
+    
+    init() {
+        // Create dots
+        this.createDots();
+        
+        // Add event listeners
+        this.prevBtn.addEventListener('click', () => this.prev());
+        this.nextBtn.addEventListener('click', () => this.next());
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            this.cardsPerView = this.getCardsPerView();
+            this.updateCarousel();
+            this.recreateDots();
+        });
+        
+        // Initial update
+        this.updateCarousel();
+        
+        // Auto-play (optional)
+        this.startAutoPlay();
+    }
+    
+    createDots() {
+        this.dotsContainer.innerHTML = '';
+        const totalDots = this.totalCards - this.cardsPerView + 1;
+        
+        for (let i = 0; i < totalDots; i++) {
+            const dot = document.createElement('button');
+            dot.classList.add('carousel-dot');
+            dot.setAttribute('role', 'tab');
+            dot.setAttribute('aria-label', `Przejdź do slajdu ${i + 1}`);
+            if (i === 0) dot.classList.add('active');
+            
+            dot.addEventListener('click', () => {
+                this.goToSlide(i);
+            });
+            
+            this.dotsContainer.appendChild(dot);
+        }
+    }
+    
+    recreateDots() {
+        this.createDots();
+        this.updateDots();
+    }
+    
+    updateDots() {
+        const dots = this.dotsContainer.querySelectorAll('.carousel-dot');
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === this.currentIndex);
+            dot.setAttribute('aria-selected', index === this.currentIndex);
+        });
+    }
+    
+    updateCarousel() {
+        // Calculate transform
+        const cardWidth = this.cards[0].offsetWidth;
+        const gap = 32; // 2rem = 32px
+        const offset = -(this.currentIndex * (cardWidth + gap));
+        
+        this.track.style.transform = `translateX(${offset}px)`;
+        
+        // Update button states
+        this.prevBtn.disabled = this.currentIndex === 0;
+        this.nextBtn.disabled = this.currentIndex >= this.totalCards - this.cardsPerView;
+        
+        // Update dots
+        this.updateDots();
+    }
+    
+    next() {
+        if (this.currentIndex < this.totalCards - this.cardsPerView) {
+            this.currentIndex++;
+            this.updateCarousel();
+            this.resetAutoPlay();
+        }
+    }
+    
+    prev() {
+        if (this.currentIndex > 0) {
+            this.currentIndex--;
+            this.updateCarousel();
+            this.resetAutoPlay();
+        }
+    }
+    
+    goToSlide(index) {
+        this.currentIndex = index;
+        this.updateCarousel();
+        this.resetAutoPlay();
+    }
+    
+    startAutoPlay() {
+        this.autoPlayInterval = setInterval(() => {
+            if (this.currentIndex >= this.totalCards - this.cardsPerView) {
+                this.currentIndex = 0;
+            } else {
+                this.currentIndex++;
+            }
+            this.updateCarousel();
+        }, 5000); // Change slide every 5 seconds
+    }
+    
+    resetAutoPlay() {
+        clearInterval(this.autoPlayInterval);
+        this.startAutoPlay();
+    }
+}
+
+// Initialize carousel when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    new TestimonialsCarousel();
+});
+
+// =================================================================
 // MOBILE NAVIGATION
 // =================================================================
 

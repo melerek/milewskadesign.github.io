@@ -681,38 +681,53 @@
     <section id="testimonials" class="testimonials">
         <div class="container">
             <div class="section-header">
-                <h2>Historie Sukcesu Klientów</h2>
+                <h2>Rekomendacje Klientów</h2>
                 <p>Co mówią moi klienci o współpracy ze mną</p>
             </div>
             
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-rating">★★★★★</div>
-                    <p>"Wizualizacje 3D były tak realistyczne, że mogłam dokładnie zobaczyć, jak będzie wyglądał mój salon. Końcowy rezultat przewyższył moje oczekiwania!"</p>
-                    <div class="testimonial-author">
-                        <strong>Anna Kowalska</strong>
-                        <span>Klient Mieszkaniowy</span>
+            <div class="testimonials-carousel">
+                <button class="carousel-btn carousel-btn-prev" aria-label="Poprzednia rekomendacja">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M15 18l-6-6 6-6"/>
+                    </svg>
+                </button>
+                
+                <div class="testimonials-wrapper">
+                    <div class="testimonials-track">
+                        <div class="testimonial-card">
+                            <div class="testimonial-image">
+                                <img src="images/recommendations/1.png" alt="Rekomendacja klienta 1" loading="lazy">
+                            </div>
+                        </div>
+                        
+                        <div class="testimonial-card">
+                            <div class="testimonial-image">
+                                <img src="images/recommendations/2.png" alt="Rekomendacja klienta 2" loading="lazy">
+                            </div>
+                        </div>
+                        
+                        <div class="testimonial-card">
+                            <div class="testimonial-image">
+                                <img src="images/recommendations/3.png" alt="Rekomendacja klienta 3" loading="lazy">
+                            </div>
+                        </div>
+                        
+                        <div class="testimonial-card">
+                            <div class="testimonial-image">
+                                <img src="images/recommendations/4.png" alt="Rekomendacja klienta 4" loading="lazy">
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="testimonial-card">
-                    <div class="testimonial-rating">★★★★★</div>
-                    <p>"Profesjonalnie, kreatywnie i efektywnie. Cały proces przebiegł płynnie od pierwszej konsultacji do końcowej realizacji."</p>
-                    <div class="testimonial-author">
-                        <strong>Piotr Nowak</strong>
-                        <span>Projekt Mieszkaniowy</span>
-                    </div>
-                </div>
-                
-                <div class="testimonial-card">
-                    <div class="testimonial-rating">★★★★★</div>
-                    <p>"Niesamowita dbałość o szczegóły i umiejętność uchwycenia dokładnie tego, czego chcieliśmy. Gorąco polecam dla każdego projektu wnętrz."</p>
-                    <div class="testimonial-author">
-                        <strong>Katarzyna Wiśniewska</strong>
-                        <span>Remont Kuchni</span>
-                    </div>
-                </div>
+                <button class="carousel-btn carousel-btn-next" aria-label="Następna rekomendacja">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                </button>
             </div>
+            
+            <div class="carousel-dots" role="tablist" aria-label="Nawigacja rekomendacji"></div>
         </div>
     </section>
 
