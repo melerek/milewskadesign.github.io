@@ -2181,6 +2181,12 @@ body {
     color: var(--accent-primary) !important;
 }
 
+/* Temporary: Hide prices until business plan is set up */
+.package-price,
+.price-row {
+    display: none !important;
+}
+
 /* Portfolio Section */
 .portfolio {
     background: var(--bg-secondary);
