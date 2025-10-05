@@ -2025,6 +2025,37 @@ h3 {
     color: var(--text-secondary);
     line-height: 1.6;
     margin-bottom: 1rem;
+    max-height: 250px; /* Limit height to keep focus on images */
+    overflow-y: auto;
+    padding-right: 0.5rem;
+    padding-bottom: 1rem; /* Ensure last paragraph is fully visible */
+    text-align: justify;
+    position: relative;
+}
+
+/* Custom scrollbar for description */
+.lightbox-description::-webkit-scrollbar {
+    width: 8px;
+}
+
+.lightbox-description::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+.lightbox-description::-webkit-scrollbar-thumb {
+    background: var(--accent-dark);
+    border-radius: 4px;
+}
+
+.lightbox-description::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-primary);
+}
+
+/* Firefox scrollbar */
+.lightbox-description {
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-dark) rgba(0, 0, 0, 0.1);
 }
 
 .lightbox-tags {
@@ -3129,9 +3160,7 @@ body {
     box-shadow: none;
 }
 
-.testimonial-card:hover {
-    /* No shadow in dark mode either */
-}
+/* Testimonial card hover - no shadow effect */
 
 .testimonial-image {
     background: var(--bg-accent);
@@ -3281,6 +3310,15 @@ body {
 
 .lightbox-description {
     color: var(--text-secondary);
+}
+
+/* Dark mode scrollbar for description */
+[data-theme="dark"] .lightbox-description::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .lightbox-description::-webkit-scrollbar-thumb {
+    background: var(--accent-dark);
 }
 
 .lightbox-tag {

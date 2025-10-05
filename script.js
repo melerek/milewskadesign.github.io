@@ -367,6 +367,10 @@ function getAllProjectImages() {
     Object.keys(portfolioProjects).forEach(projectId => {
         const project = portfolioProjects[projectId];
         project.images.forEach(image => {
+            // Skip images that are marked as gallery-only (not for hero carousel)
+            if (image.includeInHero === false) {
+                return;
+            }
             allImages.push({
                 src: image.src,
                 caption: image.caption,
@@ -944,7 +948,23 @@ const portfolioProjects = {
     },
     'project_3': {
         title: 'Ciepłe Mieszkanie na Bemowie',
-        description: 'Przytulne mieszkanie rodzinne z ciepłą, naturalną kolorystyką. Projekt stawia na komfort i funkcjonalność, łącząc przestrzeń dzienną z kuchnią i osobną sypialnią. Naturalne materiały, drewniane akcenty i przemyślane oświetlenie tworzą atmosferę spokoju i harmonii.',
+        description: `<strong>Wyzwanie:</strong><br>
+Punktem wyjścia był standardowy układ deweloperski, który, mimo potencjału, zupełnie nie odpowiadał na potrzeby i styl życia Inwestorki. Główne problemy były widoczne gołym okiem: mała i niefunkcjonalna kuchnia, w której trudno było gotować, ciasna sypialnia z miejscem tylko na pojedyncze łóżko oraz dotkliwy brak miejsca do przechowywania. Co więcej, przewidziana wnęka okazała się za mała, by zmieścić pralkę.<br><br>
+
+<strong>Rozwiązanie: Nowy Układ Funkcjonalny</strong><br>
+Kluczem do metamorfozy była odważna zmiana układu funkcjonalnego. Zamurowanie zbędnych drzwi do sypialni pozwoliło nam całkowicie przearanżować kuchnię i stworzyć funkcjonalną zabudowę w kształcie litery 'L'. Dzięki temu nie tylko zyskaliśmy znacznie więcej miejsca do przechowywania i blatu roboczego, ale również mogliśmy zachować wizualną lekkość – szafki wiszące umieściliśmy tylko na jednej ścianie, aby otwarta strefa dzienna pozostała przestronna. W nowym układzie znalazło się również dedykowane miejsce na pralkę oraz pojemne szafy w zabudowie. W sypialni, dzięki zastosowaniu przeszklenia w metalowej ramie, nie tylko bez problemu zmieściliśmy pełnowymiarowe, podwójne łóżko, ale również optycznie otworzyliśmy i doświetliliśmy całą przestrzeń. Dodatkowo, aby wizualnie powiększyć i ujednolicić całą strefę dzienną, zrezygnowaliśmy z płytek w kuchni na rzecz tej samej podłogi, która płynnie przechodzi przez salon aż do sypialni.<br><br>
+
+<strong>Detale, które tworzą magię:</strong><br>
+Na solidnym fundamencie nowego układu, mogliśmy zaszaleć z detalami, które nadały wnętrzu niepowtarzalny charakter:<br><br>
+
+<strong>Malinowe drzwi do sypialni:</strong> Przeszklenie w odważnym, malinowym odcieniu stało się rzeźbiarskim elementem, który od progu intryguje i zapowiada niezwykłe wnętrze.<br><br>
+
+<strong>Gra luster w salonie:</strong> Kompozycja nieregularnych, kolorowych luster nad sofą to inteligentny zabieg, który "kradnie" fragment spektakularnej tapety z motywem dżungli z sąsiedniej sypialni, wprowadzając do salonu element zaskoczenia.<br><br>
+
+<strong>Świadome operowanie kolorem:</strong> Spokojna szałwiowa zieleń, pojawiająca się zarówno w kuchni, jak i w łazience, stanowi spójne tło dla odważniejszych akcentów, tworząc harmonijną całość.<br><br>
+
+<strong>Rezultat:</strong><br>
+W rezultacie, standardowy układ deweloperski przeszedł pełną transformację. Powstało wnętrze z duszą, które jest nie tylko piękne i pełne odważnych detali, ale przede wszystkim perfekcyjnie funkcjonalne. To przestrzeń, w której każdy centymetr został przemyślany, udowadniając, że nawet małe mieszkanie może być niezwykle funkcjonalne i ciekawie zaprojektowane.`,
         location: 'Bemowo, Warszawa',
         area: '~65m²',
         tags: ['Mieszkanie', 'Rodzinne', 'Ciepłe', 'Naturalne', 'Przytulne'],
@@ -956,7 +976,9 @@ const portfolioProjects = {
             { src: 'images/renders/Project_3_mag/kuchnia2_full.webp', caption: 'Widok na kuchnię' },
             { src: 'images/renders/Project_3_mag/Sypialnia_full.webp', caption: 'Przytulna sypialnia' },
             { src: 'images/renders/Project_3_mag/Sypialnia2_full.webp', caption: 'Strefa nocna' },
-            { src: 'images/renders/Project_3_mag/Łazienka 2_full.webp', caption: 'Nowoczesna łazienka' }
+            { src: 'images/renders/Project_3_mag/Łazienka 2_full.webp', caption: 'Nowoczesna łazienka' },
+            { src: 'images/renders/Project_3_mag/7_full.webp', caption: 'Widok dodatkowy 1', includeInHero: false },
+            { src: 'images/renders/Project_3_mag/8_full.webp', caption: 'Widok dodatkowy 2', includeInHero: false }
         ]
     },
     'project_4': {
