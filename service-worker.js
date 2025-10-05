@@ -1,4 +1,4 @@
-const CACHE_NAME = 'milewska-design-v1.1.0';
+const CACHE_NAME = 'milewska-design-v1.3.0';
 const OFFLINE_URL = '/offline.html';
 
 // Assets to cache immediately
@@ -6,15 +6,22 @@ const PRECACHE_ASSETS = [
   '/',
   '/index.html',
   '/styles.css',
+  '/styles.min.css',
   '/script.js',
+  '/script.min.js',
   '/manifest.json',
   '/images/milewska_design_pic.jpg',
   // Core render images for offline viewing (optimized WebP)
   '/images/renders/Project_2_wil/caly salon_medium.webp',
   '/images/renders/Project_1_zab/Kuchnia_medium.webp',
   '/images/renders/Project_3_mag/Sypialnia_medium.webp',
-  // Fonts
-  'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap',
+  // Local Optimized Fonts
+  '/fonts/fonts.css',
+  '/fonts/montserrat-400.woff2',
+  '/fonts/montserrat-500.woff2',
+  '/fonts/montserrat-600.woff2',
+  '/fonts/cormorant-garamond-400.woff2',
+  '/fonts/cormorant-garamond-600.woff2',
   // AOS Library
   'https://unpkg.com/aos@2.3.1/dist/aos.css',
   'https://unpkg.com/aos@2.3.1/dist/aos.js'
@@ -23,7 +30,7 @@ const PRECACHE_ASSETS = [
 // Assets to cache on runtime (images, etc.)
 const RUNTIME_CACHE = [
   '/images/renders/',
-  'https://fonts.gstatic.com/'
+  '/fonts/'
 ];
 
 // Install event - cache core assets
@@ -72,10 +79,8 @@ self.addEventListener('fetch', event => {
   // Skip non-GET requests
   if (request.method !== 'GET') return;
 
-  // Skip external requests that aren't fonts or APIs we control
+  // Skip external requests that aren't APIs we control
   if (!request.url.startsWith(self.location.origin) &&
-      !request.url.includes('fonts.googleapis.com') &&
-      !request.url.includes('fonts.gstatic.com') &&
       !request.url.includes('unpkg.com')) {
     return;
   }
@@ -141,9 +146,10 @@ function shouldCache(url) {
     url.includes('.jpeg') ||
     url.includes('.png') ||
     url.includes('.webp') ||
+    url.includes('.woff2') ||
+    url.includes('.woff') ||
     url.includes('.css') ||
     url.includes('.js') ||
-    url.includes('fonts.gstatic.com') ||
     url.includes('unpkg.com')
   );
 }

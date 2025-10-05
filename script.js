@@ -833,6 +833,7 @@ const portfolioProjects = {
 
 let currentLightboxIndex = 0;
 let currentProjectData = null;
+let lastFocusedElement = null; // For accessibility - restore focus after closing lightbox
 
 // Lightbox Functions - Updated for Project Galleries
 function openLightbox(element) {
@@ -852,6 +853,9 @@ function openLightbox(element) {
         return;
     }
 
+    // Store last focused element for accessibility
+    lastFocusedElement = document.activeElement;
+
     // Start at first image
     currentLightboxIndex = 0;
 
@@ -860,7 +864,14 @@ function openLightbox(element) {
 
     // Show lightbox
     lightbox.classList.add('active');
+    lightbox.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+    
+    // Set focus to close button for keyboard navigation
+    const closeButton = lightbox.querySelector('.lightbox-close');
+    if (closeButton) {
+        setTimeout(() => closeButton.focus(), 100);
+    }
 }
 
 // Add click event listeners to portfolio items
@@ -878,8 +889,15 @@ document.addEventListener('DOMContentLoaded', function() {
 function closeLightbox() {
     const lightbox = document.getElementById('lightboxOverlay');
     lightbox.classList.remove('active');
+    lightbox.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = 'auto';
     currentProjectData = null;
+    
+    // Restore focus to last focused element for accessibility
+    if (lastFocusedElement) {
+        lastFocusedElement.focus();
+        lastFocusedElement = null;
+    }
 }
 
 function displayLightboxImage(index) {

@@ -10,6 +10,76 @@ html {
     scroll-padding-top: 100px; /* Account for fixed navbar height */
 }
 
+/* Accessibility: Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Skip to Content Link (Accessibility) */
+.skip-to-content {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    z-index: 100000;
+    padding: 1rem 1.5rem;
+    background: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 0 0 8px 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: top 0.3s ease;
+}
+
+.skip-to-content:focus {
+    top: 0;
+    outline: 3px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+/* Enhanced Focus Indicators */
+*:focus-visible {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 3px;
+}
+
+/* Remove default focus outline for mouse users */
+*:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* Keyboard navigation focus styles */
+.navbar a:focus-visible,
+.nav-links a:focus-visible {
+    outline: 3px solid white;
+    outline-offset: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.btn-primary:focus-visible,
+.btn-secondary:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(168, 141, 128, 0.4);
+}
+
 body {
     font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
     line-height: 1.6;
@@ -198,6 +268,10 @@ h3 {
     display: none;
     flex-direction: column;
     cursor: pointer;
+    background: transparent;
+    border: none;
+    padding: 0.5rem;
+    margin: -0.5rem;
 }
 
 .hamburger span {
@@ -3632,10 +3706,7 @@ body {
     font-style: italic;
 }
 
-.klarowny {
-    /* Background for table cells, not headers */
-}
-
+/* Klarowny package styling */
 .compare-table th.klarowny {
     background: rgba(168, 141, 128, 0.2) !important;
     color: var(--text-primary) !important;
@@ -3646,10 +3717,7 @@ body {
     background: rgba(168, 141, 128, 0.1);
 }
 
-.wizja {
-    /* Background for table cells, not headers */
-}
-
+/* Wizja package styling */
 .compare-table th.wizja {
     background: rgba(168, 141, 128, 0.25) !important;
     color: var(--text-primary) !important;
@@ -3660,10 +3728,7 @@ body {
     background: rgba(168, 141, 128, 0.15);
 }
 
-.realizacja.featured {
-    /* Background for table cells, not headers */
-}
-
+/* Realizacja featured package styling */
 .compare-table th.realizacja.featured {
     background: linear-gradient(135deg, rgba(168, 141, 128, 0.3), rgba(168, 141, 128, 0.4)) !important;
     color: var(--text-primary) !important;
