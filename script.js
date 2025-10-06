@@ -659,7 +659,6 @@ function showNotification(message, type) {
 function validateForm() {
     const name = document.getElementById('name').value.trim();
     const email = document.getElementById('email').value.trim();
-    const projectType = document.getElementById('project-type').value;
     const message = document.getElementById('message').value.trim();
     
     const errors = [];
@@ -671,10 +670,6 @@ function validateForm() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
         errors.push('Please enter a valid email address');
-    }
-    
-    if (!projectType) {
-        errors.push('Please select a project type');
     }
     
     if (message.length < 10) {
@@ -1576,8 +1571,6 @@ function sendEmail(form) {
             from_name: formData.get('name'),
             from_email: formData.get('email'),
             phone: formData.get('phone') || 'Nie podano',
-            project_type: formData.get('project-type'),
-            budget: formData.get('budget') || 'Nie określono',
             message: formData.get('message'),
             to_email: 'milewskadesign@gmail.com', // Your email
             recaptcha_token: recaptchaToken || 'not_configured' // Include reCAPTCHA token
@@ -1742,14 +1735,12 @@ if (contactForm) {
                 submitBtn.disabled = false;
 
                 // Show success message
-                showFormStatus('success', 'Dziękujemy! Skontaktujemy się z Tobą wkrótce.');
+                showFormStatus('success', 'Dziękuję! Skontaktuję się z Tobą wkrótce.');
                 
                 // Track form submission
                 const formData = new FormData(contactForm);
                 trackEvent('form_submission', {
-                    form_type: 'contact',
-                    project_type: formData.get('project-type') || 'not_specified',
-                    budget: formData.get('budget') || 'not_specified'
+                    form_type: 'contact'
                 });
                 
                 // Track conversion for GA4
