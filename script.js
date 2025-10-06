@@ -928,14 +928,12 @@ const portfolioProjects = {
         tags: ['Apartament', 'Luksusowe', 'Wilanów', 'Designerskie', 'Eleganckie'],
         images: [
             { src: 'images/renders/Project_2_wil/caly salon_full.webp', caption: 'Panorama salonu' },
-            { src: 'images/renders/Project_2_wil/salon_full.webp', caption: 'Strefa wypoczynkowa' },
             { src: 'images/renders/Project_2_wil/kanapa_CShading_LightMix_full.webp', caption: 'Designerska kanapa' },
             { src: 'images/renders/Project_2_wil/tv_CShading_LightMix_full.webp', caption: 'Strefa telewizyjna' },
             { src: 'images/renders/Project_2_wil/Stół_CShading_LightMix_full.webp', caption: 'Strefa jadalna' },
             { src: 'images/renders/Project_2_wil/Kuchnia_po_PS_full.webp', caption: 'Kuchnia z wyspą' },
             { src: 'images/renders/Project_2_wil/Kuchnia detal_CShading_LightMix_full.webp', caption: 'Detal kuchenny' },
             { src: 'images/renders/Project_2_wil/Jaśniejsze_full.webp', caption: 'Jasna przestrzeń' },
-            { src: 'images/renders/Project_2_wil/Detal_full.webp', caption: 'Detal dekoracyjny' },
             { src: 'images/renders/Project_2_wil/Detal_CShading_LightMix_full.webp', caption: 'Detal z oświetleniem' },
             { src: 'images/renders/Project_2_wil/łazienka_full.webp', caption: 'Elegancka łazienka' },
             { src: 'images/renders/Project_2_wil/Umywalka_full.webp', caption: 'Strefa umywalkowa' }
