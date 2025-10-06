@@ -137,6 +137,16 @@ class TestimonialsCarousel {
         
         // Auto-play (optional)
         this.startAutoPlay();
+        
+        // Pause on hover
+        this.carousel.addEventListener('mouseenter', () => {
+            this.stopAutoPlay();
+        });
+        
+        // Resume on mouse leave
+        this.carousel.addEventListener('mouseleave', () => {
+            this.startAutoPlay();
+        });
     }
     
     createDots() {
@@ -210,6 +220,8 @@ class TestimonialsCarousel {
     }
     
     startAutoPlay() {
+        // Clear any existing interval first
+        this.stopAutoPlay();
         this.autoPlayInterval = setInterval(() => {
             if (this.currentIndex >= this.totalCards - this.cardsPerView) {
                 this.currentIndex = 0;
@@ -220,8 +232,15 @@ class TestimonialsCarousel {
         }, 5000); // Change slide every 5 seconds
     }
     
+    stopAutoPlay() {
+        if (this.autoPlayInterval) {
+            clearInterval(this.autoPlayInterval);
+            this.autoPlayInterval = null;
+        }
+    }
+    
     resetAutoPlay() {
-        clearInterval(this.autoPlayInterval);
+        this.stopAutoPlay();
         this.startAutoPlay();
     }
 }
