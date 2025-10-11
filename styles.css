@@ -2869,29 +2869,54 @@ body {
     box-shadow: 0 10px 30px rgba(168, 141, 128, 0.4);
 }
 
-/* Featured package buttons styling */
+/* Featured package buttons styling - now matches regular packages */
 .package-card.featured .package-btn {
-    background: linear-gradient(135deg, #544f4d, #3d3a38);
-    border-color: #544f4d;
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
     color: white;
 }
 
 .package-card.featured .package-btn:hover {
     background: transparent;
-    color: #544f4d;
-    border-color: #544f4d;
-    box-shadow: 0 6px 20px rgba(84, 79, 77, 0.4);
+    color: var(--accent-primary);
+    border-color: var(--accent-primary);
+    box-shadow: 0 6px 20px rgba(168, 141, 128, 0.3);
 }
 
 .package-card.featured .compare-btn {
-    color: #544f4d;
-    border-color: #544f4d;
+    color: var(--accent-primary);
+    border-color: var(--accent-primary);
 }
 
 .package-card.featured .compare-btn:hover {
-    background: #544f4d;
+    background: var(--accent-primary);
     color: white;
-    border-color: #544f4d;
+    border-color: var(--accent-primary);
+}
+
+/* Dark theme: Make featured package buttons match regular package buttons */
+[data-theme="dark"] .package-card.featured .package-btn {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: white;
+}
+
+[data-theme="dark"] .package-card.featured .package-btn:hover {
+    background: transparent;
+    color: var(--accent-primary);
+    border-color: var(--accent-primary);
+    box-shadow: 0 6px 20px rgba(168, 141, 128, 0.3);
+}
+
+[data-theme="dark"] .package-card.featured .compare-btn {
+    color: var(--accent-primary);
+    border-color: var(--accent-primary);
+}
+
+[data-theme="dark"] .package-card.featured .compare-btn:hover {
+    background: var(--accent-primary);
+    color: white;
+    border-color: var(--accent-primary);
 }
 
 /* Closing Section */

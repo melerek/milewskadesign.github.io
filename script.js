@@ -922,8 +922,18 @@ function initializePWAFeatures() {
 // Portfolio Projects Data - Complete Gallery System
 const portfolioProjects = {
     'project_1': {
-        title: 'Nowoczesne Mieszkanie w Ząbkach',
-        description: 'Kompleksowy projekt mieszkania łączący funkcjonalność z nowoczesną estetyką. Otwarta strefa dzienna płynnie przechodzi w kuchnię, tworząc przestrzeń idealną do życia rodzinnego. Projekt wyróżnia się przemyślanym oświetleniem, elegancką kolorystyką i dbałością o każdy detal.',
+        title: 'Nowoczesne mieszkanie na Warszawskim Mokotowie - 65m2',
+        description: `Dla rodziny z dzieckiem, szukającej wytchnienia od miejskiego zgiełku, stworzyliśmy spokojne i przytulne wnętrze, opierając się na sprytnych rozwiązaniach w ramach rozsądnego budżetu, z minimalną ingerencją w istniejący układ funkcjonalny i instalacje - zgodnie z życzeniem klientów. Zamiast wielkiej rewolucji, skupiliśmy się na przemyślanych detalach, które realnie podnoszą komfort życia.<br><br>
+
+<strong>Kluczowe rozwiązania w tym projekcie:</strong><br><br>
+
+<strong>Poprawa akustyki:</strong> W salonie zastosowaliśmy grubą, tekstylną tapetę, która nie tylko dodaje przytulności, ale przede wszystkim znacząco wycisza przestrzeń.<br><br>
+
+<strong>Przemyślana elektryka:</strong> Skorygowaliśmy niebezpiecznie umiejscowione gniazdka i dodaliśmy nowe w kluczowych miejscach, zapewniając pełną ergonomię i wygodę na co dzień.<br><br>
+
+<strong>Maksymalizacja przechowywania:</strong> Zaprojektowaliśmy szereg pojemnych, ukrytych szafek w łazience i kuchni, w tym dedykowaną szufladę na kapsułki nad zmywarką, co ułatwia utrzymanie idealnego porządku.<br><br>
+
+W rezultacie powstało wnętrze, które jest nie tylko piękne, ale przede wszystkim <strong>niezwykle praktyczne i idealnie dopasowane do realnych potrzeb</strong> jego mieszkańców.`,
         location: 'Ząbki',
         area: '~75m²',
         tags: ['Mieszkanie', 'Nowoczesne', 'Salon', 'Kuchnia', 'Łazienka'],
@@ -940,7 +950,7 @@ const portfolioProjects = {
         ]
     },
     'project_2': {
-        title: 'Elegancki Apartament w Wilanowie',
+        title: 'Elegancka kawalerka na Mokotowie - 39m2',
         description: 'Luksusowy apartament łączący klasyczną elegancję z nowoczesnymi rozwiązaniami. Przestronny salon z wysokimi sufitami, designerska kuchnia oraz elegancka łazienka tworzą harmonijną całość. Projekt charakteryzuje się subtelną kolorystyką, naturalnymi materiałami i dbałością o detale.',
         location: 'Wilanów, Warszawa',
         area: '~90m²',
@@ -959,7 +969,7 @@ const portfolioProjects = {
         ]
     },
     'project_3': {
-        title: 'Ciepłe Mieszkanie na Bemowie',
+        title: 'Kolorowe mieszkanie na Białołęce - 38m2',
         description: `<strong>Wyzwanie:</strong><br>
 Punktem wyjścia był standardowy układ deweloperski, który, mimo potencjału, zupełnie nie odpowiadał na potrzeby i styl życia Inwestorki. Główne problemy były widoczne gołym okiem: mała i niefunkcjonalna kuchnia, w której trudno było gotować, ciasna sypialnia z miejscem tylko na pojedyncze łóżko oraz dotkliwy brak miejsca do przechowywania. Co więcej, przewidziana wnęka okazała się za mała, by zmieścić pralkę.<br><br>
 
@@ -982,19 +992,19 @@ W rezultacie, standardowy układ deweloperski przeszedł pełną transformację.
         tags: ['Mieszkanie', 'Rodzinne', 'Ciepłe', 'Naturalne', 'Przytulne'],
         images: [
             { src: 'images/renders/Project_3_mag/Kanapa_full.webp', caption: 'Salon z kanapą' },
-            { src: 'images/renders/Project_3_mag/Po_full.webp', caption: 'Strefa wypoczynkowa' },
             { src: 'images/renders/Project_3_mag/detal_full.webp', caption: 'Detal projektowy' },
             { src: 'images/renders/Project_3_mag/Kuchnia_full.webp', caption: 'Funkcjonalna kuchnia' },
             { src: 'images/renders/Project_3_mag/kuchnia2_full.webp', caption: 'Widok na kuchnię' },
             { src: 'images/renders/Project_3_mag/Sypialnia_full.webp', caption: 'Przytulna sypialnia' },
             { src: 'images/renders/Project_3_mag/Sypialnia2_full.webp', caption: 'Strefa nocna' },
             { src: 'images/renders/Project_3_mag/Łazienka 2_full.webp', caption: 'Nowoczesna łazienka' },
+            { src: 'images/renders/Project_3_mag/Po_full.webp', caption: 'Strefa wypoczynkowa' },
             { src: 'images/renders/Project_3_mag/7_full.webp', caption: 'Widok dodatkowy 1', includeInHero: false },
             { src: 'images/renders/Project_3_mag/8_full.webp', caption: 'Widok dodatkowy 2', includeInHero: false }
         ]
     },
     'project_4': {
-        title: 'Nowoczesne Mieszkanie w Kazimierzu',
+        title: 'Rewitalizacja domu w Łomiankach',
         description: 'Minimalistyczny projekt mieszkania z otwartą przestrzenią dzienną. Przemyślany układ funkcjonalny zapewnia wygodę użytkowania, a nowoczesny design z subtelnymi akcentami tworzy elegancką całość. Projekt charakteryzuje się czystymi liniami i harmonijną kompozycją.',
         location: 'Kazimierz',
         area: '~70m²',
@@ -1009,8 +1019,12 @@ W rezultacie, standardowy układ deweloperski przeszedł pełną transformację.
         ]
     },
     'project_s1': {
-        title: 'Projekt Konkursowy - Opcja Pierwsza',
-        description: 'Minimalistyczna propozycja konkursowa łącząca czystość formy z funkcjonalnością. Projekt wyróżnia się elegancją, wykorzystaniem naturalnych materiałów i przemyślanym oświetleniem. Harmonijna kompozycja przestrzeni tworzy spokojną, nowoczesną atmosferę.',
+        title: 'Projekt zwycięski w ogólnopolskim konkursie marki Samsung',
+        description: `Projekt przestronnej kuchni w stylu Japandi, który zdobył główną nagrodę w ogólnopolskim konkursie marki Samsung "Projektuj z Bespoke".<br><br>
+
+<strong>Uzasadnienie werdyktu jury</strong><br><br>
+
+"Projekt kuchni charakteryzuje się harmonią oraz dbałością o szczegóły. Duża ilość drewna łączy się z minimalistycznym charakterem wnętrza, wprowadzając przytulność i spokój, typowe dla stylu japandi. Subtelność projektu przejawia się w delikatnych, lecz wyrazistych detalach oraz przemyślanej kompozycji. Dodatkowo, zastosowanie luksferów zapewnia doskonałe doświetlenie wnętrza i dodaje mu unikalnego, artystycznego charakteru. Nowoczesna lodówka Samsung Bespoke idealnie wpisuje się w ten projekt. Całość stanowi doskonały przykład integracji estetyki i technologii."`,
         location: 'Projekt Konkursowy',
         tags: ['Konkurs', 'Minimalizm', 'Elegancja', 'Naturalne Materiały'],
         images: [
@@ -1020,8 +1034,12 @@ W rezultacie, standardowy układ deweloperski przeszedł pełną transformację.
         ]
     },
     'project_s2': {
-        title: 'Projekt Konkursowy - Opcja Druga',
-        description: 'Nowoczesna wizja przestrzeni z ciepłymi akcentami. Projekt łączy funkcjonalność z estetyką, stawiając na harmonię kolorów i tekstur. Przemyślane oświetlenie i naturalne materiały tworzą przytulną, ale nowoczesną atmosferę.',
+        title: 'W Kontrze: Odważniejsza Odsłona Kuchni Konkursowej',
+        description: `Druga propozycja dla tej samej przestrzeni konkursowej, prezentująca zupełnie inny, odważniejszy charakter. To dowód na to, jak wszechstronne może być jedno wnętrze.<br><br>
+
+Koncepcja opiera się na głębokich, stonowanych barwach. Ciepłe drewno łączy się tu z surowym, glinianym tynkiem w odcieniach szarości i beżu, a całość dopełniają mocne akcenty czerni i brązowych dodatków.<br><br>
+
+Sercem projektu i elementem, który nadaje całości dramaturgii, jest spektakularny kamień z mocną, graficzną żyłą. To on definiuje charakter tego wnętrza, udowadniając, że ciemniejsze przestrzenie potrafią być niezwykle eleganckie i przytulne.`,
         location: 'Projekt Konkursowy',
         tags: ['Konkurs', 'Nowoczesne', 'Ciepłe Akcenty', 'Harmonia'],
         images: [
@@ -1031,8 +1049,12 @@ W rezultacie, standardowy układ deweloperski przeszedł pełną transformację.
         ]
     },
     'project_s3': {
-        title: 'Projekt Konkursowy - Opcja Trzecia',
-        description: 'Harmonijne połączenie funkcjonalności i estetyki w przestrzeni mieszkalnej. Projekt charakteryzuje się przemyślanym układem, elegancką kolorystyką i dbałością o detale. Balans między nowoczesnością a przytulnością tworzy idealną przestrzeń do życia.',
+        title: 'Trzecia Odsłona Kuchni stylu Japandi',
+        description: `Trzecia i ostatnia propozycja dla tej samej przestrzeni, tym razem skierowana do miłośników natury i minimalizmu. Koncepcja jest celebracją drewna, które pojawia się tu w różnych odcieniach, tworząc ciepłą i niezwykle przytulną bazę.<br><br>
+
+Najważniejszym elementem projektu jest świadome zatarcie granicy między wnętrzem a zewnętrzem. Cała, minimalistyczna aranżacja stanowi idealne, spokojne tło dla bujnej zieleni, która staje się głównym bohaterem przestrzeni, niemal "wchodząc" do środka.<br><br>
+
+W rezultacie powstało wnętrze, które jest esencją spokoju i harmonii – proste, autentyczne i w pełni zintegrowane z naturą.`,
         location: 'Projekt Konkursowy',
         tags: ['Konkurs', 'Funkcjonalność', 'Estetyka', 'Harmonia'],
         images: [
@@ -1042,8 +1064,14 @@ W rezultacie, standardowy układ deweloperski przeszedł pełną transformację.
         ]
     },
     'project_s4': {
-        title: 'Projekt Konkursowy - Opcja Czwarta',
-        description: 'Subtelna propozycja konkursowa stawiająca na detale i przemyślaną kompozycję. Projekt charakteryzuje się elegancją, czystością formy i funkcjonalnością. Harmonijna paleta kolorów i naturalne materiały tworzą spokojną, nowoczesną przestrzeń.',
+        title: 'Projekt konkursowy - Kuchnia w Stylu Mid-Century Modern',
+        description: `Projekt konkursowy dla marki Samsung, będący współczesną interpretacją stylu mid-century modern. Celem było stworzenie przestrzeni, która czerpie z estetyki połowy XX wieku, ale jest w pełni dostosowana do wymagań nowoczesnego życia.<br><br>
+
+Koncepcja opiera się na odważnym połączeniu różnorodnych materiałów – od szlachetnej stali i ciemnego drewna, przez wzorzyste, geometryczne płytki, aż po kolorowe szkło. To eklektyczne tło stanowi idealną scenę dla ponadczasowych klasyków designu.<br><br>
+
+W projekcie nie mogło zabraknąć hołdu dla mistrzów tamtego okresu. Pojawiają się tu absolutne ikony wzornictwa, takie jak organiczne w formie krzesło Panton, oraz kultowa lampa Flowerpot.<br><br>
+
+W rezultacie powstało wnętrze z duszą, które jest dialogiem między przeszłością a teraźniejszością.`,
         location: 'Projekt Konkursowy',
         tags: ['Konkurs', 'Subtelność', 'Detale', 'Kompozycja'],
         images: [
@@ -1151,13 +1179,6 @@ function displayLightboxImage(index) {
     // Update description with caption and project info
     let descriptionHTML = `<strong>${imageData.caption}</strong><br>`;
     descriptionHTML += currentProjectData.description;
-    
-    if (currentProjectData.location) {
-        descriptionHTML += `<br><br><strong>Lokalizacja:</strong> ${currentProjectData.location}`;
-    }
-    if (currentProjectData.area) {
-        descriptionHTML += ` | <strong>Powierzchnia:</strong> ${currentProjectData.area}`;
-    }
     
     lightboxDesc.innerHTML = descriptionHTML;
 
