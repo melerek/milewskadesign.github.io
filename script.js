@@ -965,7 +965,9 @@ W rezultacie powstało wnętrze, które jest nie tylko piękne, ale przede wszys
             { src: 'images/renders/Project_2_wil/Jaśniejsze_full.webp', caption: 'Jasna przestrzeń' },
             { src: 'images/renders/Project_2_wil/Detal_CShading_LightMix_full.webp', caption: 'Detal z oświetleniem' },
             { src: 'images/renders/Project_2_wil/łazienka_full.webp', caption: 'Elegancka łazienka' },
-            { src: 'images/renders/Project_2_wil/Umywalka_full.webp', caption: 'Strefa umywalkowa' }
+            { src: 'images/renders/Project_2_wil/Umywalka_full.webp', caption: 'Strefa umywalkowa' },
+            { src: 'images/renders/Project_2_wil/9.jpg', caption: 'Widok dodatkowy 1' },
+            { src: 'images/renders/Project_2_wil/10.jpg', caption: 'Widok dodatkowy 2' }
         ]
     },
     'project_3': {

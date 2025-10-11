@@ -3742,6 +3742,12 @@ body {
     border-color: rgba(255, 255, 255, 0.8);
 }
 
+/* Portfolio button text - dark in dark theme for better contrast */
+[data-theme="dark"] .portfolio-item:hover .view-project {
+    background: white;
+    color: var(--bg-primary); /* Dark text color for better contrast */
+}
+
 /* Enhanced form styling for dark mode */
 [data-theme="dark"] .form-group input::placeholder,
 [data-theme="dark"] .form-group textarea::placeholder {
