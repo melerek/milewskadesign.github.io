@@ -1537,6 +1537,36 @@ h3 {
     .hero-gallery {
         display: none;
     }
+    
+    /* Lightbox adjustments for very small screens */
+    .lightbox-content {
+        max-width: 98vw;
+        max-height: 98vh;
+    }
+    
+    .lightbox-image {
+        max-height: 45vh;
+    }
+    
+    .lightbox-info {
+        max-height: 45vh;
+        padding: 0.75rem;
+    }
+    
+    .lightbox-title {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .lightbox-description {
+        font-size: 0.85rem;
+        line-height: 1.4;
+    }
+    
+    .lightbox-nav {
+        width: 35px;
+        height: 35px;
+    }
 }
 
 /* New Styles for Updated Content */
@@ -2016,6 +2046,8 @@ h3 {
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 25px 100px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
 }
 
 .lightbox-overlay.active .lightbox-content {
@@ -2026,13 +2058,19 @@ h3 {
     width: 100%;
     height: auto;
     display: block;
-    max-height: 70vh;
+    max-height: 60vh;
     object-fit: contain;
+    flex-shrink: 0;
 }
 
 .lightbox-info {
     padding: 1.5rem;
     background: white;
+    overflow-y: auto;
+    max-height: 30vh;
+    flex-shrink: 1;
+    flex-grow: 0;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
 }
 
 .lightbox-title {
@@ -2046,39 +2084,41 @@ h3 {
     color: var(--text-secondary);
     line-height: 1.6;
     margin-bottom: 1rem;
-    max-height: 250px; /* Limit height to keep focus on images */
-    overflow-y: auto;
     padding-right: 0.5rem;
-    padding-bottom: 2rem; /* Ensure last paragraph is fully visible */
     text-align: justify;
     position: relative;
 }
 
-.lightbox-description > *:last-child {
+.lightbox-description p {
     margin-bottom: 1rem;
 }
 
-/* Custom scrollbar for description */
-.lightbox-description::-webkit-scrollbar {
+.lightbox-description > *:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0.5rem;
+}
+
+/* Custom scrollbar for lightbox info section */
+.lightbox-info::-webkit-scrollbar {
     width: 8px;
 }
 
-.lightbox-description::-webkit-scrollbar-track {
+.lightbox-info::-webkit-scrollbar-track {
     background: rgba(0, 0, 0, 0.1);
     border-radius: 4px;
 }
 
-.lightbox-description::-webkit-scrollbar-thumb {
+.lightbox-info::-webkit-scrollbar-thumb {
     background: var(--accent-dark);
     border-radius: 4px;
 }
 
-.lightbox-description::-webkit-scrollbar-thumb:hover {
+.lightbox-info::-webkit-scrollbar-thumb:hover {
     background: var(--accent-primary);
 }
 
 /* Firefox scrollbar */
-.lightbox-description {
+.lightbox-info {
     scrollbar-width: thin;
     scrollbar-color: var(--accent-dark) rgba(0, 0, 0, 0.1);
 }
@@ -3413,12 +3453,12 @@ body {
     color: var(--text-secondary);
 }
 
-/* Dark mode scrollbar for description */
-[data-theme="dark"] .lightbox-description::-webkit-scrollbar-track {
+/* Dark mode scrollbar for lightbox info */
+[data-theme="dark"] .lightbox-info::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.1);
 }
 
-[data-theme="dark"] .lightbox-description::-webkit-scrollbar-thumb {
+[data-theme="dark"] .lightbox-info::-webkit-scrollbar-thumb {
     background: var(--accent-dark);
 }
 
@@ -3833,6 +3873,24 @@ body {
         max-width: 95vw;
         max-height: 95vh;
         margin: 0 10px;
+    }
+    
+    .lightbox-image {
+        max-height: 50vh;
+    }
+    
+    .lightbox-info {
+        max-height: 40vh;
+        padding: 1rem;
+    }
+    
+    .lightbox-title {
+        font-size: 1.2rem;
+    }
+    
+    .lightbox-description {
+        font-size: 0.9rem;
+        line-height: 1.5;
     }
 
     .lightbox-nav {
