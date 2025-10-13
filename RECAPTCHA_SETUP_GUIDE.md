@@ -34,7 +34,7 @@ Your contact form now has **Google reCAPTCHA v3** configured - an **invisible** 
 
 1. **Go to reCAPTCHA Admin:**
    - Visit: **https://www.google.com/recaptcha/admin/create**
-   - Sign in with your Google account (use milewskadesign@gmail.com)
+   - Sign in with your Google account (use kontakt@milewskadesign.pl)
 
 2. **Fill Out Registration Form:**
    - **Label:** `Milewska Design - Contact Form`
@@ -135,7 +135,7 @@ To see reCAPTCHA verification in your emails:
    ```
 
 ### **Test 2: Email Verification**
-1. Check your Gmail: milewskadesign@gmail.com
+1. Check your Gmail: kontakt@milewskadesign.pl
 2. Open the test email
 3. You should see:
    ```

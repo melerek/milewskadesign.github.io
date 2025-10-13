@@ -1,6 +1,6 @@
 # EmailJS Setup Guide - Milewska Design
 
-This guide will help you set up EmailJS so your contact form sends real emails to `milewskadesign@gmail.com`.
+This guide will help you set up EmailJS so your contact form sends real emails to `kontakt@milewskadesign.pl`.
 
 **Time required:** 5-10 minutes  
 **Cost:** FREE (200 emails/month)
@@ -13,7 +13,7 @@ This guide will help you set up EmailJS so your contact form sends real emails t
 
 1. Go to **https://www.emailjs.com/**
 2. Click **"Sign Up Free"**
-3. Sign up using your Google account (milewskadesign@gmail.com) or email
+3. Sign up using your Google account (kontakt@milewskadesign.pl) or email
 4. Verify your email if needed
 
 ---
@@ -24,7 +24,7 @@ This guide will help you set up EmailJS so your contact form sends real emails t
 2. Click **"Add New Service"**
 3. Select **"Gmail"**
 4. Click **"Connect Account"**
-5. Sign in with `milewskadesign@gmail.com`
+5. Sign in with `kontakt@milewskadesign.pl`
 6. Give it a **Service ID** (or use the auto-generated one)
    - Example: `service_abc123`
 7. **Copy this Service ID** - you'll need it later!
@@ -77,7 +77,7 @@ Wiadomość:
 Odpowiedz klientowi na: {{from_email}}
 ```
 
-4. **To Email:** Leave as `{{to_email}}` (it will use milewskadesign@gmail.com from the code)
+4. **To Email:** Leave as `{{to_email}}` (it will use kontakt@milewskadesign.pl from the code)
 5. **From Name:** `{{from_name}}`
 6. **From Email:** Leave default (service@emailjs.com)
 7. **Reply To:** `{{from_email}}` (so you can reply directly to the customer)
@@ -132,7 +132,7 @@ const EMAILJS_CONFIG = {
 4. Go to the contact form
 5. Fill it out with test data
 6. Submit!
-7. Check `milewskadesign@gmail.com` inbox - you should receive an email!
+7. Check `kontakt@milewskadesign.pl` inbox - you should receive an email!
 
 ---
 

@@ -1612,7 +1612,7 @@ function sendEmail(form) {
             from_email: formData.get('email'),
             phone: formData.get('phone') || 'Nie podano',
             message: formData.get('message'),
-            to_email: 'milewskadesign@gmail.com', // Your email
+            to_email: 'kontakt@milewskadesign.pl', // Your email
             recaptcha_token: recaptchaToken || 'not_configured' // Include reCAPTCHA token
         };
 
@@ -1812,7 +1812,7 @@ if (contactForm) {
 
                 // Show error message
                 console.error('EmailJS Error:', error);
-                showFormStatus('error', 'Wystąpił błąd. Prosimy spróbować ponownie lub skontaktować się bezpośrednio: milewskadesign@gmail.com');
+                showFormStatus('error', 'Wystąpił błąd. Prosimy spróbować ponownie lub skontaktować się bezpośrednio: kontakt@milewskadesign.pl');
             });
     });
 
