@@ -92,6 +92,7 @@
     
     <!-- Preload Critical Resources -->
     <link rel="preload" href="images/logo_md.webp" as="image" type="image/webp">
+    <link rel="preload" href="images/logo_img_md.webp" as="image" type="image/webp">
     <link rel="preload" href="images/renders/Project_2_wil/caly salon_full.webp" as="image" type="image/webp">
     <link rel="preload" href="styles.css" as="style">
     
@@ -124,8 +125,11 @@
     <!-- Page Loader -->
     <div class="page-loader" id="pageLoader">
         <div class="loader-content">
+            <div class="loader-text">
+                <img src="images/logo_img_md.webp" alt="Milewska Design" class="loader-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <span style="display: none;">Milewska Design</span>
+            </div>
             <div class="loader-spinner"></div>
-            <div class="loader-text">Milewska Design</div>
         </div>
     </div>
     <!-- Navigation -->

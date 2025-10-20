@@ -1493,6 +1493,11 @@ h3 {
         max-width: 180px;
     }
 
+    .loader-logo {
+        max-height: 70px;
+        max-width: 70px;
+    }
+
     .container {
         padding: 0 15px;
     }
@@ -1980,13 +1985,23 @@ h3 {
     border-top: 3px solid var(--accent-primary);
     border-radius: 50%;
     animation: spin 1s linear infinite;
-    margin: 0 auto 1rem;
+    margin: 1.5rem auto 0;
 }
 
 .loader-text {
     font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', Times, serif;
     font-size: 1.2rem;
     font-weight: 600;
+}
+
+.loader-logo {
+    height: auto;
+    max-height: 100px;
+    max-width: 100px;
+    width: auto;
+    display: block;
+    margin: 0 auto;
+    object-fit: contain;
 }
 
 @keyframes spin {

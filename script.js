@@ -845,8 +845,8 @@ function updateNavbarBackground() {
 // Initialize theme on page load
 function initializeTheme() {
     const savedTheme = localStorage.getItem('theme');
-    // Default to light mode (ignore system preference)
-    const theme = savedTheme || 'light';
+    // Default to dark mode (ignore system preference)
+    const theme = savedTheme || 'dark';
 
     document.documentElement.setAttribute('data-theme', theme);
 
