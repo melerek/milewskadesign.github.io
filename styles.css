@@ -121,13 +121,13 @@ h3 {
     position: fixed;
     top: 0;
     width: 100%;
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--navbar-bg);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     z-index: 1000;
     padding: 1rem 0;
     transition: all 0.3s ease;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid var(--border-light);
 }
 
 .nav-container {
@@ -2499,7 +2499,7 @@ h3 {
     --shadow-light: rgba(0, 0, 0, 0.4);
     --shadow-medium: rgba(0, 0, 0, 0.6);
     --overlay-light: rgba(0, 0, 0, 0.8);
-    --navbar-bg: rgba(28, 39, 38, 0.95);
+    --navbar-bg: #1c2726;
     --hero-text-shadow: 0 2px 20px rgba(0, 0, 0, 0.9);
     --contact-bg: linear-gradient(135deg, #1c2726, #2a3432);
 }
@@ -2512,13 +2512,6 @@ body {
 }
 
 /* Navigation */
-.navbar {
-    background: var(--navbar-bg);
-    border-bottom: 1px solid var(--border-light);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-}
-
 .nav-logo h2 {
     color: var(--accent-primary) !important;
 }

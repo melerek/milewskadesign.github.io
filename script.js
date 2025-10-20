@@ -825,7 +825,7 @@ function updateNavbarBackground() {
 
     if (window.scrollY > 100) {
         if (isDarkMode) {
-            navbar.style.background = 'rgba(13, 17, 23, 0.98)';
+            navbar.style.background = 'rgba(28, 39, 38, 0.98)';
             navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.3)';
         } else {
             navbar.style.background = 'rgba(255, 255, 255, 0.98)';
@@ -833,7 +833,7 @@ function updateNavbarBackground() {
         }
     } else {
         if (isDarkMode) {
-            navbar.style.background = 'rgba(13, 17, 23, 0.95)';
+            navbar.style.background = 'rgba(28, 39, 38, 0.95)';
             navbar.style.boxShadow = 'none';
         } else {
             navbar.style.background = 'rgba(255, 255, 255, 0.95)';
@@ -966,8 +966,8 @@ W rezultacie powstało wnętrze, które jest nie tylko piękne, ale przede wszys
             { src: 'images/renders/Project_2_wil/Detal_CShading_LightMix_full.webp', caption: 'Detal z oświetleniem' },
             { src: 'images/renders/Project_2_wil/łazienka_full.webp', caption: 'Elegancka łazienka' },
             { src: 'images/renders/Project_2_wil/Umywalka_full.webp', caption: 'Strefa umywalkowa' },
-            { src: 'images/renders/Project_2_wil/9.jpg', caption: 'Widok dodatkowy 1' },
-            { src: 'images/renders/Project_2_wil/10.jpg', caption: 'Widok dodatkowy 2' }
+            { src: 'images/renders/Project_2_wil/9.jpg', caption: 'Wady pierwotnego układu funkcjonalnego', includeInHero: false },
+            { src: 'images/renders/Project_2_wil/10.jpg', caption: 'Zalety nowegu układu funkcjonalnego', includeInHero: false }
         ]
     },
     'project_3': {
@@ -1001,8 +1001,8 @@ W rezultacie, standardowy układ deweloperski przeszedł pełną transformację.
             { src: 'images/renders/Project_3_mag/Sypialnia2_full.webp', caption: 'Strefa nocna' },
             { src: 'images/renders/Project_3_mag/Łazienka 2_full.webp', caption: 'Nowoczesna łazienka' },
             { src: 'images/renders/Project_3_mag/Po_full.webp', caption: 'Strefa wypoczynkowa' },
-            { src: 'images/renders/Project_3_mag/7_full.webp', caption: 'Widok dodatkowy 1', includeInHero: false },
-            { src: 'images/renders/Project_3_mag/8_full.webp', caption: 'Widok dodatkowy 2', includeInHero: false }
+            { src: 'images/renders/Project_3_mag/7_full.webp', caption: 'Wady pierwotnego układu funkcjonalnego', includeInHero: false },
+            { src: 'images/renders/Project_3_mag/8_full.webp', caption: 'Zalety nowegu układu funkcjonalnego', includeInHero: false }
         ]
     },
     'project_4': {
