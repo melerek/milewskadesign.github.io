@@ -1030,9 +1030,9 @@ W rezultacie, standardowy układ deweloperski przeszedł pełną transformację.
         location: 'Projekt Konkursowy',
         tags: ['Konkurs', 'Minimalizm', 'Elegancja', 'Naturalne Materiały'],
         images: [
-            { src: 'images/renders/Project_S1/Ujęcie I_full.webp', caption: 'Ujęcie I - perspektywa ogólna' },
-            { src: 'images/renders/Project_S1/Ujęcie II_full.webp', caption: 'Ujęcie II - detal' },
-            { src: 'images/renders/Project_S1/Ujęcie III_full.webp', caption: 'Ujęcie III - atmosfera wnętrza' }
+            { src: 'images/renders/Project_S2/Ujęcie I_full.webp', caption: 'Ujęcie I - perspektywa ogólna' },
+            { src: 'images/renders/Project_S2/Ujęcie II_full.webp', caption: 'Ujęcie II - detal' },
+            { src: 'images/renders/Project_S2/Ujęcie III_full.webp', caption: 'Ujęcie III - atmosfera wnętrza' }
         ]
     },
     'project_s2': {
@@ -1045,9 +1045,9 @@ Sercem projektu i elementem, który nadaje całości dramaturgii, jest spektakul
         location: 'Projekt Konkursowy',
         tags: ['Konkurs', 'Nowoczesne', 'Ciepłe Akcenty', 'Harmonia'],
         images: [
-            { src: 'images/renders/Project_S2/Ujęcie I_full.webp', caption: 'Ujęcie I - widok ogólny' },
-            { src: 'images/renders/Project_S2/Ujęcie II_full.webp', caption: 'Ujęcie II - kompozycja' },
-            { src: 'images/renders/Project_S2/Ujęcie III_full.webp', caption: 'Ujęcie III - detale' }
+            { src: 'images/renders/Project_S1/Ujęcie I_full.webp', caption: 'Ujęcie I - widok ogólny' },
+            { src: 'images/renders/Project_S1/Ujęcie II_full.webp', caption: 'Ujęcie II - kompozycja' },
+            { src: 'images/renders/Project_S1/Ujęcie III_full.webp', caption: 'Ujęcie III - detale' }
         ]
     },
     'project_s3': {
