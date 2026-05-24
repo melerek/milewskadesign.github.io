@@ -1,4 +1,4 @@
-const CACHE_NAME = 'milewska-design-v1.4.0';
+const CACHE_NAME = 'milewska-design-v1.4.1';
 const OFFLINE_URL = '/offline.html';
 
 // Security headers to add to all responses
@@ -20,7 +20,7 @@ const PRECACHE_ASSETS = [
   '/script.js',
   '/script.min.js',
   '/manifest.json',
-  '/images/milewska_design_pic.jpg',
+  '/images/milewska_design_pic.webp',
   // Core render images for offline viewing (optimized WebP)
   '/images/renders/Project_2_wil/caly salon_medium.webp',
   '/images/renders/Project_1_zab/Kuchnia_medium.webp',

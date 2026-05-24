@@ -1507,7 +1507,7 @@ document.querySelectorAll('.gallery-item[data-hero-image]').forEach(item => {
 // reCAPTCHA Configuration
 // IMPORTANT: Replace with your actual reCAPTCHA Site Key
 const RECAPTCHA_CONFIG = {
-    SITE_KEY: 'YOUR_RECAPTCHA_SITE_KEY',
+    SITE_KEY: '6Le7ft8rAAAAABYPjWYgTxnfERwmYMf-oCCbGFnx',
     ACTION: 'contact_form'
 };
 
