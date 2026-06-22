@@ -1,0 +1,10 @@
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Project backups and renders
+images/renders_backup/
+.claude/
