@@ -1,4 +1,4 @@
-const CACHE_NAME = 'milewska-design-v2.7.8';
+const CACHE_NAME = 'milewska-design-v2.7.9';
 const OFFLINE_URL = '/offline.html';
 
 // Security headers to add to all responses

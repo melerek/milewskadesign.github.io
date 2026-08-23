@@ -1212,7 +1212,6 @@ h3 {
 }
 
 .contact-card .card-icon {
-    font-size: 1.4rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1220,11 +1219,20 @@ h3 {
     height: 42px;
     border-radius: 2px;
     background: var(--accent-light);
+    color: var(--accent-primary);
     flex-shrink: 0;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.contact-card .card-icon svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
 }
 
 [data-theme="dark"] .contact-card .card-icon {
     background: rgba(255, 255, 255, 0.08);
+    color: var(--accent-primary);
 }
 
 .contact-card .card-text {
