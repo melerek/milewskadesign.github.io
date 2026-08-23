@@ -29,7 +29,7 @@ function trackEvent(eventName, eventParams = {}) {
  */
 function trackPageView(pagePath, pageTitle) {
     if (typeof gtag === 'function') {
-        gtag('config', 'G-XXXXXXXXXX', {
+        gtag('config', 'G-5NCLH2V4FB', {
             page_path: pagePath,
             page_title: pageTitle
         });
@@ -258,16 +258,18 @@ document.addEventListener('DOMContentLoaded', () => {
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
 
-hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    navMenu.classList.toggle('active');
-});
+if (hamburger && navMenu) {
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+    });
+}
 
 // Close mobile menu when clicking on a link
 document.querySelectorAll('.nav-menu a').forEach(link => {
     link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
+        if (hamburger) hamburger.classList.remove('active');
+        if (navMenu) navMenu.classList.remove('active');
         
         // Track navigation clicks
         trackEvent('navigation_click', {
@@ -314,34 +316,30 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Smooth scrolling for navigation links with navbar offset
+// Smooth scrolling for navigation links with exact navbar offset via scroll-padding-top
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
-        e.preventDefault();
         const targetId = this.getAttribute('href');
+        if (!targetId || targetId === '#' || targetId.length <= 1) return;
         const target = document.querySelector(targetId);
         
         if (target) {
-            // Get navbar height
-            const navbar = document.querySelector('.navbar');
-            const navbarHeight = navbar ? navbar.offsetHeight : 80;
-            
-            // Calculate target position with offset
-            const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
-            const offsetPosition = targetPosition - navbarHeight - 20; // Extra 20px padding
-            
-            // Smooth scroll to position
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth'
+            e.preventDefault();
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
             });
+            if (history.pushState) {
+                history.pushState(null, null, targetId);
+            }
         }
     });
 });
 
-// Navbar background on scroll - with dark mode support
+// Navbar background and scroll progress on scroll
 window.addEventListener('scroll', () => {
     updateNavbarBackground();
+    updateScrollProgress();
 });
 
 // Portfolio Filter Functionality
@@ -674,52 +672,6 @@ function showNotification(message, type) {
     }, 5000);
 }
 
-// Enhanced form validation
-function validateForm() {
-    const name = document.getElementById('name').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const message = document.getElementById('message').value.trim();
-    
-    const errors = [];
-    
-    if (name.length < 2) {
-        errors.push('Name must be at least 2 characters long');
-    }
-    
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-        errors.push('Please enter a valid email address');
-    }
-    
-    if (message.length < 10) {
-        errors.push('Message must be at least 10 characters long');
-    }
-    
-    return errors;
-}
-
-// Real-time form validation with progress tracking
-document.querySelectorAll('#contactForm input, #contactForm select, #contactForm textarea').forEach(field => {
-    // Track field completion on input
-    field.addEventListener('input', () => {
-        trackFieldCompletion(field);
-    });
-
-    field.addEventListener('blur', () => {
-        const errors = validateForm();
-        const submitBtn = document.querySelector('.submit-btn');
-
-        if (errors.length === 0) {
-            submitBtn.style.opacity = '1';
-            submitBtn.disabled = false;
-        } else {
-            submitBtn.style.opacity = '0.7';
-        }
-
-        trackFieldCompletion(field);
-    });
-});
-
 // Add loading animation
 window.addEventListener('load', async () => {
     document.body.classList.add('loaded');
@@ -845,14 +797,15 @@ function updateNavbarBackground() {
 // Initialize theme on page load
 function initializeTheme() {
     const savedTheme = localStorage.getItem('theme');
-    // Default to dark mode (ignore system preference)
-    const theme = savedTheme || 'dark';
+    // Default to light mode
+    const theme = savedTheme || 'light';
 
     document.documentElement.setAttribute('data-theme', theme);
 
     // Update theme color meta tag
     const themeColor = theme === 'dark' ? '#1c2726' : '#a88d80';
-    document.querySelector('meta[name=\"theme-color\"]').setAttribute('content', themeColor);
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    if (metaTheme) metaTheme.setAttribute('content', themeColor);
 
     // Initialize navbar background
     setTimeout(() => {
@@ -1234,7 +1187,7 @@ function makeCall(phoneNumber) {
     }
 }
 
-function sendEmail(emailAddress) {
+function openMailClient(emailAddress) {
     const subject = encodeURIComponent('Zapytanie o projekt wnętrza');
     const body = encodeURIComponent('Dzień dobry,\n\nChciałbym/chciałabym uzyskać więcej informacji na temat Państwa usług projektowania wnętrz.\n\nZ poważaniem');
 
@@ -1272,70 +1225,6 @@ function showEnhancedNotification(title, message, type = 'info', icon = '') {
     }, 5000);
 }
 
-// Form Progress Tracking
-const formSteps = {
-    1: ['name', 'email', 'phone'],
-    2: ['project-type', 'budget'],
-    3: ['message']
-};
-
-let currentStep = 1;
-let completedFields = new Set();
-
-function updateFormProgress() {
-    const progressLine = document.getElementById('progressLine');
-    const totalSteps = Object.keys(formSteps).length;
-
-    // Calculate completion percentage
-    let completedSteps = 0;
-
-    for (let step = 1; step <= totalSteps; step++) {
-        const stepFields = formSteps[step];
-        const stepCompleted = stepFields.every(fieldId => {
-            const field = document.getElementById(fieldId);
-            return field && field.value.trim() !== '';
-        });
-
-        const stepElement = document.getElementById(`step${step}`);
-
-        if (stepCompleted) {
-            stepElement.classList.remove('active');
-            stepElement.classList.add('completed');
-            completedSteps++;
-        } else if (stepFields.some(fieldId => {
-            const field = document.getElementById(fieldId);
-            return field && field.value.trim() !== '';
-        })) {
-            stepElement.classList.add('active');
-            stepElement.classList.remove('completed');
-            currentStep = step;
-        } else {
-            stepElement.classList.remove('active', 'completed');
-        }
-    }
-
-    // Update progress line
-    const progressPercentage = (completedSteps / totalSteps) * 100;
-    progressLine.style.width = `${progressPercentage}%`;
-}
-
-// Enhanced form validation with progress tracking
-function trackFieldCompletion(field) {
-    const fieldId = field.id;
-    const value = field.value.trim();
-    const formGroup = field.closest('.form-group');
-
-    if (value !== '') {
-        completedFields.add(fieldId);
-        formGroup.classList.add('completed');
-    } else {
-        completedFields.delete(fieldId);
-        formGroup.classList.remove('completed');
-    }
-
-    updateFormProgress();
-}
-
 // Page Loader
 function hidePageLoader() {
     const loader = document.getElementById('pageLoader');
@@ -1343,14 +1232,17 @@ function hidePageLoader() {
         loader.classList.add('hidden');
         setTimeout(() => {
             loader.style.display = 'none';
-        }, 500);
+        }, 300);
     }
 }
+
+// Fallback: Never let loader block the screen if external assets lag
+setTimeout(hidePageLoader, 2500);
 
 // Keyboard navigation for lightbox
 document.addEventListener('keydown', function(e) {
     const lightbox = document.getElementById('lightboxOverlay');
-    if (lightbox.classList.contains('active')) {
+    if (lightbox && lightbox.classList.contains('active')) {
         switch(e.key) {
             case 'ArrowLeft':
                 previousImage();
@@ -1366,11 +1258,14 @@ document.addEventListener('keydown', function(e) {
 });
 
 // Close lightbox when clicking outside
-document.getElementById('lightboxOverlay').addEventListener('click', function(e) {
-    if (e.target === this) {
-        closeLightbox();
-    }
-});
+const lightboxOverlay = document.getElementById('lightboxOverlay');
+if (lightboxOverlay) {
+    lightboxOverlay.addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeLightbox();
+        }
+    });
+}
 
 // Compare Modal Functions
 function openCompareModal() {
@@ -1434,7 +1329,7 @@ document.addEventListener('click', function(e) {
             makeCall(target.getAttribute('data-phone'));
             break;
         case 'email':
-            sendEmail(target.getAttribute('data-email'));
+            openMailClient(target.getAttribute('data-email'));
             break;
         case 'install-pwa':
             installPWA();
@@ -1552,7 +1447,7 @@ function getRecaptchaToken() {
 // EmailJS Configuration
 // IMPORTANT: Replace these with your actual EmailJS credentials
 const EMAILJS_CONFIG = {
-    PUBLIC_KEY: 'egtGOL04rZzV-8WHG',
+    PUBLIC_KEY: 'xsuo0L9HH3VOTMg67',
     SERVICE_ID: 'service_nott0ma',
     TEMPLATE_ID: 'template_8wh19gm'
 };
@@ -1567,9 +1462,20 @@ function initEmailJS() {
     }
 }
 
-// Send email function
-function sendEmail(form) {
+// Send email function using EmailJS
+function submitEmailJSForm(form) {
     return new Promise(async (resolve, reject) => {
+        const formData = new FormData(form);
+
+        // Honeypot antispam trap
+        if (formData.get('_gotcha') && formData.get('_gotcha').trim() !== '') {
+            console.warn('⚠️ Spam submission caught by honeypot');
+            setTimeout(() => {
+                resolve({ status: 200, text: 'OK (spambot trapped)' });
+            }, 800);
+            return;
+        }
+
         // Check if EmailJS is initialized
         if (typeof emailjs === 'undefined') {
             reject(new Error('EmailJS not loaded'));
@@ -1582,15 +1488,15 @@ function sendEmail(form) {
             EMAILJS_CONFIG.TEMPLATE_ID.includes('YOUR_')) {
             
             console.warn('⚠️ EmailJS not configured yet. Please add your credentials.');
-            // For now, simulate success to test the flow
+            // Simulate success for local testing
             setTimeout(() => {
                 console.log('Simulated email send (configure EmailJS to enable real emails)');
                 resolve({ status: 200, text: 'Simulated success' });
-            }, 1500);
+            }, 1200);
             return;
         }
 
-        // Get reCAPTCHA token first
+        // Get reCAPTCHA token
         let recaptchaToken = null;
         try {
             recaptchaToken = await getRecaptchaToken();
@@ -1601,20 +1507,22 @@ function sendEmail(form) {
             }
         } catch (error) {
             console.error('❌ reCAPTCHA verification failed:', error);
-            // Don't reject - allow form to work even if reCAPTCHA fails
-            // In production, you might want to reject here
         }
 
-        // Get form data
-        const formData = new FormData(form);
         const templateParams = {
             from_name: formData.get('name'),
             from_email: formData.get('email'),
             phone: formData.get('phone') || 'Nie podano',
+            property_type: formData.get('property_type') || 'Nie wybrano',
+            area_sqm: formData.get('area_sqm') || 'Nie podano',
+            timeline: formData.get('timeline') || 'Nie wybrano',
             message: formData.get('message'),
-            to_email: 'kontakt@milewskadesign.pl', // Your email
-            recaptcha_token: recaptchaToken || 'not_configured' // Include reCAPTCHA token
+            to_email: 'kontakt@milewskadesign.pl'
         };
+
+        if (recaptchaToken) {
+            templateParams.recaptcha_token = recaptchaToken;
+        }
 
         // Send using EmailJS
         emailjs.send(
@@ -1640,7 +1548,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ============================================
-// FORM VALIDATION
+// FORM VALIDATION & SUBMISSION
 // ============================================
 
 const contactForm = document.getElementById('contactForm');
@@ -1652,14 +1560,13 @@ if (contactForm) {
             default: 'To pole jest wymagane',
             name: 'Proszę podać swoje imię',
             email: 'Proszę podać adres email',
-            message: 'Proszę opisać swój projekt',
-            'project-type': 'Proszę wybrać typ projektu'
+            message: 'Proszę opisać swój projekt'
         },
         typeMismatch: {
             email: 'Proszę podać poprawny adres email'
         },
         patternMismatch: {
-            name: 'Proszę używać tylko liter',
+            name: 'Proszę podać poprawne imię lub nazwisko',
             email: 'Proszę podać poprawny adres email',
             phone: 'Proszę podać poprawny numer telefonu'
         },
@@ -1674,7 +1581,7 @@ if (contactForm) {
     };
 
     // Get all form fields
-    const formFields = contactForm.querySelectorAll('input, textarea, select');
+    const formFields = contactForm.querySelectorAll('input:not([type="hidden"]), textarea, select');
 
     // Validate individual field
     function validateField(field) {
@@ -1682,12 +1589,19 @@ if (contactForm) {
         const errorSpan = document.getElementById(`${fieldId}-error`);
         const formGroup = field.closest('.form-group');
 
+        if (!formGroup) return true;
+
         // Clear previous states
         field.classList.remove('invalid', 'valid');
         formGroup.classList.remove('has-error', 'has-success');
         
         if (errorSpan) {
             errorSpan.textContent = '';
+        }
+
+        // Optional fields that are empty are valid
+        if (!field.required && field.value.trim() === '') {
+            return true;
         }
 
         // Check validity
@@ -1723,7 +1637,7 @@ if (contactForm) {
         return true;
     }
 
-    // Add real-time validation on blur
+    // Add real-time validation on blur & input
     formFields.forEach(field => {
         field.addEventListener('blur', () => {
             if (field.value.trim() !== '') {
@@ -1731,7 +1645,6 @@ if (contactForm) {
             }
         });
 
-        // Clear error on input
         field.addEventListener('input', () => {
             if (field.classList.contains('invalid')) {
                 validateField(field);
@@ -1751,15 +1664,20 @@ if (contactForm) {
             }
         });
 
+        // Check RODO consent
+        const consentCheckbox = document.getElementById('rodoConsent');
+        if (consentCheckbox && !consentCheckbox.checked) {
+            isValid = false;
+            const consentError = document.getElementById('consent-error');
+            if (consentError) consentError.textContent = 'Wymagana jest zgoda na przetwarzanie danych w celu odpowiedzi';
+        }
+
         if (!isValid) {
-            // Focus first invalid field
-            const firstInvalid = contactForm.querySelector('.invalid');
+            const firstInvalid = contactForm.querySelector('.invalid') || contactForm.querySelector('input:invalid');
             if (firstInvalid) {
                 firstInvalid.focus();
             }
-
-            // Show error status
-            showFormStatus('error', 'Proszę poprawić błędy w formularzu');
+            showFormStatus('error', 'Proszę poprawić błędy i zaznaczyć wymagane zgody w formularzu');
             return;
         }
 
@@ -1769,50 +1687,48 @@ if (contactForm) {
         submitBtn.disabled = true;
 
         // Send email using EmailJS
-        sendEmail(contactForm)
+        submitEmailJSForm(contactForm)
             .then((result) => {
                 submitBtn.classList.remove('loading');
                 submitBtn.disabled = false;
 
                 // Show success message
-                showFormStatus('success', 'Dziękuję! Skontaktuję się z Tobą wkrótce.');
+                showFormStatus('success', 'Dziękuję! Twoja wiadomość została wysłana. Skontaktuję się z Tobą wkrótce.');
                 
                 // Track form submission
-                const formData = new FormData(contactForm);
                 trackEvent('form_submission', {
-                    form_type: 'contact'
+                    form_type: 'contact_detailed'
                 });
                 
                 // Track conversion for GA4
                 if (typeof gtag === 'function') {
                     gtag('event', 'conversion', {
-                        'send_to': 'G-XXXXXXXXXX/conversion',
+                        'send_to': 'G-5NCLH2V4FB/conversion',
                         'value': 1.0,
                         'currency': 'PLN'
                     });
                 }
 
-                // Reset form after 3 seconds
+                // Reset form after 4 seconds
                 setTimeout(() => {
                     contactForm.reset();
                     formFields.forEach(field => {
                         field.classList.remove('valid', 'invalid');
-                        field.closest('.form-group').classList.remove('has-success', 'has-error');
+                        const formGroup = field.closest('.form-group');
+                        if (formGroup) formGroup.classList.remove('has-success', 'has-error');
                         const errorSpan = document.getElementById(`${field.id}-error`);
-                        if (errorSpan) {
-                            errorSpan.textContent = '';
-                        }
+                        if (errorSpan) errorSpan.textContent = '';
                     });
+                    const consentError = document.getElementById('consent-error');
+                    if (consentError) consentError.textContent = '';
                     hideFormStatus();
-                }, 3000);
+                }, 4000);
             })
             .catch((error) => {
                 submitBtn.classList.remove('loading');
                 submitBtn.disabled = false;
-
-                // Show error message
                 console.error('EmailJS Error:', error);
-                showFormStatus('error', 'Wystąpił błąd. Prosimy spróbować ponownie lub skontaktować się bezpośrednio: kontakt@milewskadesign.pl');
+                showFormStatus('error', 'Wystąpił problem z wysyłką. Prosimy spróbować ponownie lub napisać bezpośrednio na kontakt@milewskadesign.pl');
             });
     });
 
@@ -1837,3 +1753,271 @@ if (contactForm) {
         }
     }
 }
+
+// ============================================
+// SCROLL PROGRESS INDICATOR
+// ============================================
+
+function updateScrollProgress() {
+    const scrollProgress = document.getElementById('scrollProgress');
+    if (!scrollProgress) return;
+    const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+    if (totalHeight <= 0) {
+        scrollProgress.style.width = '0%';
+        return;
+    }
+    const progress = (window.scrollY / totalHeight) * 100;
+    scrollProgress.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+}
+
+// ============================================
+// INTERACTIVE ANATOMY SHOWCASE (HOTSPOTS)
+// ============================================
+
+function initializeAnatomyHotspots() {
+    const showcase = document.querySelector('.anatomy-showcase');
+    if (!showcase) return;
+
+    const hotspots = showcase.querySelectorAll('.anatomy-hotspot');
+    const infoCard = document.getElementById('anatomyActiveCard');
+    if (!hotspots.length || !infoCard) return;
+
+    const hotspotData = {
+        'lighting': {
+            badge: 'Oświetlenie & Nastrój',
+            title: 'Wielopoziomowe sceny świetlne',
+            desc: 'Połączenie ukrytych profili LED, oświetlenia strefowego i nastrojowych kinkietów. Pozwala jednym dotknięciem zmienić jasną przestrzeń do pracy w intymną, wyciszającą strefę relaksu.'
+        },
+        'materials': {
+            badge: 'Materiały & Szlachetność',
+            title: 'Naturalny fornir i spiek kwarcowy',
+            desc: 'Szlachetne usłojenie dębu ociepla przestrzeń, a spiek kwarcowy na wyspie i blatach gwarantuje stuprocentową odporność na zarysowania, plamy i wysoką temperaturę.'
+        },
+        'storage': {
+            badge: 'Ergonomia & Przechowywanie',
+            title: 'Zabudowa stolarska pod sam sufit',
+            desc: 'Dedykowany projekt stolarski z ukrytym systemem otwierania tip-on. Daje 40% więcej miejsca na przechowywanie, zachowując harmonijną, nienarzucającą się bryłę mebla.'
+        },
+        'tech': {
+            badge: 'Funkcjonalność & Estetyka',
+            title: 'Niewidoczne instalacje & Smart Home',
+            desc: 'Precyzyjna siatka gniazd wpuszczanych w blat i okablowanie ukryte w ścianach. Żadnych wiszących kabli czy przedłużaczy – sprzęty mają niewidoczne, dedykowane zasilanie.'
+        }
+    };
+
+    function activateHotspot(spot) {
+        hotspots.forEach(h => h.classList.remove('active'));
+        spot.classList.add('active');
+
+        const key = spot.getAttribute('data-hotspot');
+        const data = hotspotData[key];
+        if (data) {
+            infoCard.classList.remove('active-fade');
+            void infoCard.offsetWidth; // Trigger reflow for animation
+            infoCard.innerHTML = `
+                <span class="anatomy-card-badge">${data.badge}</span>
+                <h4 class="anatomy-card-title">${data.title}</h4>
+                <p class="anatomy-card-desc">${data.desc}</p>
+            `;
+            infoCard.classList.add('active-fade');
+        }
+    }
+
+    hotspots.forEach(spot => {
+        spot.addEventListener('click', (e) => {
+            e.stopPropagation();
+            activateHotspot(spot);
+        });
+        spot.addEventListener('mouseenter', () => {
+            activateHotspot(spot);
+        });
+    });
+
+    // Default activate first hotspot
+    if (hotspots[0]) {
+        activateHotspot(hotspots[0]);
+    }
+}
+
+// ============================================
+// FAQ ACCORDION
+// ============================================
+
+function initializeFAQAccordion() {
+    const faqItems = document.querySelectorAll('.faq-item');
+    if (!faqItems.length) return;
+
+    faqItems.forEach(item => {
+        const questionBtn = item.querySelector('.faq-question');
+        if (!questionBtn) return;
+
+        questionBtn.addEventListener('click', () => {
+            const isOpen = item.classList.contains('active');
+
+            // Close all items
+            faqItems.forEach(other => {
+                other.classList.remove('active');
+                const otherBtn = other.querySelector('.faq-question');
+                if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+                const otherAns = other.querySelector('.faq-answer');
+                if (otherAns) otherAns.style.maxHeight = null;
+            });
+
+            // If wasn't open, open this item
+            if (!isOpen) {
+                item.classList.add('active');
+                questionBtn.setAttribute('aria-expanded', 'true');
+                const answer = item.querySelector('.faq-answer');
+                if (answer) {
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                }
+            }
+        });
+    });
+}
+
+// ============================================
+// LIGHTBOX DETAIL ZOOM (HIGH-RES LOUPE)
+// ============================================
+
+function initializeLightboxZoom() {
+    const lightboxImg = document.getElementById('lightboxImage');
+    const lightboxOverlay = document.getElementById('lightboxOverlay');
+    if (!lightboxImg || !lightboxOverlay) return;
+
+    let isZoomed = false;
+
+    function applyZoomPosition(e) {
+        if (!isZoomed) return;
+        const rect = lightboxImg.getBoundingClientRect();
+        const x = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+        const y = Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100));
+        lightboxImg.style.transformOrigin = `${x}% ${y}%`;
+    }
+
+    lightboxImg.addEventListener('click', function(e) {
+        e.stopPropagation();
+        isZoomed = !isZoomed;
+        if (isZoomed) {
+            lightboxImg.classList.add('zoomed');
+            applyZoomPosition(e);
+        } else {
+            lightboxImg.classList.remove('zoomed');
+            lightboxImg.style.transformOrigin = 'center center';
+        }
+    });
+
+    lightboxImg.addEventListener('mousemove', function(e) {
+        if (isZoomed) {
+            applyZoomPosition(e);
+        }
+    });
+
+    // Reset zoom when navigating images or closing lightbox
+    const resetZoom = () => {
+        isZoomed = false;
+        if (lightboxImg) {
+            lightboxImg.classList.remove('zoomed');
+            lightboxImg.style.transformOrigin = 'center center';
+        }
+    };
+
+    document.querySelectorAll('[data-action="prev-image"], [data-action="next-image"], [data-action="close-lightbox"]').forEach(btn => {
+        btn.addEventListener('click', resetZoom);
+    });
+    lightboxOverlay.addEventListener('click', resetZoom);
+}
+
+// ============================================
+// FULLSCREEN EDITORIAL MAGAZINE MENU
+// ============================================
+
+function initializeFullscreenMenu() {
+    const fullscreenMenu = document.getElementById('fullscreenMenu');
+    const menuTriggerBtn = document.getElementById('menuTriggerBtn');
+    const closeMenuBtn = document.getElementById('closeMenuBtn');
+    const backdrop = document.getElementById('fullscreenMenuBackdrop');
+    const previewImg = document.getElementById('menuPreviewImg');
+    const previewCaption = document.getElementById('menuPreviewCaption');
+    const menuItems = document.querySelectorAll('.fullscreen-menu-list li');
+
+    if (!fullscreenMenu || !menuTriggerBtn) return;
+
+    function openMenu() {
+        fullscreenMenu.classList.add('active');
+        fullscreenMenu.setAttribute('aria-hidden', 'false');
+        menuTriggerBtn.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+        fullscreenMenu.classList.remove('active');
+        fullscreenMenu.setAttribute('aria-hidden', 'true');
+        menuTriggerBtn.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+    }
+
+    menuTriggerBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openMenu();
+    });
+
+    if (closeMenuBtn) {
+        closeMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeMenu();
+        });
+    }
+
+    if (backdrop) {
+        backdrop.addEventListener('click', closeMenu);
+    }
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && fullscreenMenu.classList.contains('active')) {
+            closeMenu();
+        }
+    });
+
+    // Close when clicking on any menu link
+    document.querySelectorAll('.fullscreen-menu-list .menu-link').forEach(link => {
+        link.addEventListener('click', () => {
+            closeMenu();
+        });
+    });
+
+    // Hover Image Reveal Logic
+    menuItems.forEach(item => {
+        item.addEventListener('mouseenter', () => {
+            const newImage = item.getAttribute('data-menu-image');
+            const newCaption = item.getAttribute('data-menu-caption');
+
+            if (previewImg && newImage) {
+                previewImg.style.opacity = '0.4';
+                previewImg.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    previewImg.src = newImage;
+                    previewImg.style.opacity = '1';
+                    previewImg.style.transform = 'scale(1)';
+                }, 150);
+            }
+
+            if (previewCaption && newCaption) {
+                previewCaption.textContent = newCaption;
+            }
+
+            menuItems.forEach(i => i.classList.remove('hovered'));
+            item.classList.add('hovered');
+        });
+    });
+}
+
+// Initialize all features on DOM ready
+document.addEventListener('DOMContentLoaded', () => {
+    initializeAnatomyHotspots();
+    initializeFAQAccordion();
+    initializeLightboxZoom();
+    updateScrollProgress();
+    initializeFullscreenMenu();
+});

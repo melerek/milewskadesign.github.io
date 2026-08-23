@@ -1,4 +1,4 @@
-const CACHE_NAME = 'milewska-design-v1.4.1';
+const CACHE_NAME = 'milewska-design-v2.7.7';
 const OFFLINE_URL = '/offline.html';
 
 // Security headers to add to all responses
@@ -7,19 +7,21 @@ const SECURITY_HEADERS = {
   'X-Content-Type-Options': 'nosniff',
   'Referrer-Policy': 'strict-origin-when-cross-origin',
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), interest-cohort=()',
-  'X-XSS-Protection': '1; mode=block',
-  'Strict-Transport-Security': 'max-age=31536000; includeSubDomains'
+  'X-XSS-Protection': '1; mode=block'
 };
 
 // Assets to cache immediately
 const PRECACHE_ASSETS = [
   '/',
   '/index.html',
+  '/offline.html',
   '/styles.css',
   '/styles.min.css',
   '/script.js',
   '/script.min.js',
   '/manifest.json',
+  '/images/logo_md.webp',
+  '/images/logo_img_md.webp',
   '/images/milewska_design_pic.webp',
   // Core render images for offline viewing (optimized WebP)
   '/images/renders/Project_2_wil/caly salon_medium.webp',
@@ -27,11 +29,12 @@ const PRECACHE_ASSETS = [
   '/images/renders/Project_3_mag/Sypialnia_medium.webp',
   // Local Optimized Fonts
   '/fonts/fonts.css',
-  '/fonts/montserrat-400.woff2',
-  '/fonts/montserrat-500.woff2',
-  '/fonts/montserrat-600.woff2',
-  '/fonts/cormorant-garamond-400.woff2',
-  '/fonts/cormorant-garamond-600.woff2',
+  '/fonts/montserrat-300-ext.woff2',
+  '/fonts/montserrat-400-ext.woff2',
+  '/fonts/montserrat-500-ext.woff2',
+  '/fonts/montserrat-600-ext.woff2',
+  '/fonts/montserrat-700-ext.woff2',
+  '/fonts/cormorant-garamond-ext.woff2',
   // AOS Library
   'https://unpkg.com/aos@2.3.1/dist/aos.css',
   'https://unpkg.com/aos@2.3.1/dist/aos.js'

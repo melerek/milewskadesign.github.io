@@ -8,3 +8,6 @@ Thumbs.db
 # Project backups and renders
 images/renders_backup/
 .claude/
+.gemini/
+__pycache__/
+*.pyc

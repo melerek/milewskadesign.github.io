@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="pl" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -64,18 +64,14 @@
     <!-- Security Headers -->
     <meta http-equiv="Content-Security-Policy" content="
         default-src 'self';
-        script-src 'self' 'unsafe-inline' https://unpkg.com https://cdn.jsdelivr.net https://www.googletagmanager.com https://www.google-analytics.com https://www.clarity.ms https://www.google.com https://www.gstatic.com;
+        script-src 'self' 'unsafe-inline' https://unpkg.com https://cdn.jsdelivr.net https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://www.clarity.ms https://*.clarity.ms https://scripts.clarity.ms https://www.google.com https://www.gstatic.com;
         style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com;
         font-src 'self' https://fonts.gstatic.com data:;
         img-src 'self' data: https: blob:;
-        connect-src 'self' https://api.emailjs.com https://www.google-analytics.com https://analytics.google.com https://www.clarity.ms https://*.clarity.ms https://www.google.com;
+        connect-src 'self' https://api.emailjs.com https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://stats.g.doubleclick.net https://*.doubleclick.net https://www.clarity.ms https://*.clarity.ms https://www.google.com https://*.google.com https://www.gstatic.com;
         frame-src https://www.google.com;
-        frame-ancestors 'none';
         base-uri 'self';
-        form-action 'self';
-        upgrade-insecure-requests;">
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="X-Frame-Options" content="DENY">
+        form-action 'self';">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()">
     
@@ -94,7 +90,7 @@
     <link rel="preload" href="images/logo_md.webp" as="image" type="image/webp">
     <link rel="preload" href="images/logo_img_md.webp" as="image" type="image/webp">
     <link rel="preload" href="images/renders/Project_2_wil/caly salon_full.webp" as="image" type="image/webp">
-    <link rel="preload" href="styles.css" as="style">
+    <link rel="preload" href="styles.css?v=2.7.7" as="style">
     
     <!-- Temporary: Google Fonts with Polish support -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -105,7 +101,7 @@
     <link rel="preconnect" href="https://unpkg.com">
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=2.7.7">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <!-- PWA Manifest -->
@@ -118,7 +114,10 @@
     <meta name="msapplication-TileColor" content="#a88d80">
     <meta name="msapplication-TileImage" content="/images/icons/favicon-48x48.png">
 </head>
-<body>
+<body data-nav-mode="magazine">
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
     <!-- Skip to Content (Accessibility) -->
     <a href="#about" class="skip-to-content">Przejdź do treści</a>
     
@@ -133,56 +132,140 @@
         </div>
     </div>
     <!-- Navigation -->
-    <nav class="navbar">
+    <nav class="navbar" id="mainNavbar">
         <div class="nav-container">
-            <div class="nav-logo">
-                <img src="images/logo_md.webp" alt="Milewska Design" class="logo-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                <h2 style="display: none;">Milewska Design</h2>
+            <div class="nav-brand">
+                <a href="#home" class="brand-link">
+                    <img src="images/logo_md.webp" alt="Milewska Design" class="logo-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <h2 style="display: none;">Milewska Design</h2>
+                    <span class="nav-brand-tagline">Studio Architektury Wnętrz</span>
+                </a>
             </div>
 
             <ul class="nav-menu">
-                <li><a href="#home">Start</a></li>
                 <li><a href="#about">O mnie</a></li>
                 <li><a href="#oferta">Oferta</a></li>
-                <!-- <li><a href="#my-process">Mój Proces</a></li> -->
                 <li><a href="#portfolio">Portfolio</a></li>
-                <li><a href="#contact" class="cta-button">Kontakt</a></li>
-                <li class="social-nav">
-                    <a href="https://www.instagram.com/milewska_design/" target="_blank" rel="noopener noreferrer" class="social-link instagram" title="Instagram">
-                        <svg class="social-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" fill="currentColor"/>
-                        </svg>
-                    </a>
-                    <a href="https://www.facebook.com/people/Milewska-Design/61556583926533/" target="_blank" rel="noopener noreferrer" class="social-link facebook" title="Facebook">
-                        <svg class="social-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" fill="currentColor"/>
-                        </svg>
-                    </a>
-                </li>
+                <li><a href="#contact">Kontakt</a></li>
             </ul>
-            
-            <!-- Dark Mode Toggle -->
-            <div class="theme-toggle" role="button" tabindex="0" title="Przełącz motyw" aria-label="Przełącz tryb ciemny">
-                <div class="theme-toggle-icon">
-                    <span class="sun-icon">☀️</span>
-                    <span class="moon-icon">🌙</span>
+
+            <div class="nav-actions">
+                <!-- Sleek Minimalist Menu Button -->
+                <button class="menu-trigger-btn" id="menuTriggerBtn" aria-label="Otwórz menu nawigacji" aria-expanded="false">
+                    <span class="menu-trigger-text">Menu</span>
+                    <span class="menu-trigger-icon" aria-hidden="true">
+                        <span class="menu-bar bar-top"></span>
+                        <span class="menu-bar bar-bottom"></span>
+                    </span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Fullscreen Editorial Magazine Menu -->
+    <div class="fullscreen-menu" id="fullscreenMenu" aria-hidden="true">
+        <div class="fullscreen-menu-backdrop" id="fullscreenMenuBackdrop"></div>
+        <div class="fullscreen-menu-container">
+            <div class="fullscreen-menu-header">
+                <div class="menu-brand">
+                    <img src="images/logo_md.webp" alt="Milewska Design" class="menu-brand-logo">
+                    <span class="menu-brand-tagline">Studio Architektury Wnętrz</span>
+                </div>
+                <button class="menu-close-btn" id="closeMenuBtn" aria-label="Zamknij menu">
+                    <span class="close-label">Zamknij</span>
+                    <span class="close-icon">&times;</span>
+                </button>
+            </div>
+
+            <div class="fullscreen-menu-body">
+                <nav class="fullscreen-menu-nav">
+                    <ul class="fullscreen-menu-list">
+                        <li data-menu-image="images/renders/Project_2_wil/caly salon_full.webp" data-menu-caption="Salon w Wilanowie – Ponadczasowa harmonia światła i formy">
+                            <a href="#home" class="menu-link">
+                                <span class="menu-num">01</span>
+                                <span class="menu-title">Start</span>
+                            </a>
+                        </li>
+                        <li data-menu-image="images/milewska_design_pic.webp" data-menu-caption="Anna Milewska – 7 lat pasji, doświadczenia i nagroda Samsung Bespoke">
+                            <a href="#about" class="menu-link">
+                                <span class="menu-num">02</span>
+                                <span class="menu-title">O mnie & Filozofia</span>
+                            </a>
+                        </li>
+                        <li data-menu-image="images/renders/Project_1_zab/Kuchnia_full.webp" data-menu-caption="4-etapowa ścieżka od ankiety do gotowej księgi projektu">
+                            <a href="#my-process" class="menu-link">
+                                <span class="menu-num">03</span>
+                                <span class="menu-title">Jak wygląda współpraca?</span>
+                            </a>
+                        </li>
+                        <li data-menu-image="images/renders/Project_2_wil/salon_full.webp" data-menu-caption="Anatomia projektu – niewidoczne detale, które tworzą luksus">
+                            <a href="#anatomy" class="menu-link">
+                                <span class="menu-num">04</span>
+                                <span class="menu-title">Anatomia Projektu</span>
+                            </a>
+                        </li>
+                        <li data-menu-image="images/renders/Project_3_mag/Kanapa_full.webp" data-menu-caption="Pakiety dopasowane do Twojego poziomu zaangażowania">
+                            <a href="#oferta" class="menu-link">
+                                <span class="menu-num">05</span>
+                                <span class="menu-title">Oferta i Pakiety</span>
+                            </a>
+                        </li>
+                        <li data-menu-image="images/renders/Project_S1/Ujęcie II_full.webp" data-menu-caption="Nagrodzony projekt kuchni Japandi – konkurs Samsung Bespoke">
+                            <a href="#portfolio" class="menu-link">
+                                <span class="menu-num">06</span>
+                                <span class="menu-title">Wybrane Portfolio</span>
+                            </a>
+                        </li>
+                        <li data-menu-image="images/renders/Project_4_kaz/Widok na tv_full.webp" data-menu-caption="Rozwiewamy obawy o budżet, poprawki i realizację">
+                            <a href="#faq" class="menu-link">
+                                <span class="menu-num">07</span>
+                                <span class="menu-title">Częste Pytania (FAQ)</span>
+                            </a>
+                        </li>
+                        <li data-menu-image="images/renders/Project_2_wil/caly salon_full.webp" data-menu-caption="Skontaktuj się i odbierz spersonalizowaną ofertę">
+                            <a href="#contact" class="menu-link highlight">
+                                <span class="menu-num">08</span>
+                                <span class="menu-title">Kontakt & Wycena</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="fullscreen-menu-preview" aria-hidden="true">
+                    <div class="menu-preview-card">
+                        <img id="menuPreviewImg" src="images/renders/Project_2_wil/caly salon_full.webp" alt="Podgląd sekcji">
+                        <div class="menu-preview-overlay"></div>
+                        <div class="menu-preview-info">
+                            <span class="preview-badge">Eksploruj</span>
+                            <p class="preview-text" id="menuPreviewCaption">Salon w Wilanowie – Ponadczasowa harmonia światła i formy</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Mobile Dark Mode Toggle -->
-            <div class="mobile-theme-toggle" role="button" tabindex="0" title="Przełącz motyw" aria-label="Przełącz tryb ciemny">
-                <div class="theme-toggle-icon">
-                    <span class="sun-icon">☀️</span>
-                    <span class="moon-icon">🌙</span>
+            <div class="fullscreen-menu-footer">
+                <div class="menu-footer-contact">
+                    <a href="tel:+48669870306" class="footer-contact-link">📞 +48 669 870 306</a>
+                    <a href="mailto:kontakt@milewskadesign.pl" class="footer-contact-link">✉️ kontakt@milewskadesign.pl</a>
+                    <span class="footer-location">📍 Warszawa i okolice</span>
+                </div>
+                <div class="menu-footer-social">
+                    <!-- Theme Toggle inside Menu Footer -->
+                    <div class="theme-toggle menu-theme-toggle" role="button" tabindex="0" title="Przełącz motyw" aria-label="Przełącz tryb ciemny/jasny">
+                        <div class="theme-toggle-icon">
+                            <span class="sun-icon">☀️</span>
+                            <span class="moon-icon">🌙</span>
+                        </div>
+                        <span class="menu-theme-label">Motyw</span>
+                    </div>
+                    <span class="divider">/</span>
+                    <a href="https://www.instagram.com/milewska_design/" target="_blank" rel="noopener noreferrer" class="social-text-link">Instagram</a>
+                    <span class="divider">/</span>
+                    <a href="https://www.facebook.com/people/Milewska-Design/61556583926533/" target="_blank" rel="noopener noreferrer" class="social-text-link">Facebook</a>
                 </div>
             </div>
-            <button class="hamburger" aria-label="Menu nawigacji" aria-expanded="false" aria-controls="navLinks">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-            </button>
         </div>
-    </nav>
+    </div>
 
     <!-- Hero Section -->
     <section id="home" class="hero">
@@ -264,7 +347,10 @@
                     <p class="about-cta">Zobacz, jak możemy wspólnie stworzyć Twój wymarzony dom.</p>
                 </div>
                 <div class="about-image">
-                    <img src="images/milewska_design_pic.webp" alt="Anna Milewska - Interior Designer" class="about-photo" loading="lazy">
+                    <picture>
+                        <source srcset="images/milewska_design_pic.webp" type="image/webp">
+                        <img src="images/milewska_design_pic.webp" alt="Anna Milewska - Architekt Wnętrz" class="about-photo" loading="lazy" width="400" height="500">
+                    </picture>
                 </div>
             </div>
         </div>
@@ -402,7 +488,7 @@
                             <span class="price">Orientacyjna cena:<br><strong>6 000 zł netto</strong></span>
                         </div>
                         <div class="package-actions">
-                            <a href="#contact" class="package-btn">Chcę poznać szczegółową ofertę</a>
+                            <a href="#contact" class="package-btn">Chcę poznać<br>szczegółową ofertę</a>
                             <button class="compare-btn" data-action="open-compare">Porównaj pakiety</button>
                         </div>
                     </div>
@@ -449,7 +535,7 @@
                             <span class="price">Orientacyjna cena:<br><strong>11 000 zł netto</strong></span>
                         </div>
                         <div class="package-actions">
-                            <a href="#contact" class="package-btn">Chcę poznać szczegółową ofertę</a>
+                            <a href="#contact" class="package-btn">Chcę poznać<br>szczegółową ofertę</a>
                             <button class="compare-btn" data-action="open-compare">Porównaj pakiety</button>
                         </div>
                     </div>
@@ -494,7 +580,7 @@
                             <span class="price">Orientacyjna cena:<br><strong>16 000 zł netto</strong></span>
                         </div>
                         <div class="package-actions">
-                            <a href="#contact" class="package-btn featured-btn">Chcę poznać szczegółową ofertę</a>
+                            <a href="#contact" class="package-btn featured-btn">Chcę poznać<br>szczegółową ofertę</a>
                             <button class="compare-btn" data-action="open-compare">Porównaj pakiety</button>
                         </div>
                     </div>
@@ -523,14 +609,120 @@
         </div>
     </section>
 
-    <!-- My Process Section - HIDDEN FOR NOW -->
-    <section id="my-process" class="about" style="display: none;">
+    <!-- My Process Section -->
+    <section id="my-process" class="process-section">
         <div class="container">
-            <div class="section-header">
-                <h2>Mój Proces</h2>
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Jak Wygląda Współpraca?</h2>
+                <p class="section-subtitle">Przejrzysta, 4-etapowa ścieżka od pierwszej rozmowy do wymarzonego, spokojnego wnętrza</p>
             </div>
-            <div style="padding: 4rem 0; text-align: center; color: var(--text-secondary);">
-                <p style="font-size: 1.2rem;">Zawartość tej sekcji będzie uzupełniona wkrótce...</p>
+
+            <div class="process-grid">
+                <div class="process-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="process-step-num">01</div>
+                    <div class="process-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/>
+                            <rect x="9" y="3" width="6" height="4" rx="1"/>
+                            <path d="M9 12l2 2 4-4"/>
+                            <path d="M9 17h6"/>
+                        </svg>
+                    </div>
+                    <h3>Analiza & Briefing</h3>
+                    <p>Zaczynamy od szczegółowej, autorskiej ankiety (150+ pytań) i inwentaryzacji. Poznaję Twój rytm dnia, nawyki i realny budżet inwestycyjny.</p>
+                    <span class="process-pill">Fundament i bezpieczeństwo</span>
+                </div>
+
+                <div class="process-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="process-step-num">02</div>
+                    <div class="process-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="1"/>
+                            <path d="M3 9h18"/>
+                            <path d="M9 21V9"/>
+                            <path d="M15 9v6"/>
+                            <path d="M15 15h6"/>
+                        </svg>
+                    </div>
+                    <h3>Układ 2D & Moodboardy</h3>
+                    <p>Tworzę 2-3 warianty ergonomicznego układu funkcjonalnego ścian i mebli oraz tablice stylu z paletą kolorów i wstępnym doborem materiałów.</p>
+                    <span class="process-pill">Ergonomia i harmonia</span>
+                </div>
+
+                <div class="process-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="process-step-num">03</div>
+                    <div class="process-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                            <line x1="12" y1="22.08" x2="12" y2="12"/>
+                        </svg>
+                    </div>
+                    <h3>Fotorealistyczne 3D</h3>
+                    <p>Przekształcam koncepcję w nagradzane wizualizacje 3D. Widzisz każdy detal, faktury i grę światła jeszcze przed wydaniem złotówki na remont.</p>
+                    <span class="process-pill">100% pewności efektu</span>
+                </div>
+
+                <div class="process-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="process-step-num">04</div>
+                    <div class="process-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+                            <line x1="9" y1="7" x2="15" y2="7"/>
+                            <line x1="9" y1="11" x2="15" y2="11"/>
+                        </svg>
+                    </div>
+                    <h3>Księga Projektu & Kosztorys</h3>
+                    <p>Kompletna dokumentacja techniczna dla ekipy (hydraulika, elektryka, meble na wymiar) oraz gotowa lista zakupowa z bezpośrednimi linkami.</p>
+                    <span class="process-pill">Gotowe do realizacji</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Anatomy of Design Section -->
+    <section id="anatomy" class="anatomy-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Anatomia Dobrego Projektu</h2>
+                <p class="section-subtitle">Poznaj niewidoczne detale, które odróżniają profesjonalną architekturę od przypadkowej aranżacji. Kliknij na punkty, aby odkryć szczegóły.</p>
+            </div>
+
+            <div class="anatomy-container" data-aos="fade-up" data-aos-delay="100">
+                <div class="anatomy-showcase">
+                    <img src="images/renders/Project_2_wil/caly salon_full.webp" alt="Anatomia projektu wnętrza - salon Milewska Design" class="anatomy-img" loading="lazy">
+                    <div class="anatomy-overlay"></div>
+
+                    <!-- Interactive Hotspots -->
+                    <button class="anatomy-hotspot active" data-hotspot="lighting" style="top: 28%; left: 45%;" aria-label="Szczegóły: Oświetlenie wielopoziomowe">
+                        <span class="hotspot-pulse"></span>
+                        <span class="hotspot-dot">+</span>
+                    </button>
+
+                    <button class="anatomy-hotspot" data-hotspot="materials" style="top: 64%; left: 32%;" aria-label="Szczegóły: Naturalne materiały i spiek">
+                        <span class="hotspot-pulse"></span>
+                        <span class="hotspot-dot">+</span>
+                    </button>
+
+                    <button class="anatomy-hotspot" data-hotspot="storage" style="top: 48%; left: 78%;" aria-label="Szczegóły: Zabudowa pod sufit">
+                        <span class="hotspot-pulse"></span>
+                        <span class="hotspot-dot">+</span>
+                    </button>
+
+                    <button class="anatomy-hotspot" data-hotspot="tech" style="top: 76%; left: 56%;" aria-label="Szczegóły: Niewidoczne instalacje">
+                        <span class="hotspot-pulse"></span>
+                        <span class="hotspot-dot">+</span>
+                    </button>
+                </div>
+
+                <div class="anatomy-card-wrapper">
+                    <div class="anatomy-card" id="anatomyActiveCard">
+                        <span class="anatomy-card-badge">Oświetlenie & Nastrój</span>
+                        <h4 class="anatomy-card-title">Wielopoziomowe sceny świetlne</h4>
+                        <p class="anatomy-card-desc">Połączenie ukrytych profili LED, oświetlenia strefowego i nastrojowych kinkietów. Pozwala jednym dotknięciem zmienić jasną przestrzeń do pracy w intymną, wyciszającą strefę relaksu.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -548,9 +740,9 @@
                 <div class="portfolio-item" data-category="residential" data-project-id="project_1">
                     <div class="portfolio-image">
                         <img src="images/renders/Project_1_zab/Widok salon-kuchnia_thumbnail.webp" 
-                             srcset="images/renders/Project_1_zab/Widok salon-kuchnia_thumbnail.webp 400w,
-                                     images/renders/Project_1_zab/Widok salon-kuchnia_medium.webp 800w,
-                                     images/renders/Project_1_zab/Widok salon-kuchnia_full.webp 1920w"
+                             srcset="images/renders/Project_1_zab/Widok%20salon-kuchnia_thumbnail.webp 400w,
+                                     images/renders/Project_1_zab/Widok%20salon-kuchnia_medium.webp 800w,
+                                     images/renders/Project_1_zab/Widok%20salon-kuchnia_full.webp 1920w"
                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                              alt="Nowoczesne mieszkanie na Warszawskim Mokotowie - 65m2" class="portfolio-img" loading="lazy">
                         <div class="portfolio-overlay">
@@ -565,9 +757,9 @@
                 <div class="portfolio-item" data-category="residential" data-project-id="project_2">
                     <div class="portfolio-image">
                         <img src="images/renders/Project_2_wil/caly salon_thumbnail.webp" 
-                             srcset="images/renders/Project_2_wil/caly salon_thumbnail.webp 400w,
-                                     images/renders/Project_2_wil/caly salon_medium.webp 800w,
-                                     images/renders/Project_2_wil/caly salon_full.webp 1920w"
+                             srcset="images/renders/Project_2_wil/caly%20salon_thumbnail.webp 400w,
+                                     images/renders/Project_2_wil/caly%20salon_medium.webp 800w,
+                                     images/renders/Project_2_wil/caly%20salon_full.webp 1920w"
                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                              alt="Elegancka kawalerka na Mokotowie - 39m2" class="portfolio-img" loading="lazy">
                         <div class="portfolio-overlay">
@@ -599,9 +791,9 @@
                 <div class="portfolio-item" data-category="residential" data-project-id="project_4">
                     <div class="portfolio-image">
                         <img src="images/renders/Project_4_kaz/Widok na tv_thumbnail.webp" 
-                             srcset="images/renders/Project_4_kaz/Widok na tv_thumbnail.webp 400w,
-                                     images/renders/Project_4_kaz/Widok na tv_medium.webp 800w,
-                                     images/renders/Project_4_kaz/Widok na tv_full.webp 1920w"
+                             srcset="images/renders/Project_4_kaz/Widok%20na%20tv_thumbnail.webp 400w,
+                                     images/renders/Project_4_kaz/Widok%20na%20tv_medium.webp 800w,
+                                     images/renders/Project_4_kaz/Widok%20na%20tv_full.webp 1920w"
                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                              alt="Rewitalizacja domu w Łomiankach" class="portfolio-img" loading="lazy">
                         <div class="portfolio-overlay">
@@ -616,9 +808,9 @@
                 <div class="portfolio-item" data-category="competition" data-project-id="project_s1">
                     <div class="portfolio-image">
                         <img src="images/renders/Project_S2/Ujęcie II_thumbnail.webp" 
-                             srcset="images/renders/Project_S2/Ujęcie II_thumbnail.webp 400w,
-                                     images/renders/Project_S2/Ujęcie II_medium.webp 800w,
-                                     images/renders/Project_S2/Ujęcie II_full.webp 1920w"
+                             srcset="images/renders/Project_S2/Uj%C4%99cie%20II_thumbnail.webp 400w,
+                                     images/renders/Project_S2/Uj%C4%99cie%20II_medium.webp 800w,
+                                     images/renders/Project_S2/Uj%C4%99cie%20II_full.webp 1920w"
                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                              alt="Projekt zwycięski w ogólnopolskim konkursie marki Samsung" class="portfolio-img" loading="lazy">
                         <div class="portfolio-overlay">
@@ -633,9 +825,9 @@
                 <div class="portfolio-item" data-category="competition" data-project-id="project_s2">
                     <div class="portfolio-image">
                         <img src="images/renders/Project_S1/Ujęcie II_thumbnail.webp" 
-                             srcset="images/renders/Project_S1/Ujęcie II_thumbnail.webp 400w,
-                                     images/renders/Project_S1/Ujęcie II_medium.webp 800w,
-                                     images/renders/Project_S1/Ujęcie II_full.webp 1920w"
+                             srcset="images/renders/Project_S1/Uj%C4%99cie%20II_thumbnail.webp 400w,
+                                     images/renders/Project_S1/Uj%C4%99cie%20II_medium.webp 800w,
+                                     images/renders/Project_S1/Uj%C4%99cie%20II_full.webp 1920w"
                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                              alt="Projekt konkursowy - wizja druga" class="portfolio-img" loading="lazy">
                         <div class="portfolio-overlay">
@@ -650,9 +842,9 @@
                 <div class="portfolio-item" data-category="competition" data-project-id="project_s3">
                     <div class="portfolio-image">
                         <img src="images/renders/Project_S3/Ujęcie II_thumbnail.webp" 
-                             srcset="images/renders/Project_S3/Ujęcie II_thumbnail.webp 400w,
-                                     images/renders/Project_S3/Ujęcie II_medium.webp 800w,
-                                     images/renders/Project_S3/Ujęcie II_full.webp 1920w"
+                             srcset="images/renders/Project_S3/Uj%C4%99cie%20II_thumbnail.webp 400w,
+                                     images/renders/Project_S3/Uj%C4%99cie%20II_medium.webp 800w,
+                                     images/renders/Project_S3/Uj%C4%99cie%20II_full.webp 1920w"
                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                              alt="Projekt konkursowy - wizja trzecia" class="portfolio-img" loading="lazy">
                         <div class="portfolio-overlay">
@@ -667,9 +859,9 @@
                 <div class="portfolio-item" data-category="competition" data-project-id="project_s4">
                     <div class="portfolio-image">
                         <img src="images/renders/Project_S4/Ujęcie 1_thumbnail.webp" 
-                             srcset="images/renders/Project_S4/Ujęcie 1_thumbnail.webp 400w,
-                                     images/renders/Project_S4/Ujęcie 1_medium.webp 800w,
-                                     images/renders/Project_S4/Ujęcie 1_full.webp 1920w"
+                             srcset="images/renders/Project_S4/Uj%C4%99cie%201_thumbnail.webp 400w,
+                                     images/renders/Project_S4/Uj%C4%99cie%201_medium.webp 800w,
+                                     images/renders/Project_S4/Uj%C4%99cie%201_full.webp 1920w"
                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                              alt="Projekt konkursowy - wizja czwarta" class="portfolio-img" loading="lazy">
                         <div class="portfolio-overlay">
@@ -737,81 +929,211 @@
         </div>
     </section>
 
+    <!-- FAQ Section -->
+    <section id="faq" class="faq-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Często Zadawane Pytania</h2>
+                <p class="section-subtitle">Odpowiedzi na najważniejsze pytania przed rozpoczęciem projektu wnętrza</p>
+            </div>
+
+            <div class="faq-accordion" data-aos="fade-up" data-aos-delay="100">
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Co jeśli pierwsza koncepcja 3D nie do końca trafi w mój gust?</span>
+                        <span class="faq-icon" aria-hidden="true">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            <p>To niemal niemożliwe dzięki naszemu procesowi! Zanim powstanie pierwszy render 3D, wypełniasz szczegółową ankietę (150+ pytań) i wspólnie ustalamy moodboardy oraz kierunek stylistyczny. Każdy etap zawiera także dedykowane tury poprawek, dzięki czemu projekt dopracowujemy aż do Twojej pełnej satysfakcji.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Na jakim etapie zakupu/budowy nieruchomości najlepiej się zgłosić?</span>
+                        <span class="faq-icon" aria-hidden="true">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            <p>Najlepiej zgłosić się jak najwcześniej – w przypadku stanu deweloperskiego idealnym momentem jest czas przed zgłoszeniem zmian lokatorskich u dewelopera. Pozwala to zaoszczędzić tysiące złotych na późniejszym przesuwaniu ścian, punktów elektrycznych czy hydrauliki.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Czy projekt uwzględnia mój realny budżet na remont i wyposażenie?</span>
+                        <span class="faq-icon" aria-hidden="true">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            <p>Zdecydowanie tak. Dobieramy materiały, meble i oświetlenie ściśle pod określone przez Ciebie ramy finansowe. W Projekcie Całościowym otrzymujesz kompletny kosztorys z linkami do sklepów i cenami, co pozwala uniknąć przykrych niespodzianek na budowie.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Gdzie realizujesz projekty wnętrz?</span>
+                        <span class="faq-icon" aria-hidden="true">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            <p>Specjalizuję się w kompleksowym projektowaniu wnętrz na terenie Warszawy i okolic (m.in. Wilanów, Mokotów, Śródmieście, Bemowo, Ząbki, Piaseczno, Konstancin-Jeziorna i aglomeracja warszawska). Dzięki skupieniu na tym rejonie osobiście wykonuję precyzyjną inwentaryzację na budowie, prowadzę spotkania i zapewniam bezpośredni kontakt na każdym etapie.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Czym różni się Pakiet Kreatywna Koncepcja od Projektu Całościowego?</span>
+                        <span class="faq-icon" aria-hidden="true">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            <p>Kreatywna Koncepcja skupia się na estetyce i układzie – otrzymujesz wizualizacje 3D, układ 2D i wytyczne materiałowe. Projekt Całościowy to z kolei pełna „księga wykonawcza” (nawet 50-70 stron rysunków technicznych dla hydraulików, elektryków i stolarzy) wraz ze szczegółowym kosztorysem i autorską checklistą odbiorczą.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section id="contact" class="contact">
         <div class="container">
             <div class="contact-content">
                 <div class="contact-info">
-                    <h2>Gotowy na Transformację Swojej Przestrzeni?</h2>
-                    <p>Porozmawiajmy o Twoim projekcie i stwórzmy razem coś pięknego.</p>
+                    <span class="section-tag">Kontakt & Wycena</span>
+                    <h2 class="contact-title">Gotowy na Transformację Swojej Przestrzeni?</h2>
+                    <p class="contact-subtitle">Porozmawiajmy o Twoim projekcie i stwórzmy razem wnętrze, w którym odnajdziesz spokój.</p>
                     
-                    <div class="contact-details">
-                        <div class="contact-item clickable" data-action="call" data-phone="+48669870306" role="button" tabindex="0" aria-label="Zadzwoń pod numer +48 669 870 306">
-                            <h4>Telefon</h4>
-                            <p>+48 669 870 306</p>
+                    <div class="contact-details-cards">
+                        <div class="contact-card clickable" data-action="call" data-phone="+48669870306" role="button" tabindex="0" aria-label="Zadzwoń pod numer +48 669 870 306">
+                            <span class="card-icon">📞</span>
+                            <div class="card-text">
+                                <span class="card-label">Telefon</span>
+                                <span class="card-val">+48 669 870 306</span>
+                            </div>
                         </div>
-                        <div class="contact-item clickable" data-action="email" data-email="kontakt@milewskadesign.pl" role="button" tabindex="0" aria-label="Wyślij email do kontakt@milewskadesign.pl">
-                            <h4>Email</h4>
-                            <p>kontakt@milewskadesign.pl</p>
+                        <div class="contact-card clickable" data-action="email" data-email="kontakt@milewskadesign.pl" role="button" tabindex="0" aria-label="Wyślij email do kontakt@milewskadesign.pl">
+                            <span class="card-icon">✉️</span>
+                            <div class="card-text">
+                                <span class="card-label">Adres Email</span>
+                                <span class="card-val">kontakt@milewskadesign.pl</span>
+                            </div>
                         </div>
-                        <div class="contact-item">
-                            <h4>Konsultacja</h4>
-                            <p>Bezpłatna wstępna konsultacja</p>
+                        <div class="contact-card">
+                            <span class="card-icon">☕</span>
+                            <div class="card-text">
+                                <span class="card-label">Wstępna konsultacja</span>
+                                <span class="card-val">Bezpłatna rozmowa online / tel</span>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
                 <div class="contact-form-container">
                     <form class="contact-form" id="contactForm" novalidate>
-                        <h3>Masz pytania? Napisz do mnie</h3>
-                        
-                        <div class="form-group">
-                            <input type="text" 
-                                   id="name" 
-                                   name="name" 
-                                   required 
-                                   minlength="2"
-                                   maxlength="50"
-                                   pattern="[A-Za-zĄąĆćĘęŁłŃńÓóŚśŹźŻż\s]+"
-                                   aria-describedby="name-error">
-                            <label for="name">Twoje Imię *</label>
-                            <span class="error-message" id="name-error" role="alert"></span>
+                        <h3 class="form-title">Masz pytania? Napisz do mnie</h3>
+                        <p class="form-intro-note">Opowiedz o swojej przestrzeni – przygotuję dla Ciebie spersonalizowaną propozycję współpracy.</p>
+
+                        <!-- Honeypot anti-spam trap -->
+                        <div style="position: absolute; left: -9999px; opacity: 0; pointer-events: none;" aria-hidden="true">
+                            <input type="text" name="_gotcha" tabindex="-1" autocomplete="off">
                         </div>
                         
-                        <div class="form-group">
-                            <input type="email" 
-                                   id="email" 
-                                   name="email" 
-                                   required
-                                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                                   aria-describedby="email-error">
-                            <label for="email">Adres Email *</label>
-                            <span class="error-message" id="email-error" role="alert"></span>
+                        <div class="form-row-2col">
+                            <div class="form-group">
+                                <input type="text" 
+                                       id="name" 
+                                       name="name" 
+                                       required 
+                                       minlength="2"
+                                       maxlength="50"
+                                       pattern="[A-Za-zĄąĆćĘęŁłŃńÓóŚśŹźŻż\s\-]+"
+                                       aria-describedby="name-error">
+                                <label for="name">Imię i Nazwisko *</label>
+                                <span class="error-message" id="name-error" role="alert"></span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="email" 
+                                       id="email" 
+                                       name="email" 
+                                       required
+                                       aria-describedby="email-error">
+                                <label for="email">Adres Email *</label>
+                                <span class="error-message" id="email-error" role="alert"></span>
+                            </div>
                         </div>
                         
-                        <div class="form-group">
-                            <input type="tel" 
-                                   id="phone" 
-                                   name="phone"
-                                   pattern="[0-9\s\-\+\(\)]{9,15}"
-                                   aria-describedby="phone-error">
-                            <label for="phone">Numer Telefonu (opcjonalnie)</label>
-                            <span class="error-message" id="phone-error" role="alert"></span>
+                        <div class="form-row-2col">
+                            <div class="form-group">
+                                <input type="tel" 
+                                       id="phone" 
+                                       name="phone"
+                                       pattern="[0-9\s\-\+\(\)]{9,15}"
+                                       aria-describedby="phone-error">
+                                <label for="phone">Telefon (opcjonalnie)</label>
+                                <span class="error-message" id="phone-error" role="alert"></span>
+                            </div>
+
+                            <div class="form-group select-group">
+                                <select id="property_type" name="property_type" class="custom-select">
+                                    <option value="" disabled selected hidden>Typ nieruchomości</option>
+                                    <option value="Mieszkanie (stan deweloperski)">Mieszkanie (stan deweloperski)</option>
+                                    <option value="Mieszkanie (rynek wtórny)">Mieszkanie (rynek wtórny)</option>
+                                    <option value="Dom / Segment">Dom / Segment</option>
+                                    <option value="Pojedyncze pomieszczenie">Pojedyncze pomieszczenie</option>
+                                    <option value="Inne">Inne</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row-2col">
+                            <div class="form-group">
+                                <input type="text" 
+                                       id="area_sqm" 
+                                       name="area_sqm"
+                                       placeholder=" ">
+                                <label for="area_sqm">Metraż (np. 65 m²)</label>
+                            </div>
+
+                            <div class="form-group select-group">
+                                <select id="timeline" name="timeline" class="custom-select">
+                                    <option value="" disabled selected hidden>Planowany start</option>
+                                    <option value="Jak najszybciej">Jak najszybciej</option>
+                                    <option value="W ciągu 3-6 miesięcy">W ciągu 3-6 miesięcy</option>
+                                    <option value="Za ponad 6 miesięcy">Za ponad 6 miesięcy</option>
+                                </select>
+                            </div>
                         </div>
                         
-                        <div class="form-group">
+                        <div class="form-group form-group-textarea">
                             <textarea id="message" 
                                       name="message" 
-                                      rows="4" 
+                                      rows="3" 
                                       required
                                       minlength="10"
                                       maxlength="1000"
                                       aria-describedby="message-error"></textarea>
-                            <label for="message">Twoja wiadomość *</label>
+                            <label for="message">Opisz swoje oczekiwania lub pytania *</label>
                             <span class="error-message" id="message-error" role="alert"></span>
                         </div>
+
+                        <!-- RODO Consent Checkbox -->
+                        <div class="form-consent-group">
+                            <label class="consent-label" for="rodoConsent">
+                                <input type="checkbox" id="rodoConsent" name="rodoConsent" required>
+                                <span>Wyrażam zgodę na przetwarzanie moich danych osobowych w celu odpowiedzi na przesłane zapytanie. *</span>
+                            </label>
+                            <span class="error-message" id="consent-error" role="alert"></span>
+                        </div>
                         
-                        <button type="submit" class="submit-btn">Wyślij</button>
+                        <button type="submit" class="submit-btn">Wyślij zapytanie</button>
                         
                         <!-- Form Status Messages -->
                         <div class="form-status" id="formStatus" role="status" aria-live="polite"></div>
@@ -1088,7 +1410,7 @@
     <!-- EmailJS for form submission -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     
-    <script src="script.js" defer></script>
+    <script src="script.js?v=2.7.7" defer></script>
 
     <!-- PWA Installation -->
     <script>
@@ -1143,5 +1465,4 @@
         });
     </script>
 </body>
-</html>
 </html>

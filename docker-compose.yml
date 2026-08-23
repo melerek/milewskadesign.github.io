@@ -1,0 +1,9 @@
+services:
+  milewska-design-server:
+    image: nginx:alpine
+    container_name: milewska-design-container
+    restart: always
+    ports:
+      - "3000:80" # Lewy port to port na laptopie, prawy to port wewnątrz kontenera
+    volumes:
+      - ./:/usr/share/nginx/html:ro # Montujemy katalog z kodem do katalogu Nginx, :ro oznacza read-only
