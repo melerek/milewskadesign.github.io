@@ -11,3 +11,4 @@ images/renders_backup/
 .gemini/
 __pycache__/
 *.pyc
+.playwright-mcp/

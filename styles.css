@@ -1013,23 +1013,27 @@ h3 {
 }
 
 .testimonial-card {
-    background: transparent; /* No background - just show image */
-    border-radius: 0; /* No rounded corners */
-    box-shadow: none; /* No shadow */
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     transition: all 0.3s ease;
     flex: 0 0 calc(50% - 1rem); /* Show 2 cards at a time */
     min-width: calc(50% - 1rem);
-    overflow: visible; /* Allow image to show fully */
+    overflow: hidden;
+    padding: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    box-sizing: border-box;
 }
 
 .testimonial-card:hover {
-    transform: translateY(-5px);
-    /* No shadow - just lift effect */
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
 }
 
 .testimonial-image {
     width: 100%;
-    height: 400px;
+    height: auto;
+    aspect-ratio: 866 / 636;
     overflow: hidden;
     background: transparent;
     display: flex;
@@ -1042,7 +1046,6 @@ h3 {
     height: 100%;
     object-fit: contain;
     display: block;
-    /* No zoom - images updated */
     transform: scale(1.0);
 }
 
@@ -1763,21 +1766,24 @@ h3 {
     
     /* Testimonials Carousel Mobile */
     .testimonials-carousel {
-        gap: 1rem;
+        gap: 0.5rem;
     }
     
     .carousel-btn {
-        width: 40px;
-        height: 40px;
+        width: 38px;
+        height: 38px;
+        flex-shrink: 0;
     }
     
     .testimonial-card {
         flex: 0 0 100%;
         min-width: 100%;
+        padding: 6px;
     }
     
     .testimonial-image {
-        height: 300px;
+        height: auto;
+        aspect-ratio: 866 / 636;
     }
     
     .testimonial-image img {
@@ -3669,32 +3675,38 @@ body {
     color: var(--text-primary);
 }
 
-/* Testimonials */
+/* Testimonials Theme Styles */
 .testimonials {
     background: var(--bg-accent);
 }
 
-/* Force light background in testimonials section for dark theme */
 [data-theme="dark"] .testimonials {
-    background: #f5f5f5; /* Light background to ensure text visibility on transparent images */
-}
-
-[data-theme="dark"] .testimonials .section-header h2,
-[data-theme="dark"] .testimonials .section-header p {
-    color: #1c2726; /* Dark text color for contrast */
+    background: var(--bg-accent);
 }
 
 [data-theme="dark"] .testimonial-card {
-    background: transparent;
+    background: #ffffff;
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="dark"] .testimonial-card:hover {
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
+    border-color: var(--accent-primary);
 }
 
 [data-theme="dark"] .testimonial-image {
-    background: #ffffff; /* White background for images with transparency */
+    background: transparent;
 }
 
 [data-theme="dark"] .carousel-btn {
-    background: #ffffff;
-    border-color: #d0d0d0;
+    background: rgba(42, 52, 50, 0.9);
+    border-color: var(--border-medium);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .carousel-btn svg {
+    stroke: var(--text-primary);
 }
 
 [data-theme="dark"] .carousel-btn:hover {
@@ -3702,16 +3714,12 @@ body {
     border-color: var(--accent-primary);
 }
 
-[data-theme="dark"] .carousel-btn svg {
-    stroke: #1c2726;
-}
-
 [data-theme="dark"] .carousel-btn:hover svg {
-    stroke: white;
+    stroke: #ffffff;
 }
 
 [data-theme="dark"] .carousel-dot {
-    background: #1c2726;
+    background: rgba(255, 255, 255, 0.25);
 }
 
 [data-theme="dark"] .carousel-dot:hover {
@@ -3720,18 +3728,6 @@ body {
 
 [data-theme="dark"] .carousel-dot.active {
     background: var(--accent-primary);
-}
-
-.testimonial-card {
-    background: transparent;
-    border: none;
-    box-shadow: none;
-}
-
-/* Testimonial card hover - no shadow effect */
-
-.testimonial-image {
-    background: var(--bg-accent);
 }
 
 .carousel-btn {
@@ -4189,8 +4185,8 @@ body {
 
 /* Enhanced testimonial cards for dark mode */
 [data-theme="dark"] .testimonial-card:hover {
-    transform: translateY(-3px);
-    box-shadow: none;
+    transform: translateY(-4px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
 }
 
 /* Enhanced process stages for dark mode */
@@ -5422,6 +5418,53 @@ button[type="submit"].loading::after {
     background: var(--accent-primary);
 }
 
+/* Mobile top bar improvements: icon-only button and proper spacing */
+@media (max-width: 768px) {
+    .nav-container {
+        padding: 0 1rem;
+    }
+
+    .nav-brand .logo-image {
+        height: 28px;
+        max-width: calc(100vw - 80px);
+    }
+
+    .nav-actions {
+        gap: 0.5rem;
+    }
+
+    .menu-trigger-btn {
+        padding: 0.5rem;
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        justify-content: center;
+        flex-shrink: 0;
+        border-radius: 4px;
+        gap: 0;
+    }
+
+    .menu-trigger-text {
+        display: none;
+    }
+
+    .menu-trigger-icon {
+        width: 18px;
+        gap: 4px;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-container {
+        padding: 0 0.85rem;
+    }
+
+    .nav-brand .logo-image {
+        height: 26px;
+        max-width: calc(100vw - 75px);
+    }
+}
+
 /* =================================================================
    9. FULLSCREEN EDITORIAL MAGAZINE MENU (HOVER IMAGE REVEAL)
    ================================================================= */
@@ -5845,5 +5888,73 @@ button[type="submit"].loading::after {
         flex-direction: column;
         gap: 1rem;
         align-items: flex-start;
+    }
+}
+
+/* Mobile popup menu header: cleanly aligned logo and close button without redundant elements */
+@media (max-width: 768px) {
+    .fullscreen-menu-container {
+        padding: 1.25rem 1rem;
+        max-width: 100vw;
+        box-sizing: border-box;
+        overflow-x: hidden;
+    }
+
+    .fullscreen-menu-header {
+        padding-bottom: 1rem;
+        width: 100%;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .menu-brand {
+        gap: 0;
+    }
+
+    .menu-brand-logo {
+        height: 28px;
+        max-width: calc(100vw - 80px);
+        width: auto;
+        object-fit: contain;
+    }
+
+    .menu-brand-tagline {
+        display: none !important;
+    }
+
+    .menu-close-btn {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        padding: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        border-radius: 4px;
+        gap: 0;
+    }
+
+    .menu-close-btn .close-label {
+        display: none !important;
+    }
+
+    .menu-close-btn .close-icon {
+        font-size: 1.6rem;
+        line-height: 1;
+        display: block;
+    }
+}
+
+@media (max-width: 480px) {
+    .fullscreen-menu-container {
+        padding: 1rem 0.85rem;
+    }
+
+    .menu-brand-logo {
+        height: 26px;
+        max-width: calc(100vw - 75px);
     }
 }

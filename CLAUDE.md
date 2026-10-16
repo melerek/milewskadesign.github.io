@@ -1,62 +1,23 @@
-# CLAUDE.md
+# CLAUDE.md — Milewska Design Website (PWA Portfolio)
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to AI coding assistants when working with code in this repository.
 
 ## Project Overview
+Portfolio PWA (Progressive Web App) for interior designer Kasia Milewska (`milewskadesign.github.io`).
+- **Tech Stack:** Vanilla HTML5, modern CSS3 (glassmorphic styling, custom properties), Vanilla JavaScript (ES6+), Service Worker (`service-worker.js`), Web App Manifest (`manifest.json`).
+- **Target Hosting:** GitHub Pages (production at `https://milewskadesign.github.io`).
+- **Local Dev Server:** Docker Compose (`docker-compose.yml`) or lightweight static file server (e.g. `npx serve .`).
 
-This is a GitHub Pages repository for `milewskadesign.github.io` - a design portfolio website. The repository is currently empty and ready for initial setup.
-
-## Repository Type
-
-This is a GitHub Pages site repository that will be automatically deployed from the `main` branch to `https://milewskadesign.github.io`.
-
-## Development Setup
-
-Since this is a new repository, the development setup will depend on the chosen technology stack. Common options for GitHub Pages include:
-
-### Static Site Options
-- **Plain HTML/CSS/JS**: No build process required, files served directly
-- **Jekyll**: Ruby-based static site generator (GitHub Pages native support)
-- **React/Next.js**: Requires build process and GitHub Actions for deployment
-- **Vue/Nuxt**: Requires build process and GitHub Actions for deployment
-- **Gatsby**: React-based static site generator
-
-### Common Commands (will vary based on chosen stack)
-
-For Jekyll sites:
+## Development & Testing Commands
 ```bash
-bundle install          # Install dependencies
-bundle exec jekyll serve # Run development server
-bundle exec jekyll build # Build for production
+# Run local dev container via Docker
+docker compose up -d
+
+# Check security headers, assets or minification
+bash scripts/bump_cache.sh  # Update PWA service worker cache version
 ```
 
-For Node.js-based sites:
-```bash
-npm install             # Install dependencies  
-npm run dev            # Run development server
-npm run build          # Build for production
-npm run lint           # Run linting
-```
-
-## GitHub Pages Deployment
-
-- **Automatic deployment**: Pushes to `main` branch trigger automatic deployment
-- **Custom domains**: Configure in repository settings if using custom domain
-- **HTTPS**: Automatically enabled for `.github.io` domains
-
-## File Structure Considerations
-
-- `index.html` or `index.md` will serve as the homepage
-- `_config.yml` required for Jekyll sites
-- `404.html` for custom 404 page
-- `CNAME` file if using custom domain
-- `robots.txt` and `sitemap.xml` recommended for SEO
-
-## Design Portfolio Specific Notes
-
-As a design portfolio site, consider:
-- Responsive design for mobile/tablet viewing
-- Image optimization for web performance
-- Portfolio gallery/grid layouts
-- Contact forms (may require external service)
-- SEO optimization for designer discovery
+## Architectural Guidelines
+1. **Zero Framework Overhead:** Do not introduce React, Vue, or heavy node build frameworks unless requested. Keep it lightweight, fast-loading, and mobile-first.
+2. **PWA Standards:** Any new assets or script changes require bumping the cache name/version in `service-worker.js` so clients receive updates immediately.
+3. **Accessibility & SEO:** Maintain semantic HTML, image `alt` tags, WebP formats with fallback, and high color contrast.
